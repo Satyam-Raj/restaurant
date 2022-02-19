@@ -9,10 +9,10 @@
       <v-app-bar-title class="title">
         <div>Butter </div>
       </v-app-bar-title>
-      <v-avatar
-        :color="$vuetify.breakpoint.smAndDown ? 'grey darken-1' : 'transparent'"
-        size="32"
-      ></v-avatar>
+
+
+        
+
 
       <v-tabs
         centered
@@ -71,6 +71,13 @@
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Account</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="/premium">
+            <v-list-item-icon>
+              <v-icon>mdi-calendar-clock</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Calendar</v-list-item-title>
           </v-list-item>
 
           <v-list-item to="/premium">
