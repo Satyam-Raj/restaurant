@@ -136,11 +136,12 @@
                   </v-flex>
 
                   <v-flex xs2 sm4 md2>
-                    <div class="caption grey--text">Category</div>
-                    <div>Cereals</div>
+                    <div class="caption grey--text">No. of item</div>
+                    <div>43</div>
                   </v-flex>
 
                 </v-layout>
+
 
 
                 <v-layout row wrap>
@@ -161,8 +162,8 @@
                   </v-flex>
 
                   <v-flex xs2 sm4 md2>
-                    <div class="caption grey--text">Category</div>
-                    <div>Cereals</div>
+                    <div class="caption grey--text">No. of item</div>
+                    <div>12</div>
                   </v-flex>
 
                 </v-layout>
@@ -187,6 +188,79 @@
               :elevation="10"
 
             >
+              <v-form v-model="valid">
+                <v-container>
+                  <v-row>
+                    
+                    <v-col
+                      cols="12"
+                      md="3"
+                    >
+                      <v-text-field
+                        v-model="name"
+                        :rules="nameRules"
+                        :counter="30"
+                        label="Product Name"
+                        required
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col
+                      cols="12"
+                      md="3"
+                    >
+                      <v-text-field
+                        v-model="quantity"
+                        :rules="quantityRules"
+                        :counter="5"
+                        label="Quantity"
+                        required
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col
+                      cols="12"
+                      md="3"
+                    >
+                      <v-text-field
+                        v-model="price"
+                        :rules="priceRules"
+                        :counter="7"
+                        label="Price"
+                        required
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col
+                      cols="12"
+                      md="3"
+                    >
+                      <v-text-field
+                        v-model="no_of_item"
+                        :rules="no_of_itemRules"
+                        :counter="5"
+                        label="No. of item"
+                        required
+                      ></v-text-field>
+                    </v-col>
+
+                    <!-- <v-col
+                      cols="12"
+                      md="4"
+                    >
+                      <v-text-field
+                        v-model="email"
+                        :rules="emailRules"
+                        label="E-mail"
+                        required
+                      ></v-text-field>
+                    </v-col> -->
+
+                  </v-row>
+                </v-container>
+              </v-form>
+
+            
               <!--  -->
             </v-sheet>
           </v-col>
@@ -211,6 +285,53 @@
       // ],
       drawer:false,
       group: null,
+
+// form validation section below
+      valid: false,
+      name: '',
+
+      nameRules: [
+        v => !!v || 'required',
+        v => v.length <= 30 || 'must be less than 10 characters',
+      ],
+
+      quantity: '',
+      quantityRules: [
+        v => !!v || 'required',
+        v => v.length <= 6 || 'must be less than 10 characters',
+        v => /^[0-9]+$/.test(v) || 'must be a number',
+      ],
+
+      price: '',
+      priceRules: [
+        v => !!v || 'required',
+        v => v.length <= 7 || 'must be less than 10 characters',
+        v => /^[0-9]+$/.test(v) || 'must be a number',
+      ],
+
+
+      no_of_item: '',
+      no_of_itemRules: [
+        v => !!v || 'required',
+        v => v.length <= 5 || 'must be less than 10 characters',
+        v => /^[0-9]+$/.test(v) || 'must be a number',
+      ],
+
+
+
+
+
+
+      // email: '',
+      // emailRules: [
+      //   v => !!v || 'E-mail is required',
+      //   v => /.+@.+/.test(v) || 'E-mail must be valid',
+      // ],
+
+// form validation section above
+
+
+    
     }),
 
 
