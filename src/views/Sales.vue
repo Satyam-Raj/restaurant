@@ -4,10 +4,12 @@
       app
       color="white"
       flat
+      :elevation="2"
+
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-app-bar-title class="title">
-        <div>Butter </div>
+        <div>Butter Scotch..</div>
       </v-app-bar-title>
 
 
@@ -21,12 +23,12 @@
           Dashboard
         </v-tab>
 
-        <v-tab router to="/inventory" >
-          Inventory
-        </v-tab>
-
         <v-tab router to="/sales" >
           Sales
+        </v-tab>
+
+        <v-tab router to="/inventory" >
+          Inventory
         </v-tab>
 
         <v-tab router to="/buffer" >
@@ -96,8 +98,9 @@
     </v-navigation-drawer>
 
 
-    <v-main class="grey lighten-3">
+    <v-main class="grey lighten-3 pt-0">
       <v-container>
+        <h1 class="pl-3">Sales</h1>
         <v-row>
 
 
@@ -108,8 +111,10 @@
             <v-sheet
               min-height="70vh"
               rounded="lg"
+              :elevation="10"
+
             >
-          <h1>Sales</h1>
+          
               <!--  -->
             </v-sheet>
           </v-col>
@@ -121,6 +126,8 @@
             <v-sheet
               rounded="lg"
               min-height="70vh"
+              :elevation="10"
+
             >
               <!--  -->
             </v-sheet>

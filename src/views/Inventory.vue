@@ -4,10 +4,12 @@
       app
       color="white"
       flat
+      :elevation="2"
+
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-app-bar-title class="title">
-        <div>Butter </div>
+        <div>Butter Scotch..</div>
       </v-app-bar-title>
 
 
@@ -15,17 +17,18 @@
         centered
         class="ml-n9"
         color="grey darken-1"
+        
       >
         <v-tab router to="/" >
           Dashboard
         </v-tab>
 
-        <v-tab router to="/inventory" >
-          Inventory
-        </v-tab>
-
         <v-tab router to="/sales" >
           Sales
+        </v-tab>
+
+        <v-tab router to="/inventory" >
+          Inventory
         </v-tab>
 
         <v-tab router to="/buffer" >
@@ -41,6 +44,7 @@
       <v-icon>mdi-calendar-clock</v-icon>
       </v-avatar>
     </v-app-bar>
+
 
 
     <v-navigation-drawer
@@ -93,22 +97,82 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
+    
 
 
-    <v-main class="grey lighten-3">
+    <v-main class="grey lighten-3 pt-0">
       <v-container>
-        <v-row>
+        <h1 class="pl-3">Inventory</h1>
 
-
+        <v-row >
+          
           <v-col
             cols="12"
             sm="8"
           >
+            
             <v-sheet
               min-height="70vh"
               rounded="lg"
+              :elevation="10"
             >
-          <h1>Inventory</h1>
+            <v-container>
+              <v-card flat class="pa-3" >
+                <v-layout row wrap >
+
+                  <v-flex xs12 md6>
+                    <div class="caption grey--text">Product Name</div>
+                    <div>Rice</div>
+                  </v-flex>
+
+                  <v-flex xs6 sm4 md2>
+                    <div class="caption grey--text">Quantity</div>
+                    <div>12 Kg</div>
+                  </v-flex>
+
+                  <v-flex xs6 sm4 md2>
+                    <div class="caption grey--text">Price</div>
+                    <div>Rs 120</div>
+                  </v-flex>
+
+                  <v-flex xs2 sm4 md2>
+                    <div class="caption grey--text">Category</div>
+                    <div>Cereals</div>
+                  </v-flex>
+
+                </v-layout>
+
+
+                <v-layout row wrap>
+
+                  <v-flex xs12 md6>
+                    <div class="caption grey--text">Product Name</div>
+                    <div>Wheat</div>
+                  </v-flex>
+
+                  <v-flex xs6 sm4 md2>
+                    <div class="caption grey--text">Quantity</div>
+                    <div>22 Kg</div>
+                  </v-flex>
+
+                  <v-flex xs6 sm4 md2>
+                    <div class="caption grey--text">Price</div>
+                    <div>Rs 520</div>
+                  </v-flex>
+
+                  <v-flex xs2 sm4 md2>
+                    <div class="caption grey--text">Category</div>
+                    <div>Cereals</div>
+                  </v-flex>
+
+                </v-layout>
+
+
+
+              </v-card>
+              
+            </v-container>
+
               <!--  -->
             </v-sheet>
           </v-col>
@@ -120,6 +184,8 @@
             <v-sheet
               rounded="lg"
               min-height="70vh"
+              :elevation="10"
+
             >
               <!--  -->
             </v-sheet>
