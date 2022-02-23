@@ -117,7 +117,7 @@
               :elevation="10"
             >
             <v-container>
-              <v-card flat class="pa-3" >
+              <v-card flat class="pa-2" >
                 <v-layout row wrap >
 
                   <v-flex xs12 md6>
@@ -142,18 +142,27 @@
 
                 </v-layout>
 
+              </v-card>
+            </v-container>
 
 
+
+
+                <v-divider></v-divider>
+
+
+              <v-container>
+              <v-card flat class="pa-2" >
                 <v-layout row wrap>
 
                   <v-flex xs12 md6>
                     <div class="caption grey--text">Product Name</div>
-                    <div>Wheat</div>
+                    <div >Wheat</div>
                   </v-flex>
 
                   <v-flex xs6 sm4 md2>
                     <div class="caption grey--text">Quantity</div>
-                    <div>22 Kg</div>
+                    <span class="text-decoration-line-through">22</span><span> Kg</span>
                   </v-flex>
 
                   <v-flex xs6 sm4 md2>
@@ -184,81 +193,115 @@
           >
             <v-sheet
               rounded="lg"
-              min-height="70vh"
+              min-height="10vh"
               :elevation="10"
 
             >
-              <v-form v-model="valid">
-                <v-container>
-                  <v-row>
-                    
-                    <v-col
-                      cols="12"
-                      md="3"
-                    >
-                      <v-text-field
-                        v-model="name"
-                        :rules="nameRules"
-                        :counter="30"
-                        label="Product Name"
-                        required
-                      ></v-text-field>
-                    </v-col>
 
-                    <v-col
-                      cols="12"
-                      md="3"
-                    >
-                      <v-text-field
-                        v-model="quantity"
-                        :rules="quantityRules"
-                        :counter="5"
-                        label="Quantity"
-                        required
-                      ></v-text-field>
-                    </v-col>
 
-                    <v-col
-                      cols="12"
-                      md="3"
-                    >
-                      <v-text-field
-                        v-model="price"
-                        :rules="priceRules"
-                        :counter="7"
-                        label="Price"
-                        required
-                      ></v-text-field>
-                    </v-col>
+            <v-container
+             class="text-center red--text text--darken-2"
+             
+             >
 
-                    <v-col
-                      cols="12"
-                      md="3"
-                    >
-                      <v-text-field
-                        v-model="no_of_item"
-                        :rules="no_of_itemRules"
-                        :counter="5"
-                        label="No. of item"
-                        required
-                      ></v-text-field>
-                    </v-col>
+              <h2>Data Entry</h2>
+            </v-container>
+            <v-divider></v-divider>
 
-                    <!-- <v-col
-                      cols="12"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
-                        label="E-mail"
-                        required
-                      ></v-text-field>
-                    </v-col> -->
+            
+              <v-container >
 
-                  </v-row>
-                </v-container>
-              </v-form>
+                   
+                
+            
+                  <v-form v-model="valid">
+                      <v-row>
+                        
+                        <v-col
+                          cols="12"
+                          md="3"
+                        >
+                          <v-text-field
+                            v-model="data_feeds.name"
+                            :rules="nameRules"
+                            :counter="30"
+                            label="Product Name"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
+                        <v-col
+                          cols="12"
+                          md="3"
+                        >
+                          <v-text-field
+                            v-model="data_feeds.quantity"
+                            :rules="quantityRules"
+                            :counter="5"
+                            label="Quantity"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
+                        <v-col
+                          cols="12"
+                          md="3"
+                        >
+                          <v-text-field
+                            v-model="data_feeds.price"
+                            :rules="priceRules"
+                            :counter="7"
+                            label="Price"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
+                        <v-col
+                          cols="12"
+                          md="3"
+                        >
+                          <v-text-field
+                            v-model="data_feeds.no_of_item"
+                            :rules="no_of_itemRules"
+                            :counter="5"
+                            label="No. of item"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
+                        <!-- <v-col
+                          cols="12"
+                          md="4"
+                        >
+                          <v-text-field
+                            v-model="email"
+                            :rules="emailRules"
+                            label="E-mail"
+                            required
+                          ></v-text-field>
+                        </v-col> -->
+
+                      </v-row>
+
+                        <v-container
+                          class="text-center pt-9"
+                        >
+                          
+                          <v-btn
+                            class="mr-4"
+                            @click="submit"
+                          >
+                            submit
+                          </v-btn>
+                          <v-btn @click="clear">
+                            clear
+                          </v-btn>
+                        </v-container>
+                  </v-form>
+
+
+              </v-container>
+
 
             
               <!--  -->
@@ -288,8 +331,8 @@
 
 // form validation section below
       valid: false,
+      
       name: '',
-
       nameRules: [
         v => !!v || 'required',
         v => v.length <= 30 || 'must be less than 10 characters',
@@ -318,10 +361,6 @@
       ],
 
 
-
-
-
-
       // email: '',
       // emailRules: [
       //   v => !!v || 'E-mail is required',
@@ -330,9 +369,20 @@
 
 // form validation section above
 
+      data_feeds: 
+        {
+          name: '',
+          quantity: '',
+          price: '',
+          no_of_item: '',
+        }
+      
+
 
     
     }),
+
+    
 
 
   }
