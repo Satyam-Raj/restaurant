@@ -114,6 +114,52 @@
               :elevation="10"
 
             >
+
+
+
+
+              <v-container 
+                v-for="(item, index) in list"
+                :key="index"
+              >
+                <v-card flat class="pa-2" >
+                  <v-layout row wrap >
+
+                    <v-flex xs12 md6>
+                      <div class="caption grey--text">Product Name</div>
+                      <div>{{item.name}}</div>
+                    </v-flex>
+
+                    <v-flex xs6 sm4 md2>
+                      <div class="caption grey--text">Quantity</div>
+                      <span>{{item.quantity}}</span><span> Kg</span>
+                    </v-flex>
+
+                    <v-flex xs6 sm4 md2>
+                      <div class="caption grey--text">Price</div>
+                     <span>Rs</span><span> {{item.price}}</span>
+                    </v-flex>
+
+                    <v-flex xs2 sm4 md2>
+                      <div class="caption grey--text">No. of item</div>
+                      <div>{{item.no_of_item}}</div>
+                    </v-flex>
+
+                  </v-layout>
+
+                </v-card>
+                <v-divider></v-divider>
+              </v-container>
+
+
+
+
+                
+
+
+
+
+
           
               <!--  -->
             </v-sheet>
@@ -129,6 +175,120 @@
               :elevation="10"
 
             >
+
+
+
+
+            <v-container
+             class="text-center red--text text--darken-2"
+             
+             >
+
+              <h2>Data Entry</h2>
+            </v-container>
+            <v-divider></v-divider>
+
+            
+              <v-container >
+
+                   
+                
+            
+                  <v-form 
+                    @submit.prevent="submit"
+                  >
+                      <v-row>
+                        
+                        <v-col
+                          cols="12"
+                          md="3"
+                        >
+                          <v-text-field
+                            v-model="name"
+                            :rules="nameRules"
+                            :counter="30"
+                            label="Product Name"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
+                        <v-col
+                          cols="12"
+                          md="3"
+                        >
+                          <v-text-field
+                            v-model="quantity"
+                            :rules="quantityRules"
+                            :counter="5"
+                            label="Quantity"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
+                        <v-col
+                          cols="12"
+                          md="3"
+                        >
+                          <v-text-field
+                            v-model="price"
+                            :rules="priceRules"
+                            :counter="7"
+                            label="Price"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
+                        <v-col
+                          cols="12"
+                          md="3"
+                        >
+                          <v-text-field
+                            v-model="no_of_item"
+                            :rules="no_of_itemRules"
+                            :counter="5"
+                            label="No. of item"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
+
+                      </v-row>
+
+                      
+                        
+                      
+
+                      
+
+                       
+                          
+
+                  </v-form>
+
+
+              </v-container>
+
+
+
+            <v-container>
+              <v-btn
+                @click="submit"
+              >
+                Submit
+              </v-btn>
+
+              <v-btn
+                @click="clear"
+              >
+                Clear
+              </v-btn>
+            </v-container>
+
+
+
+
+
+            
               <!--  -->
             </v-sheet>
           </v-col>
@@ -144,16 +304,74 @@
   export default {
     name: 'Sales',
     data: () => ({
-      // links: [
-      //   {title:'Dashboard', route: "/"},
-      //   {title:'Inventory', route: "/inventory"},
-      //   {title:'Sales', route: "/sales"},
-      //   {title:'Buffer', route: "/buffer"},
-        
-      // ],
       drawer:false,
       group: null,
+
+      name: '',
+      quantity: '',
+      price: '',
+      no_of_item: '',
+
+
+
+      nameRules: [
+        v => !!v || 'required',
+        v => v.length <= 30 || 'must be less than 10 characters',
+        v => /^[a-z]+$/.test(v) || 'must be only alphabet',
+      ],
+
+      quantityRules: [
+        v => !!v || 'required',
+        v => v.length <= 5 || 'must be less than 5 characters',
+        v => /^[0-9]+$/.test(v) || 'must be only number',
+      ],
+
+      priceRules: [
+        v => !!v || 'required',
+        v => v.length <= 7 || 'must be less than 7 characters',
+        v => /^[0-9]+$/.test(v) || 'must be only number',
+      ],
+
+      no_of_itemRules: [
+        v => !!v || 'required',
+        v => v.length <= 5 || 'must be less than 5 characters',
+        v => /^[0-9]+$/.test(v) || 'must be only number',
+      ],
+
+
+
+
+
+
+      list: [],
+
     }),
+
+    methods: {
+      submit(){
+        let newItem = {
+          id: Date.now(),
+          name: this.name,
+          quantity: this.quantity,
+          price: this.price,
+          no_of_item: this.no_of_item,
+        }
+        this.list.push(newItem)
+        this.name = ''
+        this.quantity = ''
+        this.price = ''
+        this.no_of_item = ''
+
+
+      },
+
+      clear(){
+        this.name = ''
+        this.quantity = ''
+        this.price = ''
+        this.no_of_item = ''
+      },
+    },
 
 
   }

@@ -1,5 +1,5 @@
 <template>
-<v-app id="inspire">
+<v-app id="inventory">
     <v-app-bar
       app
       color="white"
@@ -9,7 +9,7 @@
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-app-bar-title class="title">
-        <div>Butter Scotch..</div>
+        <div>WoW Inventory..</div>
       </v-app-bar-title>
 
 
@@ -157,22 +157,22 @@
 
                   <v-flex xs12 md6>
                     <div class="caption grey--text">Product Name</div>
-                    <div >Wheat</div>
+                    <div >{{ name }}</div>
                   </v-flex>
 
                   <v-flex xs6 sm4 md2>
                     <div class="caption grey--text">Quantity</div>
-                    <span class="text-decoration-line-through">22</span><span> Kg</span>
+                    <span class="text-decoration-line-through">{{quantity}}</span><span> Kg</span>
                   </v-flex>
 
                   <v-flex xs6 sm4 md2>
                     <div class="caption grey--text">Price</div>
-                    <div>Rs 520</div>
+                    <span>Rs</span><span> {{ price }}</span>
                   </v-flex>
 
                   <v-flex xs2 sm4 md2>
                     <div class="caption grey--text">No. of item</div>
-                    <div>12</div>
+                    <div>{{no_of_item}}</div>
                   </v-flex>
 
                 </v-layout>
@@ -199,7 +199,7 @@
             >
 
 
-            <v-container
+            <!-- <v-container
              class="text-center red--text text--darken-2"
              
              >
@@ -214,7 +214,11 @@
                    
                 
             
-                  <v-form v-model="valid">
+                  <v-form 
+                    v-model="valid"
+                    @submit.prevent="submit"
+                    ref="data_feed"
+                  >
                       <v-row>
                         
                         <v-col
@@ -222,7 +226,7 @@
                           md="3"
                         >
                           <v-text-field
-                            v-model="data_feeds.name"
+                            v-model="name"
                             :rules="nameRules"
                             :counter="30"
                             label="Product Name"
@@ -235,7 +239,7 @@
                           md="3"
                         >
                           <v-text-field
-                            v-model="data_feeds.quantity"
+                            v-model="quantity"
                             :rules="quantityRules"
                             :counter="5"
                             label="Quantity"
@@ -248,7 +252,7 @@
                           md="3"
                         >
                           <v-text-field
-                            v-model="data_feeds.price"
+                            v-model="price"
                             :rules="priceRules"
                             :counter="7"
                             label="Price"
@@ -261,7 +265,7 @@
                           md="3"
                         >
                           <v-text-field
-                            v-model="data_feeds.no_of_item"
+                            v-model="no_of_item"
                             :rules="no_of_itemRules"
                             :counter="5"
                             label="No. of item"
@@ -269,38 +273,33 @@
                           ></v-text-field>
                         </v-col>
 
-                        <!-- <v-col
-                          cols="12"
-                          md="4"
-                        >
-                          <v-text-field
-                            v-model="email"
-                            :rules="emailRules"
-                            label="E-mail"
-                            required
-                          ></v-text-field>
-                        </v-col> -->
 
                       </v-row>
 
-                        <v-container
-                          class="text-center pt-9"
-                        >
+                      
+                        
+                      
+
+                      
+
+                       
                           
-                          <v-btn
-                            class="mr-4"
-                            @click="submit"
-                          >
-                            submit
-                          </v-btn>
-                          <v-btn @click="clear">
-                            clear
-                          </v-btn>
-                        </v-container>
+
                   </v-form>
 
 
-              </v-container>
+              </v-container> -->
+
+
+              <v-container>
+              <v-btn
+                @click="buttonClick"
+              >
+                click
+              </v-btn>
+            </v-container>
+
+
 
 
             
@@ -336,19 +335,21 @@
       nameRules: [
         v => !!v || 'required',
         v => v.length <= 30 || 'must be less than 10 characters',
+        v => /^[a-z]+$/.test(v) || 'must be only alphabet',
       ],
+
 
       quantity: '',
       quantityRules: [
         v => !!v || 'required',
-        v => v.length <= 6 || 'must be less than 10 characters',
+        v => v.length <= 6 || 'must be less than 5 characters',
         v => /^[0-9]+$/.test(v) || 'must be a number',
       ],
 
       price: '',
       priceRules: [
         v => !!v || 'required',
-        v => v.length <= 7 || 'must be less than 10 characters',
+        v => v.length <= 7 || 'must be less than 7 characters',
         v => /^[0-9]+$/.test(v) || 'must be a number',
       ],
 
@@ -356,7 +357,7 @@
       no_of_item: '',
       no_of_itemRules: [
         v => !!v || 'required',
-        v => v.length <= 5 || 'must be less than 10 characters',
+        v => v.length <= 5 || 'must be less than 5 characters',
         v => /^[0-9]+$/.test(v) || 'must be a number',
       ],
 
@@ -369,14 +370,17 @@
 
 // form validation section above
 
-      data_feeds: 
-        {
-          name: '',
-          quantity: '',
-          price: '',
-          no_of_item: '',
-        }
-      
+
+
+
+
+        methods: {
+
+          buttonClick(){
+            console.log('clicked');
+          }
+
+        },
 
 
     
