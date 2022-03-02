@@ -160,26 +160,26 @@
                   fixed-header
                   height="879px"
                 >
-                  <template v-slot:default>
-                    <thead>
+                  <template v-slot:default primary >
+                    <thead  >
                       <tr>
-                        <th class="text-left">
+                        <th class="text-left orange lighten-3">
                           Product Name
                         </th>
-                        <th class="text-left">
+                        <th class="text-left orange lighten-3">
                           Quantity
                         </th>
-                        <th class="text-left">
+                        <th class="text-left orange lighten-3">
                           Price
                         </th>
-                        <th class="text-left">
+                        <th class="text-left orange lighten-3">
                           No. of item
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr
-                        v-for="item in list"
+                        v-for="item in list.slice().reverse()"
                         :key="item.index"
                       >
                         <td>{{ item.name }}</td>
@@ -191,12 +191,6 @@
                     </tbody>
                   </template>
                 </v-simple-table>
-
-
-
-
-                
-
 
 
 
@@ -292,14 +286,6 @@
 
                       </v-row>
 
-                      
-                        
-                      
-
-                      
-
-                       
-                          
 
                   </v-form>
 
