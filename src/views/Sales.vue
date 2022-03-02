@@ -232,6 +232,8 @@
             
                   <v-form 
                     @submit.prevent="submit"
+                    ref="form"
+
                   >
                       <v-row>
                         
@@ -305,6 +307,7 @@
 
               <v-btn
                 @click="submit"
+                :disabled="invalid"
               >
                 Submit
               </v-btn>
@@ -373,6 +376,9 @@
       // condition for only alphabet and space
       // v => /^[a-zA-Z ]+$/.test(v) || 'must be only alphabet and space',
 
+      // dont show error after submit
+    
+
 
 
 
@@ -383,23 +389,44 @@
     }),
 
     methods: {
-      submit(){
-        let newItem = {
-          id: Date.now(),
-          date: new Date().toLocaleDateString("fr-FR"),
-          name: this.name,
-          quantity: this.quantity,
-          price: this.price,
-          no_of_item: this.no_of_item,
+
+
+      // valid submit
+      submit() {
+        if (this.$refs.form.validate()) {
+          this.list.push({
+            id: Date.now(),
+            name: this.name,
+            quantity: this.quantity,
+            price: this.price,
+            no_of_item: this.no_of_item,
+            date: new Date().toLocaleDateString("fr-FR"),
+          });
+
+          // clear input
+          this.name = '';
+          this.quantity = '';
+          this.price = '';
+          this.no_of_item = '';
         }
-        this.list.push(newItem)
-        this.name = ''
-        this.quantity = ''
-        this.price = ''
-        this.no_of_item = ''
-
-
       },
+      // submit(){
+      //   let newItem = {
+      //     id: Date.now(),
+      //     date: new Date().toLocaleDateString("fr-FR"),
+      //     name: this.name,
+      //     quantity: this.quantity,
+      //     price: this.price,
+      //     no_of_item: this.no_of_item,
+      //   }
+      //   this.list.push(newItem)
+      //   this.name = ''
+      //   this.quantity = ''
+      //   this.price = ''
+      //   this.no_of_item = ''
+
+
+      // },
 
       clear(){
         this.name = ''
