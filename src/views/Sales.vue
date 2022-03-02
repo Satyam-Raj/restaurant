@@ -118,38 +118,79 @@
 
 
 
-              <v-container 
+              <!-- <v-container 
                 v-for="(item, index) in list"
                 :key="index"
               >
-                <v-card flat class="pa-2" >
-                  <v-layout row wrap >
+ 
 
-                    <v-flex xs12 md6>
-                      <div class="caption grey--text">Product Name</div>
-                      <div>{{item.name}}</div>
-                    </v-flex>
+                  <v-card flat class="pb-5 pa-2" >
+                    <v-layout row wrap >
 
-                    <v-flex xs6 sm4 md2>
-                      <div class="caption grey--text">Quantity</div>
-                      <span>{{item.quantity}}</span><span> Kg</span>
-                    </v-flex>
+                      <v-flex xs12 md6>
+                        <div class="caption grey--text">Product Name</div>
+                        <div>{{item.name}}</div>
+                      </v-flex>
 
-                    <v-flex xs6 sm4 md2>
-                      <div class="caption grey--text">Price</div>
-                     <span>Rs</span><span> {{item.price}}</span>
-                    </v-flex>
+                      <v-flex xs6 sm4 md2>
+                        <div class="caption grey--text">Quantity</div>
+                        <span>{{item.quantity}}</span><span> Kg</span>
+                      </v-flex>
 
-                    <v-flex xs2 sm4 md2>
-                      <div class="caption grey--text">No. of item</div>
-                      <div>{{item.no_of_item}}</div>
-                    </v-flex>
+                      <v-flex xs6 sm4 md2>
+                        <div class="caption grey--text">Price</div>
+                      <span>Rs</span><span> {{item.price}}</span>
+                      </v-flex>
 
-                  </v-layout>
+                      <v-flex xs2 sm4 md2>
+                        <div class="caption grey--text">No. of item</div>
+                        <div>{{item.no_of_item}}</div>
+                      </v-flex>
 
-                </v-card>
+
+
+                    </v-layout>
+
+                  </v-card>
+
                 <v-divider></v-divider>
-              </v-container>
+              </v-container> -->
+
+                <v-simple-table
+                  fixed-header
+                  height="879px"
+                >
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">
+                          Product Name
+                        </th>
+                        <th class="text-left">
+                          Quantity
+                        </th>
+                        <th class="text-left">
+                          Price
+                        </th>
+                        <th class="text-left">
+                          No. of item
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="item in list"
+                        :key="item.index"
+                      >
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.no_of_item }}</td>
+
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
 
 
 
@@ -171,13 +212,10 @@
           >
             <v-sheet
               rounded="lg"
-              min-height="70vh"
+              min-height="10vh"
               :elevation="10"
 
             >
-
-
-
 
             <v-container
              class="text-center red--text text--darken-2"
@@ -270,13 +308,17 @@
 
 
 
-            <v-container>
+            <v-container
+              class="text-center red--text text--darken-2  pt-5"
+             
+             >
+
               <v-btn
                 @click="submit"
               >
                 Submit
               </v-btn>
-
+              &nbsp;&nbsp;
               <v-btn
                 @click="clear"
               >
