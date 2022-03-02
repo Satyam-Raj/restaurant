@@ -175,6 +175,9 @@
                         <th class="text-left orange lighten-3">
                           No. of item
                         </th>
+                        <th class="text-left orange lighten-3">
+                          Date
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -186,6 +189,8 @@
                         <td>{{ item.quantity }}</td>
                         <td>{{ item.price }}</td>
                         <td>{{ item.no_of_item }}</td>
+                        <td>{{ item.date }}</td>
+
 
                       </tr>
                     </tbody>
@@ -213,7 +218,6 @@
 
             <v-container
              class="text-center red--text text--darken-2"
-             
              >
 
               <h2>Data Entry</h2>
@@ -379,6 +383,7 @@
       submit(){
         let newItem = {
           id: Date.now(),
+          date: new Date().toLocaleDateString("fr-FR"),
           name: this.name,
           quantity: this.quantity,
           price: this.price,
