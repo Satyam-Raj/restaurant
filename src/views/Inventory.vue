@@ -13,11 +13,11 @@
       </v-app-bar-title>
 
 
+
       <v-tabs
         centered
         class="ml-n9"
         color="grey darken-1"
-        
       >
         <v-tab router to="/" >
           Dashboard
@@ -44,7 +44,6 @@
       <v-icon>mdi-calendar-clock</v-icon>
       </v-avatar>
     </v-app-bar>
-
 
 
     <v-navigation-drawer
@@ -74,12 +73,7 @@
             <v-list-item-title>Account</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/premium">
-            <v-list-item-icon>
-              <v-icon>mdi-calendar-clock</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Calendar</v-list-item-title>
-          </v-list-item>
+
 
           <v-list-item to="/premium">
             <v-list-item-icon>
@@ -97,92 +91,111 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    
 
 
     <v-main class="grey lighten-3 pt-0">
       <v-container>
         <h1 class="pl-3">Inventory</h1>
+        <v-row>
 
-        <v-row >
-          
+
           <v-col
             cols="12"
             sm="8"
           >
-            
             <v-sheet
               min-height="70vh"
               rounded="lg"
               :elevation="10"
+
             >
-            <v-container>
-              <v-card flat class="pa-2" >
-                <v-layout row wrap >
-
-                  <v-flex xs12 md6>
-                    <div class="caption grey--text">Product Name</div>
-                    <div>Rice</div>
-                  </v-flex>
-
-                  <v-flex xs6 sm4 md2>
-                    <div class="caption grey--text">Quantity</div>
-                    <div>12 Kg</div>
-                  </v-flex>
-
-                  <v-flex xs6 sm4 md2>
-                    <div class="caption grey--text">Price</div>
-                    <div>Rs 120</div>
-                  </v-flex>
-
-                  <v-flex xs2 sm4 md2>
-                    <div class="caption grey--text">No. of item</div>
-                    <div>43</div>
-                  </v-flex>
-
-                </v-layout>
-
-              </v-card>
-            </v-container>
 
 
 
+
+              <!-- <v-container 
+                v-for="(item, index) in list"
+                :key="index"
+              >
+ 
+
+                  <v-card flat class="pb-5 pa-2" >
+                    <v-layout row wrap >
+
+                      <v-flex xs12 md6>
+                        <div class="caption grey--text">Product Name</div>
+                        <div>{{item.name}}</div>
+                      </v-flex>
+
+                      <v-flex xs6 sm4 md2>
+                        <div class="caption grey--text">Quantity</div>
+                        <span>{{item.quantity}}</span><span> Kg</span>
+                      </v-flex>
+
+                      <v-flex xs6 sm4 md2>
+                        <div class="caption grey--text">Price</div>
+                      <span>Rs</span><span> {{item.price}}</span>
+                      </v-flex>
+
+                      <v-flex xs2 sm4 md2>
+                        <div class="caption grey--text">No. of item</div>
+                        <div>{{item.no_of_item}}</div>
+                      </v-flex>
+
+
+
+                    </v-layout>
+
+                  </v-card>
 
                 <v-divider></v-divider>
+              </v-container> -->
+
+                <v-simple-table
+                  fixed-header
+                  height="879px"
+                >
+                  <template v-slot:default primary >
+                    <thead  >
+                      <tr>
+                        <th class="text-left cyan accent-1">
+                          Product Name
+                        </th>
+                        <th class="text-left cyan accent-1">
+                          Quantity (Kg)
+                        </th>
+                        <th class="text-left cyan accent-1">
+                          Price (Rs)
+                        </th>
+                        <th class="text-left cyan accent-1">
+                          No. of item
+                        </th>
+                        <th class="text-left cyan accent-1">
+                          Date
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="item in list.slice().reverse()"
+                        :key="item.index"
+                      >
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.no_of_item }}</td>
+                        <td>{{ item.date }}</td>
 
 
-              <v-container>
-              <v-card flat class="pa-2" >
-                <v-layout row wrap>
-
-                  <v-flex xs12 md6>
-                    <div class="caption grey--text">Product Name</div>
-                    <div >{{ name }}</div>
-                  </v-flex>
-
-                  <v-flex xs6 sm4 md2>
-                    <div class="caption grey--text">Quantity</div>
-                    <span class="text-decoration-line-through">{{quantity}}</span><span> Kg</span>
-                  </v-flex>
-
-                  <v-flex xs6 sm4 md2>
-                    <div class="caption grey--text">Price</div>
-                    <span>Rs</span><span> {{ price }}</span>
-                  </v-flex>
-
-                  <v-flex xs2 sm4 md2>
-                    <div class="caption grey--text">No. of item</div>
-                    <div>{{no_of_item}}</div>
-                  </v-flex>
-
-                </v-layout>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
 
 
 
-              </v-card>
-              
-            </v-container>
 
+          
               <!--  -->
             </v-sheet>
           </v-col>
@@ -198,13 +211,11 @@
 
             >
 
-
-            <!-- <v-container
+            <v-container
              class="text-center red--text text--darken-2"
-             
              >
 
-              <h2>Data Entry</h2>
+              <h2>Inventory Entry</h2>
             </v-container>
             <v-divider></v-divider>
 
@@ -215,9 +226,9 @@
                 
             
                   <v-form 
-                    v-model="valid"
                     @submit.prevent="submit"
-                    ref="data_feed"
+                    ref="form"
+
                   >
                       <v-row>
                         
@@ -276,26 +287,30 @@
 
                       </v-row>
 
-                      
-                        
-                      
-
-                      
-
-                       
-                          
 
                   </v-form>
 
 
-              </v-container> -->
+              </v-container>
 
 
-              <v-container>
+
+            <v-container
+              class="text-center red--text text--darken-2  pt-5"
+             
+             >
+
               <v-btn
-                @click="buttonClick"
+                @click="submit"
+                :disabled="invalid"
               >
-                click
+                Submit
+              </v-btn>
+              &nbsp;&nbsp;
+              <v-btn
+                @click="clear"
+              >
+                Clear
               </v-btn>
             </v-container>
 
@@ -305,6 +320,45 @@
             
               <!--  -->
             </v-sheet>
+
+
+
+<!-- calender below -->
+<!--             
+                <v-container class="pt-14">            
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-menu
+                      v-model="menu2"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="auto"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          v-model="date"
+                          label="Choose Date"
+                          prepend-icon="mdi-calendar"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="date"
+                        @input="menu2 = false"
+                      ></v-date-picker>
+                    </v-menu>
+                    </v-col>
+                  </v-container> -->
+<!-- calender above -->
+
+
           </v-col>
         </v-row>
       </v-container>
@@ -318,75 +372,104 @@
   export default {
     name: 'Inventory',
     data: () => ({
-      // links: [
-      //   {title:'Dashboard', route: "/"},
-      //   {title:'Inventory', route: "/inventory"},
-      //   {title:'Sales', route: "/sales"},
-      //   {title:'Buffer', route: "/buffer"},
-        
-      // ],
       drawer:false,
       group: null,
 
-// form validation section below
-      valid: false,
-      
       name: '',
+      quantity: '',
+      price: '',
+      no_of_item: '',
+
+      list: [],
+
+
       nameRules: [
         v => !!v || 'required',
         v => v.length <= 30 || 'must be less than 10 characters',
-        v => /^[a-z]+$/.test(v) || 'must be only alphabet',
+        v => /^[a-zA-Z ]+$/.test(v) || 'must be only alphabet and space',
       ],
 
-
-      quantity: '',
       quantityRules: [
         v => !!v || 'required',
-        v => v.length <= 6 || 'must be less than 5 characters',
-        v => /^[0-9]+$/.test(v) || 'must be a number',
+        v => v.length <= 5 || 'must be less than 5 characters',
+        v => /^[0-9]+$/.test(v) || 'must be only number',
       ],
 
-      price: '',
       priceRules: [
         v => !!v || 'required',
         v => v.length <= 7 || 'must be less than 7 characters',
-        v => /^[0-9]+$/.test(v) || 'must be a number',
+        v => /^[0-9]+$/.test(v) || 'must be only number',
       ],
 
-
-      no_of_item: '',
       no_of_itemRules: [
         v => !!v || 'required',
         v => v.length <= 5 || 'must be less than 5 characters',
-        v => /^[0-9]+$/.test(v) || 'must be a number',
+        v => /^[0-9]+$/.test(v) || 'must be only number',
       ],
 
+      // condition for only alphabet and space
+      // v => /^[a-zA-Z ]+$/.test(v) || 'must be only alphabet and space',
 
-      // email: '',
-      // emailRules: [
-      //   v => !!v || 'E-mail is required',
-      //   v => /.+@.+/.test(v) || 'E-mail must be valid',
-      // ],
+      // calender below
 
-// form validation section above
-
-
-
+      // date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      // menu: false,
+      // modal: false,
+      // menu2: false,
 
 
-        methods: {
 
-          buttonClick(){
-            console.log('clicked');
-          }
-
-        },
-
-
-    
     }),
 
-    
+    methods: {
+
+
+      // valid submit
+      submit() {
+        if (this.$refs.form.validate()) {
+          this.list.push({
+            id: Date.now(),
+            name: this.name,
+            quantity: this.quantity,
+            price: this.price,
+            no_of_item: this.no_of_item,
+            date: new Date().toLocaleDateString("fr-FR"),
+          });
+
+          // clear input
+          this.name = '';
+          this.quantity = '';
+          this.price = '';
+          this.no_of_item = '';
+        }
+      },
+      // submit(){
+      //   let newItem = {
+      //     id: Date.now(),
+      //     date: new Date().toLocaleDateString("fr-FR"),
+      //     name: this.name,
+      //     quantity: this.quantity,
+      //     price: this.price,
+      //     no_of_item: this.no_of_item,
+      //   }
+      //   this.list.push(newItem)
+      //   this.name = ''
+      //   this.quantity = ''
+      //   this.price = ''
+      //   this.no_of_item = ''
+
+
+      // },
+
+      clear(){
+        this.name = ''
+        this.quantity = ''
+        this.price = ''
+        this.no_of_item = ''
+      },
+    },
+
+
 
 
   }

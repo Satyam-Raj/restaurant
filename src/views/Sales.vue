@@ -9,7 +9,7 @@
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-app-bar-title class="title">
-        <div>Butter Scotch..</div>
+        <div>WoW Inventory..</div>
       </v-app-bar-title>
 
 
@@ -73,12 +73,7 @@
             <v-list-item-title>Account</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/premium">
-            <v-list-item-icon>
-              <v-icon>mdi-calendar-clock</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Calendar</v-list-item-title>
-          </v-list-item>
+
 
           <v-list-item to="/premium">
             <v-list-item-icon>
@@ -163,19 +158,19 @@
                   <template v-slot:default primary >
                     <thead  >
                       <tr>
-                        <th class="text-left orange lighten-3">
+                        <th class="text-left orange accent-1">
                           Product Name
                         </th>
-                        <th class="text-left orange lighten-3">
-                          Quantity
+                        <th class="text-left orange accent-1">
+                          Quantity (Kg)
                         </th>
-                        <th class="text-left orange lighten-3">
-                          Price
+                        <th class="text-left orange accent-1">
+                          Price (Rs)
                         </th>
-                        <th class="text-left orange lighten-3">
+                        <th class="text-left orange accent-1">
                           No. of item
                         </th>
-                        <th class="text-left orange lighten-3">
+                        <th class="text-left orange accent-1">
                           Date
                         </th>
                       </tr>
@@ -220,7 +215,7 @@
              class="text-center red--text text--darken-2"
              >
 
-              <h2>Data Entry</h2>
+              <h2>Sales Entry</h2>
             </v-container>
             <v-divider></v-divider>
 
@@ -322,10 +317,48 @@
 
 
 
-
             
               <!--  -->
             </v-sheet>
+
+
+
+<!-- calender below -->
+<!--             
+                <v-container class="pt-14">            
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-menu
+                      v-model="menu2"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="auto"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          v-model="date"
+                          label="Choose Date"
+                          prepend-icon="mdi-calendar"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="date"
+                        @input="menu2 = false"
+                      ></v-date-picker>
+                    </v-menu>
+                    </v-col>
+                  </v-container> -->
+<!-- calender above -->
+
+
           </v-col>
         </v-row>
       </v-container>
@@ -347,6 +380,7 @@
       price: '',
       no_of_item: '',
 
+      list: [],
 
 
       nameRules: [
@@ -376,15 +410,14 @@
       // condition for only alphabet and space
       // v => /^[a-zA-Z ]+$/.test(v) || 'must be only alphabet and space',
 
-      // dont show error after submit
-    
+      // calender below
+
+      // date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      // menu: false,
+      // modal: false,
+      // menu2: false,
 
 
-
-
-
-
-      list: [],
 
     }),
 
@@ -435,6 +468,8 @@
         this.no_of_item = ''
       },
     },
+
+
 
 
   }
