@@ -21,7 +21,7 @@
         class="ml-n9"
         color="grey darken-1"
       >
-        <v-tab router to="/" >
+        <v-tab router to="/dashboard" >
           Dashboard
         </v-tab>
 

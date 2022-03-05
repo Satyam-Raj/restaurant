@@ -7,6 +7,8 @@ import Buffer from '../views/Buffer.vue'
 import Payments from '../views/Payments.vue'
 import Account from '../views/Account.vue'
 import Premium from '../views/Premium.vue'
+import Home from '../views/Home.vue'
+
 
 
 
@@ -15,6 +17,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
   },

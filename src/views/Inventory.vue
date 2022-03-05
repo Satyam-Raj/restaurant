@@ -8,9 +8,8 @@
 
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-app-bar-title class="title">
-        <div>WoW Inventory..</div>
-      </v-app-bar-title>
+      <v-toolbar-title> <pre>Inventory </pre></v-toolbar-title>
+      
 
 
 
@@ -19,7 +18,7 @@
         class="ml-n9"
         color="grey darken-1"
       >
-        <v-tab router to="/" >
+        <v-tab router to="/dashboard" >
           Dashboard
         </v-tab>
 
