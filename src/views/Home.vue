@@ -3,7 +3,7 @@
   <v-app id="home">
     <v-app-bar
       app
-      color="grey darken-3"
+      color="grey darken-4"
       flat
     >
    
@@ -32,7 +32,7 @@
 
     
 
-    <v-main class="pt-7">
+    <v-main class="pt-7 grey lighten-1">
         
 
         <!--  -->
@@ -53,7 +53,8 @@
                         rounded="xl"
                         min-height="368"
                         max-width="1500"
-                        color="blue lighten-4"
+                        color="grey darken-2"
+                        dark
                     >
 
                     <div align="center">
@@ -83,7 +84,8 @@
                         rounded="xl"
                         min-height="368"
                         max-width="1500"
-                        color="blue lighten-4"
+                        color="grey darken-2"
+                        dark
                     >
                     <div align="center">
                         <h1 class="text-center">Register</h1>
@@ -107,12 +109,43 @@
 
 
 
+        <div 
+            class="pa-7"
+            expansion-panel-content-padding
+        >
 
-        <div class="pa-7 " daek>
-            <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, illo? Quaerat numquam, explicabo, odio excepturi quasi animi itaque ipsum architecto, blanditiis doloribus voluptatibus rerum alias esse corrupti. Dolorem illum minus maxime aliquid sequi debitis suscipit nostrum quasi tempore? Consequatur ipsa laudantium nesciunt reprehenderit, repellendus beatae soluta aperiam quas quam dolorem ratione neque natus accusamus id vel aliquid autem doloremque ullam quae rem? Et corporis praesentium totam repudiandae dicta a odit in asperiores delectus numquam? Ut porro corrupti cum. In hic delectus odio suscipit quasi tempora nobis voluptates, dolores quaerat earum ullam maxime ut rem eveniet assumenda, fuga consectetur culpa? Cum quia enim eaque blanditiis repellat. Vel sequi dignissimos a quis, suscipit architecto error sapiente, nulla dicta temporibus veniam libero iste distinctio inventore magni voluptates veritatis aut recusandae praesentium, iusto ea. Necessitatibus omnis consequatur culpa sapiente, reprehenderit accusamus dolor mollitia illo aperiam, suscipit fugiat, in molestiae! Hic eligendi beatae sed fugit provident dolores? Voluptatum aliquam repellendus dicta sed tenetur velit eius aspernatur amet, ullam excepturi? Libero et odit provident enim quae eum temporibus repellat possimus suscipit, odio repudiandae explicabo dolorum debitis? Libero accusamus voluptates officia magni expedita optio eligendi architecto facere consequatur! Quis recusandae optio maiores, voluptate, sint rerum quasi repellat quia fuga consequatur, voluptatibus sed ratione reprehenderit. Quis aut id accusamus eos nihil. Tenetur, veniam numquam placeat earum sunt nihil! Explicabo corporis eligendi accusantium praesentium enim eum voluptatem at veniam provident soluta nemo quis, aspernatur vel impedit! Sed molestiae eius eos fugit, nobis quis quos rem rerum enim, maiores, mollitia odit autem temporibus possimus deserunt! Expedita illo, porro mollitia error dolore omnis officiis numquam eum voluptatum ut id tempora in laborum. Repudiandae nesciunt officiis ratione quas accusamus amet? Officiis praesentium, rerum ex doloremque modi iure? Adipisci aperiam perferendis recusandae quibusdam. Architecto ab possimus repudiandae illum provident perspiciatis facere quas animi, dolore at vel? Incidunt, dicta quod repudiandae illo iusto cum aliquid. Incidunt odit amet, placeat hic rem ullam quibusdam soluta distinctio ad voluptates commodi quisquam esse rerum, sed illum assumenda tempore vitae non officiis velit, repellat mollitia veritatis id cupiditate? Ipsa saepe quia eos magnam, officiis odio nihil distinctio id culpa libero possimus, magni blanditiis consectetur exercitationem? Aperiam molestias tenetur deleniti consequuntur nobis fugit voluptatum? Temporibus ut, est dolorum ipsa, blanditiis explicabo minus quo impedit animi incidunt aliquam inventore nam sunt sit dignissimos, sed deleniti nobis velit suscipit! Cum quam nulla veniam alias ducimus placeat vel vero quo aliquam minus aliquid illum molestiae, quibusdam veritatis, mollitia quod. Soluta libero, earum hic ad quam rem exercitationem doloribus quidem veniam facilis? Reiciendis, incidunt? Saepe accusantium excepturi dolorum adipisci, magni facilis animi? Laboriosam, distinctio nulla. Similique quidem labore perferendis repudiandae nesciunt asperiores consequatur, vel earum enim, debitis eius rem laudantium accusantium nostrum quibusdam, voluptatem natus porro cum saepe dolores omnis qui ducimus? Libero voluptate doloribus voluptatem asperiores rem. Soluta natus incidunt ut et voluptatem consequatur voluptatum omnis enim aliquid molestiae veniam praesentium asperiores aspernatur, ab in? Voluptatibus error minima quas! Dolorem vel, reprehenderit sit, possimus porro deserunt nam autem quod magnam eum tempore? Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam rerum sequi optio nostrum quaerat aut animi molestias nulla, neque architecto veritatis inventore debitis cupiditate. Mollitia, incidunt at excepturi iure laborum eum ullam adipisci provident reprehenderit cum dolore ut quia quisquam, harum vel ipsum! Sit necessitatibus cumque, quidem hic ab possimus sint excepturi, saepe ratione maiores a quae atque consequuntur illo! Consectetur quae maxime eligendi neque reiciendis, dolores modi eveniet quaerat ipsa nesciunt saepe adipisci, corrupti dolore, omnis aut sequi rem. Hic exercitationem sit optio necessitatibus, ratione vero magni dicta nesciunt perferendis? Nihil amet illo ut quasi? Ea cumque doloremque dolorum aperiam, rem qui obcaecati consectetur corporis quaerat! Deleniti laborum eveniet, quisquam minima sunt beatae, dicta, officia dolores quos error corrupti ipsum ullam soluta adipisci dolore aliquid dolor doloremque. Itaque illo, natus totam voluptatem molestiae consectetur laudantium veniam consequuntur, exercitationem quidem quisquam eos voluptatum. Reprehenderit vel consectetur veniam illum saepe rerum libero totam non, autem expedita quisquam molestiae, repudiandae nihil dolor commodi sed ex reiciendis eos provident? Voluptatum repudiandae quam atque, mollitia tempore provident alias distinctio accusantium laborum soluta minima nulla odit cumque voluptas sed porro possimus! Qui, perspiciatis! Aliquam culpa iure laborum voluptate dolor amet ipsa, hic incidunt nesciunt sequi, sint dignissimos, consectetur praesentium dicta error reprehenderit nostrum nisi quia quidem accusantium recusandae iusto. A temporibus aliquid tempora consequatur velit debitis sit est natus doloremque itaque omnis, nam voluptas nobis cupiditate placeat quibusdam, harum fuga hic porro ab eaque explicabo! Sequi alias, quibusdam maxime tempore soluta repudiandae libero aliquid necessitatibus praesentium fugiat aperiam voluptas eaque quis quo temporibus perspiciatis non asperiores, incidunt dolore harum ipsum molestiae est voluptate! Dolore, quia. Recusandae ducimus iure vero debitis quasi facere molestiae ad quod provident iusto similique distinctio cum placeat, accusamus dolore dolor in dolores fugit ipsa odit sapiente ratione ex incidunt earum? Id magnam quo amet sit architecto facere officia mollitia, voluptatem dicta sapiente quaerat minima ratione veniam inventore totam minus quam reiciendis quos debitis non quas! Eaque sapiente expedita aspernatur a itaque, officiis velit eligendi nesciunt, laborum enim similique voluptatem ad! Nam, nisi? Omnis earum quibusdam magni corporis quas possimus molestias, quod repellat sint doloremque animi quos eos numquam autem eum obcaecati iste modi consectetur eius necessitatibus, voluptas harum hic repudiandae! Numquam rerum dolorum dolore inventore? Distinctio dignissimos et iusto, eius numquam, eos necessitatibus, repellat sequi iure nam accusantium ducimus deleniti? Totam earum tenetur, aliquid repellendus aliquam at quod facere quam omnis.
+        <h1 class="text-center">Frequently Asked Questions</h1>
+           
+        
+            <v-row justify="center" class="pa-7 mr-15 ml-15" >
+                <v-expansion-panels inset  focusable >
 
-            </div>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header color="grey darken-2" class="white--text font-weight-bold" >Why this technology is needed for merchant?</v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                        This technology is developed to assist the merchant in managing their business. This is a management system that will help the merchant to keep track of their sales, inventory, and other business related information. This system will also help the merchant to manage their business in a more efficient way. Keep all the record (sales, inventory, etc.) of your business in one place and manage it online with ease.
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+
+                    <v-expansion-panel>
+                        <v-expansion-panel-header color="grey darken-2" class="white--text font-weight-bold" >Do we require to take subscription or is it free?</v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                        This management system platform strictly requires subscription. This is because this system is developed by a team of developers and we have to pay for the technology which we are using to serve our customers like servers, domains, databases etc. However, we provide limited free trial period for our customers on special requests from their side, so that they can try out our system and see if it is suitable for them. 
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+
+                    <v-expansion-panel>
+                        <v-expansion-panel-header color="grey darken-2" class="white--text font-weight-bold" >Who can take advantage of this type of management system?</v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                        A merchant who wants to manage their sales, inventory, and other business related information online. If you want to keep transactional records, sales, inventory, etc. of your business in one place, then this is the technology that you need. We provide all sorts of features to make your business management easier, and many more features are coming soon.
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+
+
+                </v-expansion-panels>
+            </v-row>
         </div>
+       
 
     </v-main>
 
