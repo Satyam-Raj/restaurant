@@ -13,11 +13,16 @@
         color="white"
         dark
       >
-        <v-tab
-          v-for="link in links"
-          :key="link"
-        >
-          {{ link }}
+        <v-tab router to="/" >
+          Home
+        </v-tab>
+
+        <v-tab router to="/about" >
+            About
+        </v-tab>
+
+        <v-tab router to="/contact" >
+            Contact Us
         </v-tab>
 
 
@@ -29,8 +34,6 @@
 
     </v-app-bar>
 
-
-    
 
     <v-main class="pt-5 grey lighten-1">
         
@@ -113,32 +116,6 @@
                 </v-col>
                 
 
-            <!-- <v-col
-                cols="12"
-                sm="4"
-            >
-                    <v-sheet
-                        rounded="xl"
-                        min-height="368"
-                        color="grey darken-2"
-                        dark
-                    >
-                    <div align="center">
-                        <h1 class="text-center">Register</h1>
-
-                        <body class="mt-10">Create your merchant account.</body>
-
-                        <v-btn 
-                            color="black"
-                            rounded
-                            class="mt-10"
-                        >
-                        Register
-                        </v-btn>
-
-                    </div>
-                    </v-sheet>
-            </v-col> -->
             </v-row>
         </v-container>
 
@@ -258,11 +235,7 @@
     name: 'Inventory',
     data: () => ({
 
-      links: [
-        'Home',
-        'About',
-        'Contact Us',
-      ],
+      
     }),
 
   }

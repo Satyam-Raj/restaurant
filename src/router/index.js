@@ -8,6 +8,9 @@ import Payments from '../views/Payments.vue'
 import Account from '../views/Account.vue'
 import Premium from '../views/Premium.vue'
 import Home from '../views/Home.vue'
+import About from '../views/About.vue'
+import Contact from '../views/Contact.vue'
+
 
 
 
@@ -20,6 +23,17 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  {
+    path: '/about',
+    name: 'About',
+    component: About
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: Contact
+  },
+  
   {
     path: '/dashboard',
     name: 'Dashboard',
