@@ -32,7 +32,7 @@
 
     
 
-    <v-main class="pt-3 grey lighten-1">
+    <v-main class="pt-5 grey lighten-1">
         
 
         <!--  -->
@@ -47,11 +47,11 @@
             >
             <v-col
                 cols="12"
-                sm="4"
+                sm="6"
             >
                     <v-sheet
                         rounded="xl"
-                        min-height="368"
+                        min-height="291"
                         color="grey darken-2"
                         dark
                     >
@@ -59,23 +59,58 @@
                     <div align="center">
 
 
-                        <h1 class="text-center">Login</h1>
-                        <body class="mt-10">Login to your merchant account.</body>
-                        
-                        <v-btn 
-                            color="amber lighten-1"
-                            rounded
-                            class="mt-10"
+                        <v-row
+                            justify="center"
+                            align="center"
                         >
+                            <v-col
+                                cols="10"
+                                sm="6"
+                                class="mt-5"
 
-                        Login
-                        </v-btn>
+                            
+                            >
+                                <h1 class="text-center black--text">Login</h1>
+                                <body class="mt-10">Login to your business account.  </body>
+                                
+                                <v-btn 
+                                    color="black"
+                                    rounded
+                                    class="mt-10"
+                                >
+
+                                Login
+                                </v-btn>
+                            </v-col>
+
+                            <v-col
+                                cols="10"
+                                sm="6"
+                                class="mt-5"
+                            
+                            >
+                                <h1 class="text-center black--text">Register</h1>
+                                <body class="mt-10">Create your business account.  </body>
+                                
+                                <v-btn 
+                                    color="black"
+                                    rounded
+                                    class="mt-10"
+                                >
+
+                                Register
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+
+
+                        
                     </div>    
                     </v-sheet>
                 </v-col>
                 
 
-            <v-col
+            <!-- <v-col
                 cols="12"
                 sm="4"
             >
@@ -91,7 +126,7 @@
                         <body class="mt-10">Create your merchant account.</body>
 
                         <v-btn 
-                            color="amber lighten-1 "
+                            color="black"
                             rounded
                             class="mt-10"
                         >
@@ -99,16 +134,15 @@
                         </v-btn>
 
                     </div>
-                        <!--  -->
                     </v-sheet>
-            </v-col>
+            </v-col> -->
             </v-row>
         </v-container>
 
  
 
             
-            <v-container>
+            <v-container class="pa-5">
                 <v-row>
                
 
@@ -117,16 +151,45 @@
                     sm="12"
                 >
                     <v-sheet
-                    min-height="40vh"
+                    min-height="32vh"
                     rounded="lg"
+                    color="black"
+                    class="pa-4"
+                    dark
                     >
+                    
 
+                    <v-row
+                        justify="center"
+                        align="center"
+                        class="pa-2"
+                        >
+                        <v-col>
+                            <span>
+                                <h1>Hello !! 😀</h1>
+                                <h2>Welcome to Crispy.</h2>
+                                <body>
+                                    Are you a restaurant owner? Or, a merchant, tired of documenting your records of sales, inventory, etc. on physical paper and looking to digitalize your business. We provide every service you need to get your business online at very less price. And many exciting features to help you grow your business. Access your business record anywhere, anytime and from any device with Crispy.
+                                </body>
+                            </span>
 
-                    <v-img
-                        src="https://www.clipartkey.com/mpngs/m/15-151495_icons-checklist-computer-black-text-white-check-list.png"
-                        max-width="20%"
-                    ></v-img>
-                        <h1>Hello</h1>
+                        </v-col>
+
+                        <v-col>
+                            <span>
+                            <v-img
+                                lazy-src="https://media.istockphoto.com/vectors/document-icon-on-black-background-black-flat-style-vector-vector-id1161114277?k=20&m=1161114277&s=170667a&w=0&h=R_1F1FHPftuEaJdOXh8nMoXaliii6WtVbO61kJQlOgM="
+                                max-height="350"
+                                max-width="auto"
+                                class=" rounded float-right"
+                                src="https://media.istockphoto.com/vectors/document-icon-on-black-background-black-flat-style-vector-vector-id1161114277?k=20&m=1161114277&s=170667a&w=0&h=R_1F1FHPftuEaJdOXh8nMoXaliii6WtVbO61kJQlOgM="
+                                ></v-img>
+                            </span>
+                        </v-col>
+
+                    </v-row>
+
+                        
 
 
                     <!--  -->
