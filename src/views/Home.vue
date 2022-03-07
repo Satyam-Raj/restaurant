@@ -54,6 +54,7 @@
                         min-height="291"
                         color="grey darken-2"
                         dark
+                        :elevation="10"
                     >
 
                     <div align="center">
@@ -82,6 +83,8 @@
                                 Login
                                 </v-btn>
                             </v-col>
+
+                            
 
                             <v-col
                                 cols="10"
