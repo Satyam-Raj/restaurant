@@ -232,7 +232,7 @@
     
 
   export default {
-    name: 'Inventory',
+    name: 'Home',
     data: () => ({
 
       
