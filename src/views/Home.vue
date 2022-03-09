@@ -120,7 +120,7 @@
                                                                 </v-col>
                                                                 <v-spacer></v-spacer>
                                                                 <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                                                                    <v-btn x-large block :disabled="!valid" color="success" @click="validate"> Login </v-btn>
+                                                                    <v-btn x-large block :disabled="!valid" color="indigo accent-3" dark @click="validate"> Login </v-btn>
                                                                 </v-col>
                                                             </v-row>
                                                         </v-form>
@@ -177,13 +177,13 @@
                                             <v-tab-item>
                                                 <v-card class="px-4">
                                                     <v-card-text>
-                                                        <v-form ref="registerForm" v-model="valid" lazy-validation>
+                                                        <v-form ref="registerForm" v-model="valid_register" lazy-validation>
                                                             <v-row>
                                                                 <v-col cols="12" sm="6" md="6">
-                                                                    <v-text-field v-model="firstName" :rules="[rules.required]" label="First Name" maxlength="20" required></v-text-field>
+                                                                    <v-text-field v-model="firstName" :rules="firstNameRules" label="First Name" maxlength="15" required></v-text-field>
                                                                 </v-col>
                                                                 <v-col cols="12" sm="6" md="6">
-                                                                    <v-text-field v-model="lastName" :rules="[rules.required]" label="Last Name" maxlength="20" required></v-text-field>
+                                                                    <v-text-field v-model="lastName" :rules="lastNameRules" label="Last Name" maxlength="15" required></v-text-field>
                                                                 </v-col>
                                                                 <v-col cols="12">
                                                                     <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
@@ -196,7 +196,7 @@
                                                                 </v-col>
                                                                 <v-spacer></v-spacer>
                                                                 <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-                                                                    <v-btn x-large block :disabled="!valid" color="success" @click="validate">Register</v-btn>
+                                                                    <v-btn x-large block :disabled="!valid_register" color="purple accent-4" dark @click="validate">Register</v-btn>
                                                                 </v-col>
                                                             </v-row>
                                                         </v-form>
@@ -365,10 +365,23 @@
 
    
         valid: true,
+        valid_register: true,
         
         firstName: "",
+        firstNameRules: [
+            v => !!v || 'First Name is required',
+            v => (v && v.length <= 15) || 'First Name must be less than 15 characters',
+            v => /^[a-zA-Z]+$/.test(v) || 'First Name must be alphabet only',
+            // condition for only alphabetical characters
+            // v => /^[a-zA-Z]+$/.test(v) || 'First Name must be alphabetical'
+        ],
         lastName: "",
-        email: "",
+        lastNameRules: [
+            v => !!v || 'Last Name is required',
+            v => (v && v.length <= 15) || 'Last Name must be less than 15 characters',
+            v => /^[a-zA-Z]+$/.test(v) || 'Last Name must be alphabet only',
+
+        ],
         password: "",
         verify: "",
         loginPassword: "",
@@ -377,6 +390,8 @@
         v => !!v || "Required",
         v => /.+@.+\..+/.test(v) || "E-mail must be valid"
         ],
+
+        email: "",
         emailRules: [
         v => !!v || "Required",
         v => /.+@.+\..+/.test(v) || "E-mail must be valid"
