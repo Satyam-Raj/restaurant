@@ -120,7 +120,7 @@
                                                                 </v-col>
                                                                 <v-spacer></v-spacer>
                                                                 <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                                                                    <v-btn x-large block :disabled="!valid" color="indigo accent-3" dark @click="validate"> Login </v-btn>
+                                                                    <v-btn x-large block :disabled="!valid" color="indigo accent-3" class="white--text"  @click="validate"> Login </v-btn>
                                                                 </v-col>
                                                             </v-row>
                                                         </v-form>
@@ -196,7 +196,7 @@
                                                                 </v-col>
                                                                 <v-spacer></v-spacer>
                                                                 <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-                                                                    <v-btn x-large block :disabled="!valid_register" color="purple accent-4" dark @click="validate">Register</v-btn>
+                                                                    <v-btn x-large block :disabled="!valid_register" color="brown darken-2" class="white--text" @click="validate">Register</v-btn>
                                                                 </v-col>
                                                             </v-row>
                                                         </v-form>
