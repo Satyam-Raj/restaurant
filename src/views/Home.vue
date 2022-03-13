@@ -41,7 +41,6 @@
         <!--  -->
         <v-container
             fluid
-            :justify="center"
             
         >
             <v-row
@@ -108,7 +107,7 @@
                                             <v-tab-item>
                                                 <v-card class="px-4">
                                                     <v-card-text>
-                                                        <v-form ref="loginForm" v-model="valid" lazy-validation>
+                                                        <v-form ref="loginForm" v-model="valid" lazy-validation @submit.prevent="login_pressed" >
                                                             <v-row>
                                                                 <v-col cols="12">
                                                                     <v-text-field v-model="loginEmail" :rules="loginEmailRules" label="E-mail" required></v-text-field>
@@ -120,7 +119,7 @@
                                                                 </v-col>
                                                                 <v-spacer></v-spacer>
                                                                 <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                                                                    <v-btn x-large block :disabled="!valid" color="indigo accent-3" class="white--text"  @click="validate"> Login </v-btn>
+                                                                    <v-btn x-large block :disabled="!valid" color="indigo accent-3" class="white--text" @click="login"> Login </v-btn>
                                                                 </v-col>
                                                             </v-row>
                                                         </v-form>
@@ -167,7 +166,7 @@
                                     </template>
 
                                     <v-card>
-                                        <v-tabs v-model="tab" show-arrows background-color="black" icons-and-text dark grow>
+                                        <v-tabs  show-arrows background-color="black" icons-and-text dark grow>
                                             <v-tabs-slider color="purple darken-4"></v-tabs-slider>
                                             <v-tab>
                                                 <v-icon large>mdi-account-outline</v-icon>
@@ -177,7 +176,7 @@
                                             <v-tab-item>
                                                 <v-card class="px-4">
                                                     <v-card-text>
-                                                        <v-form ref="registerForm" v-model="valid_register" lazy-validation>
+                                                        <v-form ref="registerForm" v-model="valid_register" lazy-validation @submit.prevent="register_pressed">
                                                             <v-row>
                                                                 <v-col cols="12" sm="6" md="6">
                                                                     <v-text-field v-model="firstName" :rules="firstNameRules" label="First Name" maxlength="15" required></v-text-field>
@@ -196,7 +195,7 @@
                                                                 </v-col>
                                                                 <v-spacer></v-spacer>
                                                                 <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-                                                                    <v-btn x-large block :disabled="!valid_register" color="brown darken-2" class="white--text" @click="validate">Register</v-btn>
+                                                                    <v-btn x-large block :disabled="!valid_register" color="brown darken-2" class="white--text" @click="register">Register</v-btn>
                                                                 </v-col>
                                                             </v-row>
                                                         </v-form>
@@ -295,7 +294,7 @@
             <h1 class="text-center">Frequently Asked Questions</h1>
             
             
-                <v-row class="pa-7" :justify="center" >
+                <v-row class="pa-7"  >
                     <v-expansion-panels inset  focusable>
 
                         <v-expansion-panel>
@@ -333,10 +332,14 @@
 
 <script>
 
-    
+
+   import firebase from 'firebase';
+   import "firebase/auth";
+
 
   export default {
     name: 'Home',
+
 
 
     computed: {
@@ -345,18 +348,59 @@
     }
   },
   methods: {
-    validate() {
-      if (this.$refs.loginForm.validate()) {
-        // submit form to server/API here...
-      }
-    },
+   
     reset() {
       this.$refs.form.reset();
     },
     resetValidation() {
       this.$refs.form.resetValidation();
     },
-  },
+
+
+// login function
+    async login() {
+
+      firebase
+      .auth()
+      .signInWithEmailAndPassword(this.loginEmail, this.loginPassword)
+      .then(
+          () => {
+          this.$router.push("/dashboard");
+        },
+          
+          err => {
+              alert(err.message);
+          }
+      );
+
+
+    },
+
+
+// register function
+    async register() {
+
+      firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.email, this.password)
+      .then(
+          () => {
+          this.$router.push("/dashboard");
+        },
+          err => {
+              alert(err.message);
+          }
+          
+      );
+
+
+    },
+
+
+    
+
+    
+},
 
 
     data: () => ({

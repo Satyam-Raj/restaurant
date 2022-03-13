@@ -90,11 +90,11 @@
             <v-list-item-title>Premium</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/logout">
+          <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-logout</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Logout</v-list-item-title>
+            <v-list-item-title @click="logout">Logout</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -117,7 +117,6 @@
               :elevation="10"
 
             >
-          
               <!--  -->
             </v-sheet>
           </v-col>
@@ -143,6 +142,9 @@
 
 <script>
   
+    import firebase from 'firebase';
+     import "firebase/auth";
+    // import {ref , onBeforeMount} from 'vue';    
 
   export default {
     name: 'Dashboard',
@@ -158,6 +160,39 @@
       group: null,
     }),
 
+    methods: {
+      async logout(){
+        firebase
+        .auth()
+        .signOut()
+        .then(
+          user => {
+            console.log(user);
+          }
+        )
+        this.$router.push('/');
+    },
+      
+       
+    },
 
-  }
+    // setup () {
+
+    //   let  email = ref('');
+
+    //   onBeforeMount(() => {
+    //       const user = firebase.auth().currentUser;
+    //       if (user) {
+    //         email = user.email;
+    //       }  
+
+    //   });
+    //   return {
+    //     email
+    //   }
+    // },
+    
+
+ 
+  } 
 </script>
