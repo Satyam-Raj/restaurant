@@ -112,43 +112,6 @@
 
 
 
-              <!-- <v-container 
-                v-for="(item, index) in list"
-                :key="index"
-              >
- 
-
-                  <v-card flat class="pb-5 pa-2" >
-                    <v-layout row wrap >
-
-                      <v-flex xs12 md6>
-                        <div class="caption grey--text">Product Name</div>
-                        <div>{{item.name}}</div>
-                      </v-flex>
-
-                      <v-flex xs6 sm4 md2>
-                        <div class="caption grey--text">Quantity</div>
-                        <span>{{item.quantity}}</span><span> Kg</span>
-                      </v-flex>
-
-                      <v-flex xs6 sm4 md2>
-                        <div class="caption grey--text">Price</div>
-                      <span>Rs</span><span> {{item.price}}</span>
-                      </v-flex>
-
-                      <v-flex xs2 sm4 md2>
-                        <div class="caption grey--text">No. of item</div>
-                        <div>{{item.no_of_item}}</div>
-                      </v-flex>
-
-
-
-                    </v-layout>
-
-                  </v-card>
-
-                <v-divider></v-divider>
-              </v-container> -->
 
                 <v-simple-table
                   fixed-header
@@ -176,7 +139,7 @@
                     </thead>
                     <tbody>
                       <tr
-                        v-for="item in list.slice().reverse()"
+                        v-for="item in salesList"
                         :key="item.index"
                       >
                         <td>{{ item.name }}</td>
@@ -368,7 +331,8 @@
 <script>
   
   import firebase from 'firebase';
-     import "firebase/auth";
+  import "firebase/auth";
+  import { db } from '../main';
 
   export default {
     name: 'Sales',
@@ -381,7 +345,7 @@
       price: '',
       no_of_item: '',
 
-      list: [],
+      salesList: [],
 
 
       nameRules: [
@@ -408,16 +372,7 @@
         v => /^[0-9]+$/.test(v) || 'must be only number',
       ],
 
-      // condition for only alphabet and space
-      // v => /^[a-zA-Z ]+$/.test(v) || 'must be only alphabet and space',
-
-      // calender below
-
-      // date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-      // menu: false,
-      // modal: false,
-      // menu2: false,
-
+   
 
 
     }),
@@ -428,14 +383,14 @@
       // valid submit
       submit() {
         if (this.$refs.form.validate()) {
-          this.list.push({
-            id: Date.now(),
-            name: this.name,
-            quantity: this.quantity,
-            price: this.price,
-            no_of_item: this.no_of_item,
-            date: new Date().toLocaleDateString("fr-FR"),
-          });
+          db.collection('salesList').add({
+          id: Date.now(),
+          name: this.name,
+          quantity: this.quantity,
+          price: this.price,
+          no_of_item: this.no_of_item,
+          date: new Date().toLocaleDateString("fr-FR"),
+        });
 
           // clear input
           this.name = '';
@@ -444,6 +399,21 @@
           this.no_of_item = '';
         }
       },
+
+      // submitToFirebase() {
+      //   db.collection('sales').add({
+      //     name: this.name,
+      //     quantity: this.quantity,
+      //     price: this.price,
+      //     no_of_item: this.no_of_item,
+      //     date: new Date().toLocaleDateString("fr-FR"),
+      //   });
+      // },
+     
+
+
+
+
       // submit(){
       //   let newItem = {
       //     id: Date.now(),
@@ -485,7 +455,22 @@
           }
         )
     },
+
+    
+
+  
+
+
+
     },
+
+    firestore(){
+      return {
+        salesList: db.collection('salesList').orderBy('id', 'desc')
+      }
+    },
+
+
 
 
 

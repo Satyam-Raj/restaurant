@@ -5,6 +5,11 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 
 import firebase from "firebase"
+import { firestorePlugin } from 'vuefire'
+
+
+Vue.use(firestorePlugin);
+Vue.config.productionTip = false;
 
 const firebaseConfig = {
   apiKey: "AIzaSyALgjOUTpUbl-CegOPOUyUMu4fzUpRpCJ0",
@@ -17,6 +22,8 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
+export const db = firebase.firestore();
 
 let app;
 
