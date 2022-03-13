@@ -76,12 +76,6 @@
             <v-list-item-title>Account</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/premium">
-            <v-list-item-icon>
-              <v-icon>mdi-calendar-clock</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Calendar</v-list-item-title>
-          </v-list-item>
 
           <v-list-item to="/premium">
             <v-list-item-icon>
@@ -144,18 +138,11 @@
   
     import firebase from 'firebase';
      import "firebase/auth";
-    // import {ref , onBeforeMount} from 'vue';    
 
   export default {
     name: 'Dashboard',
     data: () => ({
-      // links: [
-      //   {title:'Dashboard', route: "/"},
-      //   {title:'Inventory', route: "/inventory"},
-      //   {title:'Sales', route: "/sales"},
-      //   {title:'Buffer', route: "/buffer"},
-        
-      // ],
+   
       drawer:false,
       group: null,
     }),
@@ -166,31 +153,15 @@
         .auth()
         .signOut()
         .then(
-          user => {
-            console.log(user);
+          () => {
+          this.$router.push("/");
           }
         )
-        this.$router.push('/');
     },
       
        
     },
 
-    // setup () {
-
-    //   let  email = ref('');
-
-    //   onBeforeMount(() => {
-    //       const user = firebase.auth().currentUser;
-    //       if (user) {
-    //         email = user.email;
-    //       }  
-
-    //   });
-    //   return {
-    //     email
-    //   }
-    // },
     
 
  

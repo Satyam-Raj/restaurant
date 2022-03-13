@@ -59,22 +59,26 @@ const routes = [
   {
     path: '/buffer',
     name: 'Buffer',
-    component: Buffer
+    component: Buffer,
+    meta: { requiresAuth: true }
   },
   {
     path: '/payments',
     name: 'Payments',
-    component: Payments
+    component: Payments,
+    meta: { requiresAuth: true }
   },
   {
     path: '/account',
     name: 'Account',
-    component: Account
+    component: Account,
+    meta: { requiresAuth: true }
   },
   {
     path: '/premium',
     name: 'Premium',
-    component: Premium
+    component: Premium,
+    meta: { requiresAuth: true }
   },
 ]
 

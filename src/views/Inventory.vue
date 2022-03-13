@@ -81,11 +81,11 @@
             <v-list-item-title>Premium</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/logout">
+          <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-logout</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Logout</v-list-item-title>
+            <v-list-item-title @click="logout">Logout</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -367,6 +367,8 @@
 
 <script>
   
+  import firebase from 'firebase';
+     import "firebase/auth";
 
   export default {
     name: 'Inventory',
@@ -466,6 +468,21 @@
         this.price = ''
         this.no_of_item = ''
       },
+
+
+// logout function below
+
+       async logout(){
+        firebase
+        .auth()
+        .signOut()
+        .then(
+          user => {
+            console.log(user);
+          }
+        )
+        this.$router.push('/');
+    },
     },
 
 

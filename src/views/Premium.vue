@@ -72,12 +72,7 @@
             <v-list-item-title>Account</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/premium">
-            <v-list-item-icon>
-              <v-icon>mdi-calendar-clock</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Calendar</v-list-item-title>
-          </v-list-item>
+
 
           <v-list-item to="/premium">
             <v-list-item-icon>
@@ -86,11 +81,11 @@
             <v-list-item-title>Premium</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/logout">
+          <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-logout</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Logout</v-list-item-title>
+            <v-list-item-title @click="logout">Logout</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -139,20 +134,34 @@
 
 <script>
   
+  import firebase from 'firebase';
+  import "firebase/auth";
 
   export default {
     name: 'Premium',
     data: () => ({
-      // links: [
-      //   {title:'Dashboard', route: "/"},
-      //   {title:'Inventory', route: "/inventory"},
-      //   {title:'Sales', route: "/sales"},
-      //   {title:'Buffer', route: "/buffer"},
-        
-      // ],
+     
       drawer:false,
       group: null,
     }),
+
+    methods: {
+      async logout(){
+        firebase
+        .auth()
+        .signOut()
+        .then(
+          user => {
+            console.log(user);
+          }
+        )
+        this.$router.push('/');
+    },
+      
+       
+    },
+
+
 
 
   }
