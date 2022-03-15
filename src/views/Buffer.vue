@@ -2,22 +2,21 @@
 <v-app id="inventory">
     <v-app-bar
       app
-      color="white"
+      color="grey darken-4"
       flat
       :elevation="2"
 
     >
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-app-bar-title class="title">
-        <div>WoW Inventory..</div>
-      </v-app-bar-title>
+      <v-app-bar-nav-icon @click="drawer = true" dark></v-app-bar-nav-icon>
+      <v-toolbar-title class="white--text"> <pre>Inventory </pre></v-toolbar-title>
 
 
 
       <v-tabs
         centered
         class="ml-n9"
-        color="grey darken-1"
+        color="white"
+        dark
       >
         <v-tab router to="/dashboard" >
           Dashboard
@@ -93,7 +92,7 @@
     </v-navigation-drawer>
 
 
-    <v-main class="grey lighten-3 pt-0">
+    <v-main class="grey lighten-1 pt-0">
       <v-container>
         <h1 class="pl-3">Buffer</h1>
         <v-row>
@@ -113,62 +112,26 @@
 
 
 
-              <!-- <v-container 
-                v-for="(item, index) in list"
-                :key="index"
-              >
- 
-
-                  <v-card flat class="pb-5 pa-2" >
-                    <v-layout row wrap >
-
-                      <v-flex xs12 md6>
-                        <div class="caption grey--text">Product Name</div>
-                        <div>{{item.name}}</div>
-                      </v-flex>
-
-                      <v-flex xs6 sm4 md2>
-                        <div class="caption grey--text">Quantity</div>
-                        <span>{{item.quantity}}</span><span> Kg</span>
-                      </v-flex>
-
-                      <v-flex xs6 sm4 md2>
-                        <div class="caption grey--text">Price</div>
-                      <span>Rs</span><span> {{item.price}}</span>
-                      </v-flex>
-
-                      <v-flex xs2 sm4 md2>
-                        <div class="caption grey--text">No. of item</div>
-                        <div>{{item.no_of_item}}</div>
-                      </v-flex>
-
-
-
-                    </v-layout>
-
-                  </v-card>
-
-                <v-divider></v-divider>
-              </v-container> -->
 
                 <v-simple-table
                   fixed-header
                   height="879px"
+                  dark
                 >
                   <template v-slot:default primary >
                     <thead  >
                       <tr>
-                        <th class="text-left red lighten-4">
+                        <th class="text-left black">
                           Product Name
                         </th>
-                        <th class="text-left red lighten-4">
+                        <th class="text-left black">
                           Quantity (Kg)
                         </th>
 
-                        <th class="text-left red lighten-4">
+                        <th class="text-left black">
                           No. of item
                         </th>
-                        <th class="text-left red lighten-4">
+                        <th class="text-left black">
                           Date
                         </th>
                       </tr>
@@ -205,11 +168,13 @@
               rounded="lg"
               min-height="10vh"
               :elevation="10"
+              color="grey darken-2"
+              dark
 
             >
 
             <v-container
-             class="text-center red--text text--darken-2"
+             class="text-center black pink--text "
              >
 
               <h2>Buffer Entry</h2>
@@ -282,13 +247,12 @@
 
 
             <v-container
-              class="text-center red--text text--darken-2  pt-5"
+              class="text-center  pt-5"
              
              >
 
               <v-btn
                 @click="submit"
-                :disabled="invalid"
               >
                 Submit
               </v-btn>
