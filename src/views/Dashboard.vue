@@ -2,15 +2,13 @@
 <v-app id="inspire">
     <v-app-bar
       app
-      color="white"
+      color="grey darken-4"
       flat
       :elevation="2"
 
     >
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-app-bar-title class="title">
-        <div>Butter Scotch..</div>
-      </v-app-bar-title>
+      <v-app-bar-nav-icon @click="drawer = true" dark></v-app-bar-nav-icon>
+      <v-toolbar-title class="white--text"> <pre>Inventory </pre></v-toolbar-title>
 
 
         
@@ -19,7 +17,9 @@
       <v-tabs
         centered
         class="ml-n9"
-        color="grey darken-1"
+        color="white"
+        dark
+
       >
         <v-tab router to="/dashboard" >
           Dashboard
@@ -95,7 +95,7 @@
     </v-navigation-drawer>
 
 
-    <v-main class="grey lighten-3 pt-0">
+    <v-main class="grey lighten-1 pt-0">
       <v-container>
         <h1 class="pl-3">Dashboard</h1>
         <v-row>
