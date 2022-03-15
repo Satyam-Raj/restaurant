@@ -264,7 +264,6 @@
 
               <v-btn
                 @click="submit"
-                :disabled="invalid"
               >
                 Submit
               </v-btn>
@@ -275,6 +274,8 @@
                 Clear
               </v-btn>
             </v-container>
+
+            <h1>{{ user.email }}</h1>
 
 
 
@@ -334,6 +335,11 @@
   import "firebase/auth";
   import { db } from '../main';
 
+  // let user = firebase.auth().currentUser;
+  // let userUid = user.uid;
+
+
+
   export default {
     name: 'Sales',
     data: () => ({
@@ -346,6 +352,8 @@
       no_of_item: '',
 
       salesList: [],
+
+       user : firebase.auth().currentUser,
 
 
       nameRules: [
@@ -372,6 +380,8 @@
         v => /^[0-9]+$/.test(v) || 'must be only number',
       ],
 
+      
+
    
 
 
@@ -380,17 +390,24 @@
     methods: {
 
 
+
+
       // valid submit
       submit() {
         if (this.$refs.form.validate()) {
-          db.collection('salesList').add({
-          id: Date.now(),
-          name: this.name,
-          quantity: this.quantity,
-          price: this.price,
-          no_of_item: this.no_of_item,
-          date: new Date().toLocaleDateString("fr-FR"),
-        });
+
+         
+              db.collection('users').doc(this.user.uid).collection('salesList').add({
+                userName : this.user.uid,
+                id: Date.now(),
+                name: this.name,
+                quantity: this.quantity,
+                price: this.price,
+                no_of_item: this.no_of_item,
+                date: new Date().toLocaleDateString("fr-FR"),
+              });
+
+
 
           // clear input
           this.name = '';
@@ -400,37 +417,18 @@
         }
       },
 
-      // submitToFirebase() {
-      //   db.collection('sales').add({
-      //     name: this.name,
-      //     quantity: this.quantity,
-      //     price: this.price,
-      //     no_of_item: this.no_of_item,
-      //     date: new Date().toLocaleDateString("fr-FR"),
-      //   });
-      // },
      
 
 
-
-
-      // submit(){
-      //   let newItem = {
-      //     id: Date.now(),
-      //     date: new Date().toLocaleDateString("fr-FR"),
-      //     name: this.name,
-      //     quantity: this.quantity,
-      //     price: this.price,
-      //     no_of_item: this.no_of_item,
-      //   }
-      //   this.list.push(newItem)
-      //   this.name = ''
-      //   this.quantity = ''
-      //   this.price = ''
-      //   this.no_of_item = ''
-
-
-      // },
+              // db.collection('salesList').doc(this.user.uid).set({
+              //   userName : this.user.uid,
+              //   id: Date.now(),
+              //   name: this.name,
+              //   quantity: this.quantity,
+              //   price: this.price,
+              //   no_of_item: this.no_of_item,
+              //   date: new Date().toLocaleDateString("fr-FR"),
+              // });
 
       
 
@@ -464,11 +462,21 @@
 
     },
 
-    firestore(){
+  
+
+
+ 
+
+    firestore() {
       return {
-        salesList: db.collection('salesList').orderBy('id', 'desc')
+      salesList:db.collection('users').doc(this.user.uid).collection('salesList').orderBy('id', 'desc')
+      
       }
     },
+
+
+        
+    
 
 
 
@@ -476,4 +484,6 @@
 
 
   }
+  // let user = firebase.auth().currentUser;
+
 </script>

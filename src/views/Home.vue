@@ -335,6 +335,9 @@
 
    import firebase from 'firebase';
    import "firebase/auth";
+   import { db } from '../main';
+
+
 
 
   export default {
@@ -366,6 +369,7 @@
       .then(
           () => {
           this.$router.push("/dashboard");
+          
         },
           
           err => {
@@ -384,7 +388,22 @@
       .auth()
       .createUserWithEmailAndPassword(this.email, this.password)
       .then(
-          () => {
+          (user) => {
+
+              db.collection("profile").doc(user.user.uid).set({
+
+                  firstName: this.firstName,
+                  lastName: this.lastName,
+                  email: this.email,
+                  
+              });
+
+
+
+
+
+
+
           this.$router.push("/dashboard");
         },
           err => {
