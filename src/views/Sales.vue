@@ -281,7 +281,6 @@
               </v-btn>
             </v-container>
 
-            <!-- <h1>{{ user.email }}</h1> -->
 
 
 
@@ -341,9 +340,7 @@
   import "firebase/auth";
   import { db } from '../main';
 
-  // let user = firebase.auth().currentUser;
-  // let userUid = user.uid;
-
+ 
 
 
   export default {
@@ -358,8 +355,8 @@
       no_of_item: '',
 
       salesList: [],
+      user : firebase.auth().currentUser,
 
-       user : firebase.auth().currentUser,
 
 
       nameRules: [

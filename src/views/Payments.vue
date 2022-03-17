@@ -140,7 +140,7 @@
                     </thead>
                     <tbody>
                       <tr
-                        v-for="item in list.slice().reverse()"
+                        v-for="item in paymentList"
                         :key="item.index"
                       >
                         <td>{{ item.personName }}</td>
@@ -336,6 +336,7 @@
 
   import firebase from 'firebase';
   import "firebase/auth";
+  import { db } from '../main';
 
 
   export default {
@@ -349,7 +350,8 @@
       price: '',
       personName: '',
 
-      list: [],
+      paymentList: [],
+      user : firebase.auth().currentUser,
 
 
       personNameRules: [
@@ -397,7 +399,7 @@
       // valid submit
       submit() {
         if (this.$refs.form.validate()) {
-          this.list.push({
+          db.collection('users').doc(this.user.uid).collection('paymentList').add({
             id: Date.now(),
             personName: this.personName,
             name: this.name,
@@ -451,6 +453,16 @@
           }
         )
     },
+    },
+
+
+
+
+    firestore() {
+      return {
+      paymentList:db.collection('users').doc(this.user.uid).collection('paymentList').orderBy('id', 'desc')
+      
+      }
     },
 
 

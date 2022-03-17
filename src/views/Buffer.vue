@@ -138,7 +138,7 @@
                     </thead>
                     <tbody>
                       <tr
-                        v-for="item in list.slice().reverse()"
+                        v-for="item in bufferList"
                         :key="item.index"
                       >
                         <td>{{ item.name }}</td>
@@ -319,7 +319,8 @@
 <script>
   
   import firebase from 'firebase';
-     import "firebase/auth";
+  import "firebase/auth";
+  import { db } from '../main';
 
   export default {
     name: 'Buffer',
@@ -331,7 +332,8 @@
       quantity: '',
       no_of_item: '',
 
-      list: [],
+      bufferList: [],
+      user : firebase.auth().currentUser,
 
 
       nameRules: [
@@ -373,7 +375,7 @@
       // valid submit
       submit() {
         if (this.$refs.form.validate()) {
-          this.list.push({
+          db.collection('users').doc(this.user.uid).collection('bufferList').add({
             id: Date.now(),
             name: this.name,
             quantity: this.quantity,
@@ -387,23 +389,7 @@
           this.no_of_item = '';
         }
       },
-      // submit(){
-      //   let newItem = {
-      //     id: Date.now(),
-      //     date: new Date().toLocaleDateString("fr-FR"),
-      //     name: this.name,
-      //     quantity: this.quantity,
-      //     price: this.price,
-      //     no_of_item: this.no_of_item,
-      //   }
-      //   this.list.push(newItem)
-      //   this.name = ''
-      //   this.quantity = ''
-      //   this.price = ''
-      //   this.no_of_item = ''
-
-
-      // },
+    
 
       clear(){
         this.name = ''
@@ -425,6 +411,15 @@
     },
 
 
+    },
+
+
+
+    firestore() {
+      return {
+      bufferList:db.collection('users').doc(this.user.uid).collection('bufferList').orderBy('id', 'desc')
+      
+      }
     },
 
 

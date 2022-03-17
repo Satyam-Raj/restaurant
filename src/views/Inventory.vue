@@ -142,7 +142,7 @@
                     </thead>
                     <tbody>
                       <tr
-                        v-for="item in list.slice().reverse()"
+                        v-for="item in inventoryList"
                         :key="item.index"
                       >
                         <td>{{ item.name }}</td>
@@ -335,7 +335,9 @@
 <script>
   
   import firebase from 'firebase';
-     import "firebase/auth";
+  import "firebase/auth";
+  import { db } from '../main';
+
 
   export default {
     name: 'Inventory',
@@ -348,7 +350,10 @@
       price: '',
       no_of_item: '',
 
-      list: [],
+      inventoryList: [],
+      user : firebase.auth().currentUser,
+
+      
 
 
       nameRules: [
@@ -395,7 +400,7 @@
       // valid submit
       submit() {
         if (this.$refs.form.validate()) {
-          this.list.push({
+          db.collection('users').doc(this.user.uid).collection('inventoryList').add({
             id: Date.now(),
             name: this.name,
             quantity: this.quantity,
@@ -444,12 +449,19 @@
         .auth()
         .signOut()
         .then(
-          user => {
-            console.log(user);
+          () => {
+          this.$router.push("/");
           }
         )
-        this.$router.push('/');
     },
+    },
+
+
+     firestore() {
+      return {
+      inventoryList:db.collection('users').doc(this.user.uid).collection('inventoryList').orderBy('id', 'desc')
+      
+      }
     },
 
 
