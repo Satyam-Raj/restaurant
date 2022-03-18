@@ -141,7 +141,7 @@
                     <tbody>
                       <tr
                         v-for="item in paymentList"
-                        :key="item.index"
+                        :key="item.id"
                       >
                         <td>{{ item.personName }}</td>
                         <td>{{ item.name }}</td>

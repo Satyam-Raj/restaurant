@@ -1,22 +1,22 @@
 <template>
-<v-app id="inspire">
+<v-app id="account">
     <v-app-bar
       app
-      color="white"
+      color="grey darken-4"
       flat
       :elevation="2"
 
     >
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-app-bar-title class="title">
-        <div>Butter Scotch..</div>
-      </v-app-bar-title>
+      <v-app-bar-nav-icon @click="drawer = true" dark></v-app-bar-nav-icon>
+      <v-toolbar-title class="white--text"> <pre>Inventory </pre></v-toolbar-title>
+
 
 
       <v-tabs
         centered
         class="ml-n9"
-        color="grey darken-1"
+        color="white"
+        dark
       >
         <v-tab router to="/dashboard" >
           Dashboard
@@ -93,7 +93,7 @@
     </v-navigation-drawer>
 
 
-    <v-main class="grey lighten-3 pt-0">
+    <v-main class="grey lighten-1 pt-14">
       <v-container>
         <h1 class="pl-3">Account</h1>
         <v-row>
@@ -104,11 +104,105 @@
             sm="8"
           >
             <v-sheet
-              min-height="70vh"
+              min-height="63vh"
               rounded="lg"
               :elevation="10"
+              dark
 
             >
+
+            <v-container
+               class="pa-12"
+                fluid 
+            >
+
+            <div
+               v-for="item in profileList"
+                :key="item.id"
+            >
+                <h1 
+                  class="text-center pa-5"
+                >    
+                {{user.email}}
+                </h1>
+              </div>
+              <body class="text-center">
+                GSTIN:  dklsflsdfslkfj<br>
+              </body>
+
+              <v-card class="pa-10 mt-10 text-center">
+
+                <v-row>
+                  
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                  >
+                    <v-text-field
+                      value="John Doe"
+                      label="Owner Name"
+                      outlined
+                      readonly
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                  >
+                    <v-text-field
+                      value="John Doe"
+                      label="Since"
+                      outlined
+                      readonly
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                  >
+                    <v-text-field
+                      value="John Doe"
+                      label="Email"
+                      outlined
+                      readonly
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                  >
+                    <v-text-field
+                      value="John Doe"
+                      label="Contact Number"
+                      outlined
+                      readonly
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="12"
+                  >
+                    <v-text-field
+                      value="John Doe"
+                      label="Address"
+                      outlined
+                      readonly
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+
+              </v-card>
+              
+                    
+
+
+            </v-container>
           
               <!--  -->
             </v-sheet>
@@ -120,15 +214,141 @@
           >
             <v-sheet
               rounded="lg"
-              min-height="70vh"
+              min-height="10vh"
               :elevation="10"
+              dark
 
             >
-              <!--  -->
+
+            <v-container
+             class="text-center black light-green--text "
+             
+             >
+
+              <h2>Shop Profile</h2>
+            </v-container>
+            <v-divider></v-divider>
+
+            
+              <v-container>
+
+                   
+            <v-form 
+                @submit.prevent="update"
+                ref="form"
+              >
+        
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="12"
+                >
+                  <v-card
+                    class="pa-5"
+                  >
+                   
+                    <v-card-text>
+                      <v-text-field
+                        label="Shop Name"
+                        v-model="shop.name"
+                        :rules="[
+                        v => !!v || 'Shop Name is required',
+                        v => v.length <= 20 || 'Shop Name must be less than 20 characters',
+                        v => v.length >= 3 || 'Shop Name must be greater than 3 characters',
+                        ]"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        label="Owner Name"
+                        v-model="shop.owner"
+                        :rules="[
+                        v => !!v || 'Shop Name is required',
+                        v => v.length <= 30 || 'Shop Name must be less than 30 characters',
+                        v => v.length >= 3 || 'Shop Name must be greater than 3 characters',
+                        ]"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        label="Shop Address"
+                        v-model="shop.address"
+                        :rules="[
+                        v => !!v || 'Shop Address is required',
+                        v => v.length <= 100 || 'Shop Address must be less than 100 characters'
+                        ]"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        label="Contact Number"
+                        v-model="shop.contact"
+                        :rules="[
+                        v => !!v || 'Shop Contact is required',
+                        v => v.length === 10 || 'Shop Contact must be 10 digits',
+                        v => /^[0-9]+$/.test(v) || 'Contact must be number',
+                        ]"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        label="Email"
+                        v-model="shop.email"
+                        :rules="[
+                        v => !!v || 'Shop Email is required',
+                        v => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Please enter a valid email',
+                        v => v.length <= 50 || 'Shop Email must be less than 50 characters'
+                        ]"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        label="Shop GSTIN (Optional)"
+                        v-model="shop.gst"
+                        :rules="
+                        [
+                        v => /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(v) || 'Invalid GSTIN',
+                        v => v.length <= 15 || 'must be less than 15 characters',
+                        
+                        ]" 
+                           
+                        required
+                      ></v-text-field>
+                      
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+
+            </v-form>
+
+
+              </v-container>
+
+
+              <v-container
+               class="text-center  pt-2"
+              >
+
+                <v-btn
+                  @click="update"
+                >
+                  Update
+                </v-btn>
+                &nbsp;&nbsp;
+                <v-btn
+                  @click="clear"
+                >
+                  Clear
+                </v-btn>
+            </v-container>
+
+
+
             </v-sheet>
-          </v-col>
+              </v-col>
+
+              
         </v-row>
+
       </v-container>
+
+
     </v-main>
   </v-app>
 </template>
@@ -136,14 +356,30 @@
 <script>
   
   import firebase from 'firebase';
-    import "firebase/auth";
+  import "firebase/auth";
+  import { db } from '../main';
+
 
   export default {
     name: 'Accounts',
     data: () => ({
+
+      user : firebase.auth().currentUser,
+      profileList : [],
     
       drawer:false,
       group: null,
+      shop: {
+        name: '',
+        owner: '',
+        address: '',
+        contact: '',
+        email: '',
+        gst: '',
+      },
+
+      
+
     }),
 
     methods: {
@@ -158,9 +394,66 @@
         )
         this.$router.push('/');
     },
+
+
+     update(){
+      // update only if validate
+      if(this.$refs.form.validate()){
+
+        const { name, owner, address, contact, email, gst } = this.shop;
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        const shop = {
+          name,
+          owner,
+          address,
+          contact,
+          email,
+          gst,
+        };
+        db.collection('profile').doc(uid).set(shop);
+        this.$router.push('/sales');
+
+
+        
+        // clear
+        this.shop.name = '';
+        this.shop.owner = '';
+        this.shop.address = '';
+        this.shop.contact = '';
+        this.shop.email = '';
+        this.shop.gst = '';
+      }
+
+      
+
+
+      
+      
+    },
+
+    clear(){
+        this.shop.name = '';
+        this.shop.owner = '';
+        this.shop.address = '';
+        this.shop.contact = '';
+        this.shop.email = '';
+        this.shop.gst = '';
+      }
       
        
     },
+
+
+
+    firestore() {
+      return {
+      profileList:db.collection('profile').doc(this.user.uid).orderBy('id', 'desc')
+      
+      }
+    },
+
+
 
 
   }

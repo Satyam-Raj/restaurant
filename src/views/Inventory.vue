@@ -143,7 +143,7 @@
                     <tbody>
                       <tr
                         v-for="item in inventoryList"
-                        :key="item.index"
+                        :key="item.id"
                       >
                         <td>{{ item.name }}</td>
                         <td>{{ item.quantity }}</td>

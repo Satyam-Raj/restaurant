@@ -1,5 +1,5 @@
 <template>
-<v-app id="inspire">
+<v-app id="sales">
     <v-app-bar
       app
       color="grey darken-4"
@@ -142,7 +142,7 @@
                     <tbody>
                       <tr
                         v-for="item in salesList"
-                        :key="item.index"
+                        :key="item.id"
                       >
                         <td>{{ item.name }}</td>
                         <td>{{ item.quantity }}</td>
