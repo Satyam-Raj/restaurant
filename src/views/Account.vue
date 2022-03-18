@@ -117,13 +117,12 @@
             >
 
             <div
-               v-for="item in profileList"
-                :key="item.id"
+               
             >
                 <h1 
                   class="text-center pa-5"
                 >    
-                {{user.email}}
+                {{profileList.name}}
                 </h1>
               </div>
               <body class="text-center">
@@ -365,7 +364,7 @@
     data: () => ({
 
       user : firebase.auth().currentUser,
-      profileList : [],
+      profileList : {},
     
       drawer:false,
       group: null,
