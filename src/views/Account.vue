@@ -93,7 +93,7 @@
     </v-navigation-drawer>
 
 
-    <v-main class="grey lighten-1 pt-14">
+    <v-main class="grey lighten-1 pt-4">
       <v-container>
         <h1 class="pl-3">Account</h1>
         <v-row>
@@ -120,13 +120,13 @@
                
             >
                 <h1 
-                  class="text-center pa-5"
+                  class="text-center blue--text  pa-5"
                 >    
-                {{profileList.name}}
+                {{profile.name}}
                 </h1>
               </div>
               <body class="text-center">
-                GSTIN:  dklsflsdfslkfj<br>
+                {{profile.gst}}
               </body>
 
               <v-card class="pa-10 mt-10 text-center">
@@ -139,7 +139,7 @@
                     sm="6"
                   >
                     <v-text-field
-                      value="John Doe"
+                      v-model="profile.owner"
                       label="Owner Name"
                       outlined
                       readonly
@@ -151,7 +151,7 @@
                     sm="6"
                   >
                     <v-text-field
-                      value="John Doe"
+                      v-model="user.metadata.creationTime"
                       label="Since"
                       outlined
                       readonly
@@ -163,8 +163,8 @@
                     sm="6"
                   >
                     <v-text-field
-                      value="John Doe"
-                      label="Email"
+                      v-model="profile.contact"
+                      label="Contact Number"
                       outlined
                       readonly
                     ></v-text-field>
@@ -175,8 +175,8 @@
                     sm="6"
                   >
                     <v-text-field
-                      value="John Doe"
-                      label="Contact Number"
+                      v-model="user.email"
+                      label="Email"
                       outlined
                       readonly
                     ></v-text-field>
@@ -187,7 +187,7 @@
                     sm="12"
                   >
                     <v-text-field
-                      value="John Doe"
+                      v-model="profile.address"
                       label="Address"
                       outlined
                       readonly
@@ -261,9 +261,9 @@
                         label="Owner Name"
                         v-model="shop.owner"
                         :rules="[
-                        v => !!v || 'Shop Name is required',
-                        v => v.length <= 30 || 'Shop Name must be less than 30 characters',
-                        v => v.length >= 3 || 'Shop Name must be greater than 3 characters',
+                        v => !!v || 'Owner Name is required',
+                        v => v.length <= 30 || 'Owner Name must be less than 30 characters',
+                        v => v.length >= 3 || 'Owner Name must be greater than 3 characters',
                         ]"
                         required
                       ></v-text-field>
@@ -301,13 +301,15 @@
                         v-model="shop.gst"
                         :rules="
                         [
-                        v => /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(v) || 'Invalid GSTIN',
-                        v => v.length <= 15 || 'must be less than 15 characters',
-                        
+
+                          v => v.length <= 15 || 'Shop GSTIN must be less than 15 characters',
+
                         ]" 
                            
-                        required
+                        required = "false"
                       ></v-text-field>
+
+                      
                       
                     </v-card-text>
                   </v-card>
@@ -357,14 +359,16 @@
   import firebase from 'firebase';
   import "firebase/auth";
   import { db } from '../main';
-
+// import firebase_admin from firebase
+    
+     
 
   export default {
     name: 'Accounts',
     data: () => ({
 
       user : firebase.auth().currentUser,
-      profileList : {},
+      profile : {},
     
       drawer:false,
       group: null,
@@ -377,6 +381,8 @@
         gst: '',
       },
 
+
+     
       
 
     }),
@@ -411,7 +417,6 @@
           gst,
         };
         db.collection('profile').doc(uid).set(shop);
-        this.$router.push('/sales');
 
 
         
@@ -446,8 +451,9 @@
 
 
     firestore() {
+      const user = firebase.auth().currentUser;
       return {
-      profileList:db.collection('profile').doc(this.user.uid).orderBy('id', 'desc')
+      profile:db.collection('profile').doc(user.uid)
       
       }
     },

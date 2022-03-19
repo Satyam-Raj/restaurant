@@ -336,7 +336,7 @@
    import firebase from 'firebase';
    import "firebase/auth";
    import { db } from '../main';
-
+// import { sendEmailVerification } from 'firebase/auth';
 
 
 
@@ -360,22 +360,50 @@
     },
 
 
+
+
+// get isLoggedIn(): boolean { 
+//     const user = this.userData;
+//     if(user === null || user === undefined) return false
+//     return user.emailVerified;
+//   }
+
+
+
 // login function
     async login() {
 
-      firebase
-      .auth()
-      .signInWithEmailAndPassword(this.loginEmail, this.loginPassword)
-      .then(
-          () => {
-          this.$router.push("/dashboard");
-          
-        },
-          
-          err => {
-              alert(err.message);
-          }
-      );
+        this.dialog = false
+        if ( this.x == 1 ) {
+            
+            
+            
+
+            firebase
+            .auth()
+            .signInWithEmailAndPassword(this.loginEmail, this.loginPassword)
+            .then(
+                () => {
+                this.$router.push("/dashboard");
+                
+                },
+                
+                err => {
+                    alert(err.message);
+                }
+            );
+
+        } else {
+            alert("Please verify your email first");
+
+
+        } 
+
+
+
+
+
+      
 
 
     },
@@ -383,6 +411,8 @@
 
 // register function
     async register() {
+
+    this.dialog_register = false
 
       firebase
       .auth()
@@ -398,19 +428,27 @@
                   
               });
 
+              user.user.sendEmailVerification();
+
+
+             
 
 
 
 
 
 
-          this.$router.push("/dashboard");
+
+
         },
           err => {
               alert(err.message);
           }
           
       );
+
+    //   const user = firebase.auth().currentUser;
+    //   await user.sendEmailVerification();
 
 
     },
@@ -429,6 +467,10 @@
    
         valid: true,
         valid_register: true,
+
+        x : 1,
+
+
         
         firstName: "",
         firstNameRules: [
