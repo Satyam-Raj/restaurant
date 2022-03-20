@@ -38,7 +38,7 @@
 
      
 
-      <v-tab router to="/account" class="white--text">
+      <v-tab router to="/account" class="white--text hidden-sm-and-down">
           {{profile.businessName}}
         </v-tab>
     </v-app-bar>
