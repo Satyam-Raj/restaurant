@@ -185,7 +185,7 @@
                                                         <v-form ref="registerForm" v-model="valid_register" lazy-validation @submit.prevent="register_pressed">
                                                             <v-row>
                                                                 <v-col cols="12" sm="12" md="12">
-                                                                    <v-text-field v-model="businessName" :rules="businessNameRules" label="Business Name" maxlength="20" required></v-text-field>
+                                                                    <v-text-field v-model="businessName" :rules="businessNameRules" label="Business Name" maxlength="30" required></v-text-field>
                                                                 </v-col>
                                                                 
                                                                 <v-col cols="12">
@@ -505,7 +505,7 @@
         businessName: "",
         businessNameRules: [
             v => !!v || 'Name is required',
-            v => (v && v.length <= 20) || 'Name must be less than 20 characters',
+            v => (v && v.length <= 30) || 'Name must be less than 30 characters',
             v => /^[a-zA-Z ]+$/.test(v) || 'Name must be alphabet only',
             // condition for only alphabetical characters
             // v => /^[a-zA-Z]+$/.test(v) || 'First Name must be alphabetical'

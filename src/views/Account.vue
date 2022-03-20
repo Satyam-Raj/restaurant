@@ -246,7 +246,7 @@
                         v-model="shop.businessName"
                         :rules="[
                         v => !!v || 'required',
-                        v => v.length <= 20 || 'must be less than 20 characters',
+                        v => v.length <= 30 || 'must be less than 30 characters',
                         v => v.length >= 3 || 'must be greater than 3 characters',
                         ]"
                         required
