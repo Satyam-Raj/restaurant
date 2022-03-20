@@ -395,11 +395,7 @@
                         
                         }
 
-                        // if (firebase.auth().currentUser.password !== this.loginPassword) {
-                        //     this.dialog = true
-                        //     alert("Incorrect Password")
-                        // }
-
+                     
                     
                     
                     
@@ -456,10 +452,7 @@
           
       );
 
-    //   const user = firebase.auth().currentUser;
-    //   await user.sendEmailVerification();
-
-
+ 
     },
 
     async forgot_password() {
@@ -487,21 +480,6 @@
                 );
             }
 
-
-        // firebase
-        // .auth()
-        // .sendPasswordResetEmail(this.loginEmail)
-        // .then(
-        //     () => {
-
-               
-        //         alert("Password reset email sent")
-                
-        //     },
-        //     err => {
-        //         alert(err.message);
-        //     }
-        // );
 
     },
 
