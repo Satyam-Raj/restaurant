@@ -104,7 +104,7 @@
             sm="8"
           >
             <v-sheet
-              min-height="63vh"
+              min-height="60vh"
               rounded="lg"
               :elevation="10"
               dark
@@ -112,7 +112,7 @@
             >
 
             <v-container
-               class="pa-12"
+               class="pa-10"
                 fluid 
             >
 
@@ -120,9 +120,9 @@
                
             >
                 <h1 
-                  class="text-center blue--text  pa-5"
+                  class="text-center blue--text  pa-2"
                 >    
-                {{profile.name}}
+                {{profile.businessName}}
                 </h1>
               </div>
               <body class="text-center">
@@ -248,12 +248,12 @@
                    
                     <v-card-text>
                       <v-text-field
-                        label="Shop Name"
-                        v-model="shop.name"
+                        label="Business Name"
+                        v-model="shop.businessName"
                         :rules="[
-                        v => !!v || 'Shop Name is required',
-                        v => v.length <= 20 || 'Shop Name must be less than 20 characters',
-                        v => v.length >= 3 || 'Shop Name must be greater than 3 characters',
+                        v => !!v || 'required',
+                        v => v.length <= 20 || 'must be less than 20 characters',
+                        v => v.length >= 3 || 'must be greater than 3 characters',
                         ]"
                         required
                       ></v-text-field>
@@ -286,16 +286,7 @@
                         ]"
                         required
                       ></v-text-field>
-                      <v-text-field
-                        label="Email"
-                        v-model="shop.email"
-                        :rules="[
-                        v => !!v || 'Shop Email is required',
-                        v => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Please enter a valid email',
-                        v => v.length <= 50 || 'Shop Email must be less than 50 characters'
-                        ]"
-                        required
-                      ></v-text-field>
+                      
                       <v-text-field
                         label="Shop GSTIN (Optional)"
                         v-model="shop.gst"
@@ -323,7 +314,7 @@
 
 
               <v-container
-               class="text-center  pt-2"
+               class="text-center  pa-7"
               >
 
                 <v-btn
@@ -373,11 +364,10 @@
       drawer:false,
       group: null,
       shop: {
-        name: '',
+        businessName: '',
         owner: '',
         address: '',
         contact: '',
-        email: '',
         gst: '',
       },
 
@@ -393,11 +383,10 @@
         .auth()
         .signOut()
         .then(
-          user => {
-            console.log(user);
+          () => {
+          this.$router.push("/");
           }
         )
-        this.$router.push('/');
     },
 
 
@@ -405,15 +394,14 @@
       // update only if validate
       if(this.$refs.form.validate()){
 
-        const { name, owner, address, contact, email, gst } = this.shop;
+        const { businessName, owner, address, contact, gst } = this.shop;
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const shop = {
-          name,
+          businessName,
           owner,
           address,
           contact,
-          email,
           gst,
         };
         db.collection('profile').doc(uid).set(shop);
@@ -421,11 +409,10 @@
 
         
         // clear
-        this.shop.name = '';
+        this.shop.businessName = '';
         this.shop.owner = '';
         this.shop.address = '';
         this.shop.contact = '';
-        this.shop.email = '';
         this.shop.gst = '';
       }
 
@@ -437,11 +424,10 @@
     },
 
     clear(){
-        this.shop.name = '';
+        this.shop.businessName = '';
         this.shop.owner = '';
         this.shop.address = '';
         this.shop.contact = '';
-        this.shop.email = '';
         this.shop.gst = '';
       }
       

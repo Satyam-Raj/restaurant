@@ -184,12 +184,10 @@
                                                     <v-card-text>
                                                         <v-form ref="registerForm" v-model="valid_register" lazy-validation @submit.prevent="register_pressed">
                                                             <v-row>
-                                                                <v-col cols="12" sm="6" md="6">
-                                                                    <v-text-field v-model="firstName" :rules="firstNameRules" label="First Name" maxlength="15" required></v-text-field>
+                                                                <v-col cols="12" sm="12" md="12">
+                                                                    <v-text-field v-model="businessName" :rules="businessNameRules" label="Business Name" maxlength="20" required></v-text-field>
                                                                 </v-col>
-                                                                <v-col cols="12" sm="6" md="6">
-                                                                    <v-text-field v-model="lastName" :rules="lastNameRules" label="Last Name" maxlength="15" required></v-text-field>
-                                                                </v-col>
+                                                                
                                                                 <v-col cols="12">
                                                                     <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
                                                                 </v-col>
@@ -435,9 +433,8 @@
 
               db.collection("profile").doc(user.user.uid).set({
 
-                  firstName: this.firstName,
-                  lastName: this.lastName,
-                  email: this.email,
+                  businessName: this.businessName,
+                  
                   
               });
 
@@ -502,25 +499,18 @@
         valid: true,
         valid_register: true,
 
-        x : 1,
 
 
         
-        firstName: "",
-        firstNameRules: [
-            v => !!v || 'First Name is required',
-            v => (v && v.length <= 15) || 'First Name must be less than 15 characters',
-            v => /^[a-zA-Z]+$/.test(v) || 'First Name must be alphabet only',
+        businessName: "",
+        businessNameRules: [
+            v => !!v || 'Name is required',
+            v => (v && v.length <= 20) || 'Name must be less than 20 characters',
+            v => /^[a-zA-Z ]+$/.test(v) || 'Name must be alphabet only',
             // condition for only alphabetical characters
             // v => /^[a-zA-Z]+$/.test(v) || 'First Name must be alphabetical'
         ],
-        lastName: "",
-        lastNameRules: [
-            v => !!v || 'Last Name is required',
-            v => (v && v.length <= 15) || 'Last Name must be less than 15 characters',
-            v => /^[a-zA-Z]+$/.test(v) || 'Last Name must be alphabet only',
-
-        ],
+        
         password: "",
         verify: "",
         loginPassword: "",

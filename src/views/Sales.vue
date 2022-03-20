@@ -362,7 +362,7 @@
       nameRules: [
         v => !!v || 'required',
         v => v.length <= 30 || 'must be less than 10 characters',
-        v => /^[a-zA-Z ]+$/.test(v) || 'must be only alphabet and space',
+        v => /^[a-zA-Z ]+$/.test(v) || 'must be only alphabet',
       ],
 
       quantityRules: [
