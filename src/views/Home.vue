@@ -374,30 +374,42 @@
     async login() {
 
         this.dialog = false
-        if ( this.x == 1 ) {
-            
-            
-            
 
-            firebase
-            .auth()
-            .signInWithEmailAndPassword(this.loginEmail, this.loginPassword)
-            .then(
-                () => {
-                this.$router.push("/dashboard");
+        
+            
                 
-                },
                 
-                err => {
-                    alert(err.message);
-                }
-            );
+                
 
-        } else {
-            alert("Please verify your email first");
+                firebase
+                .auth()
+                .signInWithEmailAndPassword(this.loginEmail, this.loginPassword)
+                .then(
+                    (user) => {
+                        if ( user.user.emailVerified === true ) {
 
+                            this.$router.push("/dashboard");
+                    
+                    } else {
+                        this.dialog = true
+                        
+                        alert("Please verify your email address")
+                    
+                    }
+                    
+                    err => {
+                        alert(err.message);
+                    }
+                })
 
-        } 
+           
+
+       
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //   if (user) {
+    //     console.log(user);
+    //   }
+    // });
 
 
 
@@ -407,6 +419,8 @@
 
 
     },
+
+    
 
 
 // register function
@@ -453,11 +467,15 @@
 
     },
 
+    
+
 
     
 
     
 },
+
+
 
 
     data: () => ({
