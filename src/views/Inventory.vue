@@ -37,13 +37,9 @@
         </v-tab>
       </v-tabs>
 
-      <v-avatar
-        class="hidden-sm-and-down"
-        color="white darken-1 shrink"
-        size="32"
-      >
-      <v-icon>mdi-calendar-clock</v-icon>
-      </v-avatar>
+      <v-tab router to="/account" class="white--text">
+          {{profile.businessName}}
+        </v-tab>
     </v-app-bar>
 
 
@@ -352,6 +348,8 @@
 
       inventoryList: [],
       user : firebase.auth().currentUser,
+      profile : {},
+
 
       
 
@@ -459,7 +457,8 @@
 
      firestore() {
       return {
-      inventoryList:db.collection('users').doc(this.user.uid).collection('inventoryList').orderBy('id', 'desc')
+      inventoryList:db.collection('users').doc(this.user.uid).collection('inventoryList').orderBy('id', 'desc'),
+      profile:db.collection('profile').doc(this.user.uid),
       
       }
     },

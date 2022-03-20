@@ -36,13 +36,7 @@
         </v-tab>
       </v-tabs>
 
-      <v-avatar
-        class="hidden-sm-and-down"
-        color="white darken-1 shrink"
-        size="32"
-      >
-      <v-icon>mdi-calendar-clock</v-icon>
-      </v-avatar>
+     
     </v-app-bar>
 
 

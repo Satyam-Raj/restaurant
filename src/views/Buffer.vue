@@ -35,13 +35,9 @@
         </v-tab>
       </v-tabs>
 
-      <v-avatar
-        class="hidden-sm-and-down"
-        color="white darken-1 shrink"
-        size="32"
-      >
-      <v-icon>mdi-calendar-clock</v-icon>
-      </v-avatar>
+      <v-tab router to="/account" class="white--text">
+          {{profile.businessName}}
+        </v-tab>
     </v-app-bar>
 
 
@@ -334,6 +330,8 @@
 
       bufferList: [],
       user : firebase.auth().currentUser,
+      profile : {},
+
 
 
       nameRules: [
@@ -417,7 +415,8 @@
 
     firestore() {
       return {
-      bufferList:db.collection('users').doc(this.user.uid).collection('bufferList').orderBy('id', 'desc')
+      bufferList:db.collection('users').doc(this.user.uid).collection('bufferList').orderBy('id', 'desc'),
+      profile:db.collection('profile').doc(this.user.uid),
       
       }
     },

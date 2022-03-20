@@ -39,13 +39,9 @@
         </v-tab>
       </v-tabs>
 
-      <v-avatar
-        class="hidden-sm-and-down"
-        color="white darken-1 shrink"
-        size="32"
-      >
-      <v-icon>mdi-calendar-clock</v-icon>
-      </v-avatar>
+      <v-tab router to="/account" class="white--text">
+          {{profile.businessName}}
+        </v-tab>
     </v-app-bar>
 
 
@@ -138,6 +134,8 @@
   
     import firebase from 'firebase';
      import "firebase/auth";
+  import { db } from '../main';
+
 
   export default {
     name: 'Dashboard',
@@ -145,6 +143,8 @@
    
       drawer:false,
       group: null,
+      profile : {},
+
     }),
 
     methods: {
@@ -160,6 +160,14 @@
     },
       
        
+    },
+
+
+
+    firestore() {
+      return {
+      profile:db.collection('profile').doc(this.user.uid),
+      }
     },
 
     

@@ -151,11 +151,10 @@
         .auth()
         .signOut()
         .then(
-          user => {
-            console.log(user);
+          () => {
+          this.$router.push("/");
           }
         )
-        this.$router.push('/');
     },
       
        

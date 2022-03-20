@@ -36,13 +36,11 @@
         </v-tab>
       </v-tabs>
 
-      <v-avatar
-        class="hidden-sm-and-down"
-        color="white darken-1 shrink"
-        size="32"
-      >
-      <v-icon>mdi-calendar-clock</v-icon>
-      </v-avatar>
+     
+
+      <v-tab router to="/account" class="white--text">
+          {{profile.businessName}}
+        </v-tab>
     </v-app-bar>
 
 
@@ -196,6 +194,7 @@
                   <v-form 
                     @submit.prevent="submit"
                     ref="form"
+                    v-on:keyup.enter="submit"
 
                   >
                       <v-row>
@@ -356,6 +355,7 @@
 
       salesList: [],
       user : firebase.auth().currentUser,
+      profile : {},
 
 
 
@@ -471,8 +471,8 @@
 
     firestore() {
       return {
-      salesList:db.collection('users').doc(this.user.uid).collection('salesList').orderBy('id', 'desc')
-      
+      salesList:db.collection('users').doc(this.user.uid).collection('salesList').orderBy('id', 'desc'),
+      profile:db.collection('profile').doc(this.user.uid),
       }
     },
 
