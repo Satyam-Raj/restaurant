@@ -385,15 +385,11 @@
                     (user) => {
                         if ( user.user.emailVerified === true ) {
 
-                            
-
                             this.$router.push("/dashboard");
-                    
+
                         }
                         
-                        
                         else {
-                            this.dialog = true
                             
                             alert("Please verify your email address")
                         
@@ -404,12 +400,18 @@
                         //     alert("Incorrect Password")
                         // }
 
-
                     
-                    err => {
-                        alert(err.message);
+                    
+                    
+                },
+
+                err => {
+                         alert((err.message));
                     }
-                })
+                
+                
+                )
+                
 
            
 
@@ -448,8 +450,8 @@
 
 
         },
-          err => {
-              alert(err.message);
+          error => {
+              alert(error.message);
           }
           
       );
