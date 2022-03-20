@@ -100,8 +100,9 @@
 
                                             <v-tabs-slider color="purple darken-4"></v-tabs-slider>
                                             <v-tab >
-                                                <v-icon large>mdi-account</v-icon>
+                                                
                                                 <div class="caption py-1">Login</div>
+                                                <v-icon large>mdi-account</v-icon>
                                             </v-tab>
 
                                             <v-tab-item>
@@ -115,8 +116,12 @@
                                                                 <v-col cols="12">
                                                                     <v-text-field v-model="loginPassword" :append-icon="show2?'eye':'eye-off'" :rules="[rules.required, rules.min]" :type="show2 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 8 characters" counter @click:append="show2 = !show2"></v-text-field>
                                                                 </v-col>
-                                                                <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                                                                <v-col class="d-flex mt-3"   cols="12" sm="6" xsm="12">
+                                                                    <a @click="forgot_password" >  Forgot Password? </a>
                                                                 </v-col>
+
+                                                                
+
                                                                 <v-spacer></v-spacer>
                                                                 <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
                                                                     <v-btn x-large block :disabled="!valid" color="indigo accent-3" class="white--text" @click="login"> Login </v-btn>
@@ -169,8 +174,9 @@
                                         <v-tabs  show-arrows background-color="black" icons-and-text dark grow>
                                             <v-tabs-slider color="purple darken-4"></v-tabs-slider>
                                             <v-tab>
-                                                <v-icon large>mdi-account-outline</v-icon>
+                                                
                                                 <div class="caption py-1">Register</div>
+                                                <v-icon large>mdi-account-outline</v-icon>
                                             </v-tab>
                                            
                                             <v-tab-item>
@@ -362,24 +368,15 @@
 
 
 
-// get isLoggedIn(): boolean { 
-//     const user = this.userData;
-//     if(user === null || user === undefined) return false
-//     return user.emailVerified;
-//   }
-
-
-
 // login function
     async login() {
 
         this.dialog = false
 
-        
-            
-                
-                
-                
+        if (this.loginEmail == '' || this.loginPassword == '') {
+            alert('Please fill all the fields');
+        }
+ 
 
                 firebase
                 .auth()
@@ -388,14 +385,26 @@
                     (user) => {
                         if ( user.user.emailVerified === true ) {
 
+                            
+
                             this.$router.push("/dashboard");
                     
-                    } else {
-                        this.dialog = true
+                        }
                         
-                        alert("Please verify your email address")
-                    
-                    }
+                        
+                        else {
+                            this.dialog = true
+                            
+                            alert("Please verify your email address")
+                        
+                        }
+
+                        // if (firebase.auth().currentUser.password !== this.loginPassword) {
+                        //     this.dialog = true
+                        //     alert("Incorrect Password")
+                        // }
+
+
                     
                     err => {
                         alert(err.message);
@@ -403,14 +412,6 @@
                 })
 
            
-
-       
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //   if (user) {
-    //     console.log(user);
-    //   }
-    // });
-
 
 
 
@@ -445,14 +446,6 @@
               user.user.sendEmailVerification();
 
 
-             
-
-
-
-
-
-
-
 
         },
           err => {
@@ -464,6 +457,49 @@
     //   const user = firebase.auth().currentUser;
     //   await user.sendEmailVerification();
 
+
+    },
+
+    async forgot_password() {
+
+        
+
+         if (this.loginEmail == "") {
+            alert("Please type email address and then click on the 'forgot password' button");
+        } 
+            
+            else {
+
+                this.dialog = false
+
+                firebase
+                .auth()
+                .sendPasswordResetEmail(this.loginEmail)
+                .then(
+                    () => {
+                        alert("Password reset email sent");
+                    },
+                    error => {
+                        alert("Email is not registered.  " + error.message);
+                    }
+                );
+            }
+
+
+        // firebase
+        // .auth()
+        // .sendPasswordResetEmail(this.loginEmail)
+        // .then(
+        //     () => {
+
+               
+        //         alert("Password reset email sent")
+                
+        //     },
+        //     err => {
+        //         alert(err.message);
+        //     }
+        // );
 
     },
 
