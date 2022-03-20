@@ -143,6 +143,8 @@
    
       drawer:false,
       group: null,
+
+      user : firebase.auth().currentUser,
       profile : {},
 
     }),
