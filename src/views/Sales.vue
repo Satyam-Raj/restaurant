@@ -39,7 +39,7 @@
      
 
       <v-tab router to="/account" class="white--text hidden-sm-and-down">
-          {{profile.businessName}}
+          {{ profile.businessName}}
         </v-tab>
     </v-app-bar>
 
@@ -94,13 +94,270 @@
 
     <v-main class="grey lighten-1 pt-0">
       <v-container>
-        <h1 class="pl-3">Sales</h1>
+
         <v-row>
+           <v-col>
+                <h1 class="pl-3">Sales</h1>
+            </v-col>
 
 
+
+
+
+            <v-col  class="d-flex" cols="3" sm="1" xsm="12" align-end>   
+
+                    <v-dialog
+                    v-model="dialogAdd"
+                    persistent max-width="1500px" 
+                    min-width="360px"
+                    @click:outside="dialogAdd = false"
+                    >
+
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        large 
+                        color="blue accent-4" 
+                        :elevation="5"
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                        >
+
+                        Add
+                        
+                        </v-btn>
+                    </template>
+
+                    <v-card>
+                        <v-sheet
+                          rounded="lg"
+                          min-height="80vh"
+                          min-width="50vw"
+                          :elevation="10"
+                          color="grey darken-2"
+                          dark
+                        >
+
+                        <v-container
+                        class="text-center black yellow--text "
+                        >
+
+                          <h2>Add Product</h2>
+                        </v-container>
+                        <v-divider></v-divider>
+              
+                          <v-container>    
+                              <v-form 
+                                @submit.prevent="submit"
+                                ref="form"
+                                v-on:keyup.enter="submit"
+
+                              >
+                                  <v-row>
+                                    
+                                    <v-col
+                                      cols="12"
+                                      md="6"
+                                    >
+                                      <v-text-field
+                                        v-model="name"
+                                        :rules="nameRules"
+                                        :counter="30"
+                                        label="Product Name"
+                                        required
+                                      ></v-text-field>
+                                    </v-col>
+
+
+                                    <v-col
+                                      cols="12"
+                                      md="6"
+                                    >
+                                      <v-text-field
+                                        v-model="price"
+                                        :rules="priceRules"
+                                        :counter="7"
+                                        label="Price"
+                                        required
+                                      ></v-text-field>
+                                    </v-col>
+
+                                    
+                                  </v-row>
+                              </v-form>
+                          </v-container>
+
+                        <v-container
+                          class="text-center  pt-5"
+                        >
+
+                          <v-btn
+                            @click="submitAdd"
+                          >
+                            Submit
+                          </v-btn>
+                          &nbsp;&nbsp;
+                          <v-btn
+                            @click="clearAdd"
+                          >
+                            Clear
+                          </v-btn>
+                        </v-container>
+
+                          <!--  -->
+                        </v-sheet>
+                    </v-card>
+                    </v-dialog>
+            </v-col>
+             
+
+
+
+
+
+
+
+
+            <v-col  class="d-flex" cols="4" sm="1" xsm="6" align-end>   
+
+              <v-dialog
+              v-model="dialog"
+              persistent max-width="1500px" 
+              min-width="360px"
+              @click:outside="dialog = false"
+              >
+
+              <template v-slot:activator="{ on, attrs }">
+                 <v-btn
+                  large 
+                  color="orange darken-3" 
+                  :elevation="5"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                  >
+
+                  Entry
+                  
+                  </v-btn>
+              </template>
+
+              <v-card>
+                  <v-sheet
+                    rounded="lg"
+                    min-height="80vh"
+                    min-width="50vw"
+                    :elevation="10"
+                    color="grey darken-2"
+                    dark
+                  >
+
+                  <v-container
+                  class="text-center black yellow--text "
+                  >
+
+                    <h2>Sales Entry</h2>
+                  </v-container>
+                  <v-divider></v-divider>
+         
+                    <v-container>    
+                        <v-form 
+                          @submit.prevent="submit"
+                          ref="form"
+                          v-on:keyup.enter="submit"
+
+                        >
+                            <v-row>
+                              
+                              <v-col
+                                class="d-flex"
+                                cols="12"
+                                sm="3"
+                              >
+                                <v-select
+                                  :items="items"
+                                  label="Select Product"
+                                ></v-select>
+                              </v-col>
+
+
+
+                              <v-col
+                                cols="12"
+                                md="3"
+                              >
+                                <v-text-field
+                                  v-model="quantity"
+                                  :rules="quantityRules"
+                                  :counter="5"
+                                  label="Quantity"
+                                  required
+                                ></v-text-field>
+                              </v-col>
+
+
+                              <v-col
+                                cols="12"
+                                md="3"
+                              >
+                                <v-text-field
+                                  v-model="description"
+                                  :rules="descriptionRules"
+                                  :counter="30"
+                                  label="Description"
+                                  required
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                md="3"
+                              >
+                                <v-text-field
+                                  v-model="paymentMode"
+                                  :rules="paymentModeRules"
+                                  :counter="5"
+                                  label="Payment Mode"
+                                  required
+                                ></v-text-field>
+                              </v-col>
+                            </v-row>
+                        </v-form>
+
+                        
+                    </v-container>
+
+                    <v-btn> <v-icon> mdi-plus  </v-icon>  </v-btn>
+
+                    
+
+                  <v-container
+                    class="text-center  pt-5"
+                  >
+
+                    <v-btn
+                      @click="submit"
+                    >
+                      Submit
+                    </v-btn>
+                    &nbsp;&nbsp;
+                    <v-btn
+                      @click="clear"
+                    >
+                      Clear
+                    </v-btn>
+                  </v-container>
+
+                    <!--  -->
+                  </v-sheet>
+              </v-card>
+              </v-dialog>
+            </v-col>
+       </v-row>
+
+        <v-row>
           <v-col
             cols="12"
-            sm="8"
+            sm="12"
           >
             <v-sheet
               min-height="70vh"
@@ -108,13 +365,9 @@
               :elevation="10"
             >
 
-
-
-
-
                 <v-simple-table
                   fixed-header
-                  height="879px"
+                  height="849px"
                   dark
                 >
                   <template v-slot:default primary >
@@ -124,13 +377,19 @@
                           Product Name
                         </th>
                         <th class="text-left black">
-                          Quantity (Kg)
+                          Quantity
                         </th>
                         <th class="text-left black accent-1">
                           Price (Rs)
                         </th>
                         <th class="text-left black accent-1">
-                          No. of item
+                          Total (Rs)
+                        </th>
+                        <th class="text-left black accent-1">
+                          Description
+                        </th>
+                        <th class="text-left black accent-1">
+                          Payment mode
                         </th>
                         <th class="text-left black accent-1">
                           Date
@@ -145,7 +404,9 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.quantity }}</td>
                         <td>{{ item.price }}</td>
-                        <td>{{ item.no_of_item }}</td>
+                        <td>{{ item.quantity * item.price }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.paymentMode }}</td>
                         <td>{{ item.date }}</td>
 
 
@@ -155,140 +416,11 @@
                 </v-simple-table>
 
 
-
-
-          
               <!--  -->
             </v-sheet>
           </v-col>
 
-          <v-col
-            cols="12"
-            sm="4"
-          >
-            <v-sheet
-              rounded="lg"
-              min-height="10vh"
-              :elevation="10"
-              color="grey darken-2"
-              dark
-
-
-
-            >
-
-            <v-container
-             class="text-center black yellow--text "
-             >
-
-              <h2>Sales Entry</h2>
-            </v-container>
-            <v-divider></v-divider>
-
-            
-              <v-container>
-
-                   
-                
-            
-                  <v-form 
-                    @submit.prevent="submit"
-                    ref="form"
-                    v-on:keyup.enter="submit"
-
-                  >
-                      <v-row>
-                        
-                        <v-col
-                          cols="12"
-                          md="3"
-                        >
-                          <v-text-field
-                            v-model="name"
-                            :rules="nameRules"
-                            :counter="30"
-                            label="Product Name"
-                            required
-                          ></v-text-field>
-                        </v-col>
-
-                        <v-col
-                          cols="12"
-                          md="3"
-                        >
-                          <v-text-field
-                            v-model="quantity"
-                            :rules="quantityRules"
-                            :counter="5"
-                            label="Quantity"
-                            required
-                          ></v-text-field>
-                        </v-col>
-
-                        <v-col
-                          cols="12"
-                          md="3"
-                        >
-                          <v-text-field
-                            v-model="price"
-                            :rules="priceRules"
-                            :counter="7"
-                            label="Price"
-                            required
-                          ></v-text-field>
-                        </v-col>
-
-                        <v-col
-                          cols="12"
-                          md="3"
-                        >
-                          <v-text-field
-                            v-model="no_of_item"
-                            :rules="no_of_itemRules"
-                            :counter="5"
-                            label="No. of item"
-                            required
-                          ></v-text-field>
-                        </v-col>
-
-
-                      </v-row>
-
-
-                  </v-form>
-
-
-              </v-container>
-
-
-
-            <v-container
-              class="text-center  pt-5"
-             
-             >
-
-              <v-btn
-                @click="submit"
-              >
-                Submit
-              </v-btn>
-              &nbsp;&nbsp;
-              <v-btn
-                @click="clear"
-              >
-                Clear
-              </v-btn>
-            </v-container>
-
-
-
-
-
-            
-              <!--  -->
-            </v-sheet>
-
-
+        
 
 <!-- calender below -->
 <!--             
@@ -326,7 +458,6 @@
 <!-- calender above -->
 
 
-          </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -347,11 +478,16 @@
     data: () => ({
       drawer:false,
       group: null,
+      dialog : false,
+      dialogAdd: false,
+
+      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
 
       name: '',
       quantity: '',
       price: '',
-      no_of_item: '',
+      description: '',
+      paymentMode: '',
 
       salesList: [],
       user : firebase.auth().currentUser,
@@ -377,10 +513,15 @@
         v => /^[0-9]+$/.test(v) || 'must be only number',
       ],
 
-      no_of_itemRules: [
+      descriptionRules: [
         v => !!v || 'required',
-        v => v.length <= 5 || 'must be less than 5 characters',
-        v => /^[0-9]+$/.test(v) || 'must be only number',
+        v => v.length <= 30 || 'must be less than 30 characters',
+      ],
+
+      paymentModeRules: [
+        v => !!v || 'required',
+        v => v.length <= 10 || 'must be less than 10 characters',
+        v => /^[a-zA-Z ]+$/.test(v) || 'must be only alphabet',
       ],
 
       
@@ -405,7 +546,8 @@
                 name: this.name,
                 quantity: this.quantity,
                 price: this.price,
-                no_of_item: this.no_of_item,
+                description: this.description,
+                paymentMode: this.paymentMode,
                 date: new Date().toLocaleDateString("fr-FR"),
               });
 
@@ -415,7 +557,8 @@
           this.name = '';
           this.quantity = '';
           this.price = '';
-          this.no_of_item = '';
+          this.description = '';
+          this.paymentMode = '';
         }
       },
 
@@ -440,7 +583,8 @@
         this.name = ''
         this.quantity = ''
         this.price = ''
-        this.no_of_item = ''
+        this.description = ''
+        this.paymentMode = ''
       },
 
 
