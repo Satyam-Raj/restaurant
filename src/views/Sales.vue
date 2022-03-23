@@ -565,17 +565,7 @@
      
 
 
-              // db.collection('salesList').doc(this.user.uid).set({
-              //   userName : this.user.uid,
-              //   id: Date.now(),
-              //   name: this.name,
-              //   quantity: this.quantity,
-              //   price: this.price,
-              //   no_of_item: this.no_of_item,
-              //   date: new Date().toLocaleDateString("fr-FR"),
-              // });
-
-      
+            
 
 
 
