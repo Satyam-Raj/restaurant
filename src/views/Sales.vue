@@ -108,7 +108,7 @@
                       :key="index"
                     >
                       <v-row>
-                        <v-col cols="12" sm="7">
+                        <v-col cols="12" sm="11">
                           <v-text-field
                             v-model="item.addName"
                             :counter="30"
@@ -117,15 +117,7 @@
                           ></v-text-field>
                         </v-col>
 
-                        <v-col cols="12" sm="4">
-                          <v-text-field
-                            v-model="item.addPrice"
-                            :counter="7"
-                            label="Price"
-                            required
-                          ></v-text-field>
-                        </v-col>
-
+                       
                         <v-col cols="12" sm="1">
                           <v-btn block @click="deleteProduct(item.id)">
                             <v-icon> mdi-delete </v-icon>
@@ -192,18 +184,21 @@
                     <v-form
                       @submit.prevent="submit"
                       ref="form"
+                       v-for="(item, index) in addEntryList"
+                      :key="index"
                     >
                       <v-row>
-                        <v-col class="d-flex" cols="12" sm="3">
+                        <v-col class="d-flex" cols="12" sm="2">
                           <v-select
                             :items="ProductList.map((item) => item.addName)"
+                            v-model="item.addProductName"
                             label="Select Product"
                           ></v-select>
                         </v-col>
 
-                        <v-col cols="12" md="3">
+                        <v-col cols="12" md="2">
                           <v-text-field
-                            v-model="quantity"
+                            v-model="item.quantity"
                             :rules="quantityRules"
                             :counter="5"
                             label="Quantity"
@@ -211,33 +206,54 @@
                           ></v-text-field>
                         </v-col>
 
+                        <v-col cols="12" md="2">
+                          <v-text-field
+                            v-model="item.displayprice"
+                            :rules="priceRules"
+                            :counter="5"
+                            label="Price"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
                         <v-col cols="12" md="3">
                           <v-text-field
-                            v-model="description"
+                            v-model="item.description"
                             :rules="descriptionRules"
                             :counter="30"
                             label="Description"
                             required
                           ></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="3">
+                        <v-col cols="12" md="2">
                           <v-select
-                            :items="payMode"
+                            :items="payModeDrop.map((item) => item.text)"
+                            v-model="item.payMode"
                             label="Payment Mode"
                           ></v-select>
                         </v-col>
+
+                        <v-col cols="12" sm="1">
+                          <v-btn block @click="deleteEntry(item.id)">
+                            <v-icon> mdi-delete </v-icon>
+                          </v-btn>
+                        </v-col>
+
+                        
                       </v-row>
                     </v-form>
                   </v-container>
 
                   <v-container class="text-center pa-5">
-                    <v-btn block> <v-icon> mdi-plus </v-icon> </v-btn>
+                    <v-btn block @click="addEntry">
+                      <v-icon> mdi-plus </v-icon>
+                    </v-btn>
                   </v-container>
 
                   <v-container class="text-center pt-5">
                     <v-btn @click="submit"> Submit </v-btn>
                     &nbsp;&nbsp;
-                    <v-btn @click="clear"> Clear </v-btn>
+                    <v-btn @click="closeEntry"> Close </v-btn>
                   </v-container>
 
                   <!--  -->
@@ -336,16 +352,30 @@ export default {
 
 
     addName: "",
-    addPrice: "",
     addProductList: [],
+    addEntryList: [],
+    addProductName: "",
 
-    name: "",
     quantity: "",
-    price: "",
+    displayprice: "",
     description: "",
-    paymentMode: "",
+    payMode: "",
 
-    payMode: ["PayTm","GPay","UPI", "Online", "Cash", "Dues"],
+    payModeDrop: [
+
+       { text: "PayTm", value: "PayTm" },
+       { text: "GPay", value: "GPay" },
+       { text: "UPI", value: "UPI" },
+       { text: "Online", value: "Online" },
+       { text: "Cash", value: "Cash" },
+        { text: "Dues", value: "Dues" },
+        ],
+
+
+        
+        
+      
+      
 
     salesList: [],
     user: firebase.auth().currentUser,
@@ -381,36 +411,59 @@ export default {
     ],
   }),
 
+  
+
   methods: {
     // valid submit
     submit() {
-      if (this.$refs.form.validate()) {
-        db.collection("users")
+      this.dialog = false;
+        this.addEntryList.forEach((item) => {
+          db.collection("users")
           .doc(this.user.uid)
           .collection("salesList")
           .add({
             id: Date.now(),
-            name: this.name,
-            quantity: this.quantity,
-            price: this.price,
-            description: this.description,
-            paymentMode: this.paymentMode,
+            name: item.addProductName ,
+            quantity: item.quantity,
+            price: item.displayprice,
+            description: item.description,
+            paymentMode:item.payMode  ,
             date: new Date().toLocaleDateString("fr-FR"),
-          });
+        });
+        });
+
+      // if (this.$refs.form.validate()) {}
+
+        // db.collection("users")
+        //   .doc(this.user.uid)                  
+        //   .collection("salesList")             
+        //   .add({
+        //     id: Date.now(),
+        //     name: item.addProductName ,
+        //     quantity: item.quantity,
+        //     price: item.displayprice,
+        //     description: item.description,
+        //     paymentMode:item.payMode  ,
+        //     date: new Date().toLocaleDateString("fr-FR"),
+        //   });
+
+          // send select product to firebase
+          
+
 
         // clear input
         this.name = "";
         this.quantity = "";
-        this.price = "";
+        this.displayprice = "";
         this.description = "";
         this.paymentMode = "";
-      }
+      
     },
 
     clear() {
       this.name = "";
       this.quantity = "";
-      this.price = "";
+      this.displayprice = "";
       this.description = "";
       this.paymentMode = "";
     },
@@ -429,8 +482,23 @@ export default {
       this.addProductList.push({
         id: Date.now(),
         addName: "",
-        addPrice: "",
       });
+    },
+    
+    addEntry() {
+      this.addEntryList.push({
+        id: Date.now(),
+        addProductName: "",
+        quantity: "",
+        displayprice: "",
+        description: "",
+        payMode: "",
+      });
+    },
+
+
+    deleteEntry(id) {
+      this.addEntryList= this.addEntryList.filter((item) => item.id !== id);
     },
 
     deleteProduct(id) {
@@ -448,10 +516,13 @@ export default {
                 .add({
                   id: item.id,
                   addName: item.addName,
-                  addPrice: item.addPrice,
                 });
             });
 
+    },
+
+    closeEntry() {
+      this.dialog = false;
     },
 
     closeProduct() {
@@ -460,6 +531,9 @@ export default {
 
 
   },
+
+  
+
 
   firestore() {
     return {
