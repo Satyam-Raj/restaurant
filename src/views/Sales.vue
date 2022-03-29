@@ -3,7 +3,7 @@
     <v-app-bar app color="grey darken-4" flat :elevation="2">
       <v-app-bar-nav-icon @click="drawer = true" dark></v-app-bar-nav-icon>
       <v-toolbar-title class="white--text">
-        <pre>Inventory </pre>
+        <pre>Crispy </pre>
       </v-toolbar-title>
 
       <v-tabs centered class="ml-n9" color="white" dark>
@@ -111,6 +111,7 @@
                         <v-col cols="12" sm="11">
                           <v-text-field
                             v-model="item.addName"
+                            :rules="addNameRules"
                             :counter="30"
                             label="Product Name"
                             required
@@ -180,12 +181,16 @@
                   </v-container>
                   <v-divider></v-divider>
 
-                  <v-container>
+                  <v-container
+                  
+                   v-for="(item, index) in addEntryList"
+                      :key="index"
+                      
+                  >
                     <v-form
                       @submit.prevent="submit"
                       ref="form"
-                       v-for="(item, index) in addEntryList"
-                      :key="index"
+                      
                     >
                       <v-row>
                         <v-col class="d-flex" cols="12" sm="2">
@@ -209,7 +214,7 @@
                         <v-col cols="12" md="2">
                           <v-text-field
                             v-model="item.displayprice"
-                            :rules="priceRules"
+                            :rules="displaypriceRules"
                             :counter="5"
                             label="Price"
                             required
@@ -275,7 +280,7 @@
                       <th class="text-left black accent-1">Price (Rs)</th>
                       <th class="text-left black accent-1">Total (Rs)</th>
                       <th class="text-left black accent-1">Description</th>
-                      <th class="text-left black accent-1">Payment mode</th>
+                      <th class="text-left black accent-1">Payment</th>
                       <th class="text-left black accent-1">Date</th>
                     </tr>
                   </thead>
@@ -372,18 +377,14 @@ export default {
         ],
 
 
-        
-        
-      
-      
 
     salesList: [],
     user: firebase.auth().currentUser,
     profile: {},
 
-    nameRules: [
+    addNameRules: [
       (v) => !!v || "required",
-      (v) => v.length <= 30 || "must be less than 10 characters",
+      (v) => v.length <= 30 || "must be less than 30 characters",
       (v) => /^[a-zA-Z ]+$/.test(v) || "must be only alphabet",
     ],
 
@@ -393,7 +394,7 @@ export default {
       (v) => /^[0-9]+$/.test(v) || "must be only number",
     ],
 
-    priceRules: [
+    displaypriceRules: [
       (v) => !!v || "required",
       (v) => v.length <= 7 || "must be less than 7 characters",
       (v) => /^[0-9]+$/.test(v) || "must be only number",
@@ -415,50 +416,84 @@ export default {
 
   methods: {
     // valid submit
-    submit() {
-      this.dialog = false;
-        this.addEntryList.forEach((item) => {
-          db.collection("users")
-          .doc(this.user.uid)
-          .collection("salesList")
-          .add({
-            id: Date.now(),
-            name: item.addProductName ,
-            quantity: item.quantity,
-            price: item.displayprice,
-            description: item.description,
-            paymentMode:item.payMode  ,
-            date: new Date().toLocaleDateString("fr-FR"),
-        });
-        });
+    
+              submit() {
+                
 
-      // if (this.$refs.form.validate()) {}
+                  this.addEntryList.forEach((item) => {
 
-        // db.collection("users")
-        //   .doc(this.user.uid)                  
-        //   .collection("salesList")             
-        //   .add({
-        //     id: Date.now(),
-        //     name: item.addProductName ,
-        //     quantity: item.quantity,
-        //     price: item.displayprice,
-        //     description: item.description,
-        //     paymentMode:item.payMode  ,
-        //     date: new Date().toLocaleDateString("fr-FR"),
-        //   });
+                    // condition for form validation
+                    if (item.addProductName == "" || item.quantity == "" || item.displayprice == "" || item.description == "" || item.paymentMode == "") {
+                      alert("Please fill all the fields");
+                      // how to set nameRules
 
-          // send select product to firebase
-          
+                    } 
+                    else if (isNaN(item.quantity)) {
+                        alert("Quantity must be a number");
+                      }
+                    else if((item.quantity).length > 5){
+                      alert("Quantity must be less than 5 digits");
+                    }
+                    else if(isNaN(item.displayprice)){
+                      alert("Price must be a number");
+                    }
+                    else if ((item.displayprice).length > 7){
+                      alert("Price must be less than 7 digits");
+                    }
+                    else if ((item.description).length > 30){
+                      alert("Description must be less than 30 characters");
+                    }
+
+                    
+                  
+                     else {
+                          this.dialog = false;
+
+                          db.collection("users")
+                          .doc(this.user.uid)
+                          .collection("salesList")
+                          .add({
+                            id: Date.now(),
+                            name: item.addProductName ,
+                            quantity: item.quantity,
+                            price: item.displayprice,
+                            description: item.description,
+                            paymentMode:item.payMode  ,
+                            date: new Date().toLocaleDateString("fr-FR"),
+                        });
+                     }
+                  });
+
+                // if (this.$refs.form.validate()) {}
+
+                  // db.collection("users")
+                  //   .doc(this.user.uid)                  
+                  //   .collection("salesList")             
+                  //   .add({
+                  //     id: Date.now(),
+                  //     name: item.addProductName ,
+                  //     quantity: item.quantity,
+                  //     price: item.displayprice,
+                  //     description: item.description,
+                  //     paymentMode:item.payMode  ,
+                  //     date: new Date().toLocaleDateString("fr-FR"),
+                  //   });
+
+                    // send select product to firebase
+                    
 
 
-        // clear input
-        this.name = "";
-        this.quantity = "";
-        this.displayprice = "";
-        this.description = "";
-        this.paymentMode = "";
-      
-    },
+                  // clear input
+                  this.name = "";
+                  this.quantity = "";
+                  this.displayprice = "";
+                  this.description = "";
+                  this.paymentMode = "";
+
+                  
+                
+              },
+
 
     clear() {
       this.name = "";
@@ -506,17 +541,25 @@ export default {
     },
 
     submitProduct() {
-      this.dialogAdd = false;
+      
             
             this.addProductList.forEach((item) => {
-              db.collection("users")
+              if (item.addName == "" || (item.addName).length > 30) {
+                alert("Please fill Product Name correctly");
+              } else {
+
+                this.dialogAdd = false;
+
+                db.collection("users")
                 .doc(this.user.uid)
                 .collection("addProductList")
-                
                 .add({
                   id: item.id,
                   addName: item.addName,
                 });
+                
+              }
+              
             });
 
     },
