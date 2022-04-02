@@ -105,8 +105,41 @@
               min-height="70vh"
               rounded="lg"
               :elevation="10"
+              dark
 
             >
+
+
+
+            <v-container fluid>
+                <v-sparkline
+                  :fill="false"
+                  :labels="prodName"
+                  :gradient="['#f72047', '#ffd200', '#1feaea']"
+                  :line-width="0.5"
+                  :padding="8"
+                  :smooth="1"
+                  :value="prodQuantity"
+                  auto-draw
+                ></v-sparkline>
+              </v-container>
+
+
+
+
+
+              <v-date-picker
+                v-model="date"
+              ></v-date-picker>
+
+              
+
+
+              <v-btn @click="getSalesList">
+              click me
+            </v-btn>
+
+
               <!--  -->
             </v-sheet>
           </v-col>
@@ -119,8 +152,60 @@
               rounded="lg"
               min-height="70vh"
               :elevation="10"
-
+              dark
             >
+
+
+              <v-container>
+
+
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="dates"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="dates"
+                      label="Picker in menu"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="dates"
+                    no-title
+                    scrollable
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="menu = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.menu.save(dates)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
+
+                
+              </v-container>
+            
+
+
               <!--  -->
             </v-sheet>
           </v-col>
@@ -136,7 +221,7 @@
      import "firebase/auth";
   import { db } from '../main';
 
-
+  
   export default {
     name: 'Dashboard',
     data: () => ({
@@ -146,6 +231,23 @@
 
       user : firebase.auth().currentUser,
       profile : {},
+
+      salesList : [],
+
+      date: '',
+      prodQuantity: [],
+      prodName: [],
+
+
+       dates: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
+
+
+       
+
+      
 
     }),
 
@@ -160,17 +262,57 @@
           }
         )
     },
+
+    // filer salesList by date
+    getSalesList(){
+      let selectDate = ((this.date.split("-")).reverse()).join("/");
+      db
+        .collection("users")
+        .doc(this.user.uid)
+        .collection("salesList")
+      .where("date", "==", selectDate)
+      .onSnapshot(snapshot => {
+        this.prodQuantity = [];
+        this.prodName = [];
+        snapshot.forEach(doc => {
+          this.prodQuantity.push(parseInt(doc.data().quantity));
+          this.prodName.push(doc.data().name);
+          
+        }
+        
+        );
+      console.log(this.prodQuantity);
+      console.log(this.prodName);
+
+      }
+      );
+      console.log(selectDate);
+    },
+    
+     
+
+    
       
        
     },
+    
 
 
 
     firestore() {
       return {
       profile:db.collection('profile').doc(this.user.uid),
+      salesList: db
+        .collection("users")
+        .doc(this.user.uid)
+        .collection("salesList")
+        .orderBy("date"),
       }
     },
+
+    
+
+    
 
     
 
