@@ -96,8 +96,7 @@
           <v-col cols="12" sm="4">
             <v-sheet rounded="lg" min-height="70vh" :elevation="10" dark>
 
-              <v-container fluid>
-                <p>{{ radios }}</p>
+              <v-container fluid class="pl-16">
                 <v-radio-group
                   v-model="radios"
                   mandatory
@@ -138,6 +137,7 @@
                       label="Select Date"
                       prepend-icon="mdi-calendar"
                       readonly
+                      color="orange"
                       v-bind="attrs"
                       v-on="on"
                     ></v-text-field>
@@ -206,6 +206,7 @@ export default {
 
     // filer salesList by date
     getGraph() {
+      this.menu = false;
       let selectDate = this.date.split("-").reverse().join("/");
       db.collection("users")
         .doc(this.user.uid)
@@ -232,11 +233,10 @@ export default {
         for (let i = 0; i < Math.min((this.prodQuantity).length, (this.prodPrice).length); i++) {
          eachProdEarn[i] = (this.prodQuantity)[i] * (this.prodPrice)[i];
       }
-
-        
         return eachProdEarn 
-        
-      }
+      },
+
+
 
   },
 
