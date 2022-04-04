@@ -77,7 +77,7 @@
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
-              
+
                 <h3>Earning per Product</h3>
                 <v-sparkline
                   :fill="false"
@@ -98,32 +98,28 @@
 
           <v-col cols="12" sm="4">
             <v-sheet rounded="lg" min-height="70vh" :elevation="10" dark>
-
               <v-container fluid class="pl-16">
-                <v-radio-group
-                  v-model="radios"
-                  mandatory
-                >
-                <v-row>
-                  <v-col>
-                    <v-radio
-                      label="Per Day"
-                      color="orange"
-                      value="perDay"
-                    ></v-radio>
-                  </v-col>
-                  <v-col>
-                    <v-radio
-                      label="Date Range"
-                      color="primary"
-                      value="dateRange"
-                    ></v-radio>
-                  </v-col>
-                </v-row>
+                <v-radio-group v-model="radios" mandatory>
+                  <v-row>
+                    <v-col>
+                      <v-radio
+                        label="Per Day"
+                        color="orange"
+                        value="perDay"
+                      ></v-radio>
+                    </v-col>
+                    <v-col>
+                      <v-radio
+                        label="Date Range"
+                        color="primary"
+                        value="dateRange"
+                      ></v-radio>
+                    </v-col>
+                  </v-row>
                 </v-radio-group>
               </v-container>
-  
-              <v-container>
+
+              <v-container v-if="radios === 'perDay'">
                 <v-menu
                   ref="menu"
                   v-model="menu"
@@ -132,7 +128,6 @@
                   transition="scale-transition"
                   offset-y
                   min-width="auto"
-                  v-if="radios === 'perDay'"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
@@ -146,19 +141,64 @@
                     ></v-text-field>
                   </template>
 
-                  <v-date-picker v-model="date" no-title scrollable @change="getGraph">
+                  <v-date-picker
+                    v-model="date"
+                    no-title
+                    scrollable
+                    @change="getGraph"
+                  >
+                    <v-spacer></v-spacer>
+
+                    <v-btn text color="primary" @click="menu = false">
+                      Cancel
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
+                <h4>
+                  The total earning on date "{{ date }}" is Rs {{ eachDayEarn }}
+                </h4>
+              </v-container>
+
+              <v-container v-if="radios === 'dateRange'">
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="dates"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="rangeDate"
+                      label="Select Date"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      color="blue"
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+
+                  <v-date-picker
+                    v-model="rangeDate"
+                    range
+                    no-title
+                    scrollable
+                  >
                     <v-spacer></v-spacer>
 
                     <v-btn text color="primary" @click="menu = false">
                       Cancel
                     </v-btn>
 
+                     <v-btn text color="primary" @click="rangeDateGraph">
+                      Ok
+                    </v-btn>
+
                   </v-date-picker>
                 </v-menu>
-              </v-container>
-
-              <v-container>
-                The total earning today is Rs {{eachDayEarn}}
               </v-container>
 
               <!--  -->
@@ -189,6 +229,7 @@ export default {
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
+    rangeDate: "",
     prodQuantity: [],
     prodName: [],
     prodPrice: [],
@@ -212,9 +253,27 @@ export default {
         });
     },
 
-    // filer salesList by date
-    getGraph() {
+    // filer salesList by date range
+    async rangeDateGraph() {
+      let startDate = (this.rangeDate[0]).split("-").reverse().join("/");
+      let endDate = (this.rangeDate[1]).split("-").reverse().join("/");
       
+
+      let sales = await db.collection("users")
+        .doc(this.user.uid)
+        .collection("salesList")
+        .where("date", ">=", startDate)
+        .where("date", "<=", endDate)
+        .get();
+        sales.forEach(doc => {
+          console.log(doc.data());
+        });
+
+
+
+    },
+
+    getGraph() {
       let selectDate = this.date.split("-").reverse().join("/");
       db.collection("users")
         .doc(this.user.uid)
@@ -229,33 +288,34 @@ export default {
             this.prodPrice.push(parseInt(doc.data().price));
             this.prodName.push(doc.data().name);
           });
-          console.log(this.prodPrice)
         });
     },
   },
 
   mounted() {
-      this.getGraph();
+    // for auto map on graph for current date
+    this.getGraph();
   },
 
   computed: {
-
-      totalEarning() {
-        let eachProdEarn = [];
-        for (let i = 0; i < Math.min((this.prodQuantity).length, (this.prodPrice).length); i++) {
-         eachProdEarn[i] = (this.prodQuantity)[i] * (this.prodPrice)[i];
+    totalEarning() {
+      let eachProdEarn = [];
+      for (
+        let i = 0;
+        i < Math.min(this.prodQuantity.length, this.prodPrice.length);
+        i++
+      ) {
+        eachProdEarn[i] = this.prodQuantity[i] * this.prodPrice[i];
       }
-        return eachProdEarn 
-      },
+      return eachProdEarn;
+    },
 
-      eachDayEarn() {
-        
-          let dayEarn = (this.totalEarning).reduce(function(a, b) { return a + b; }, 0)
-        return dayEarn
-      }
-
-
-
+    eachDayEarn() {
+      let dayEarn = this.totalEarning.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+      return dayEarn;
+    },
   },
 
   firestore() {
