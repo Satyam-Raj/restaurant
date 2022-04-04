@@ -76,6 +76,8 @@
                   :value="prodQuantity"
                   auto-draw
                 ></v-sparkline>
+                <v-divider></v-divider>
+              
                 <h3>Earning per Product</h3>
                 <v-sparkline
                   :fill="false"
@@ -86,6 +88,7 @@
                   :smooth="1"
                   :value="totalEarning"
                   auto-draw
+                  :tooltip="totalEarning"
                 ></v-sparkline>
               </v-container>
 
@@ -106,14 +109,14 @@
                     <v-radio
                       label="Per Day"
                       color="orange"
-                      value="radio-1"
+                      value="perDay"
                     ></v-radio>
                   </v-col>
                   <v-col>
                     <v-radio
                       label="Date Range"
                       color="primary"
-                      value="radio-2"
+                      value="dateRange"
                     ></v-radio>
                   </v-col>
                 </v-row>
@@ -129,7 +132,7 @@
                   transition="scale-transition"
                   offset-y
                   min-width="auto"
-                  v-if="radios === 'radio-1'"
+                  v-if="radios === 'perDay'"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
@@ -143,16 +146,19 @@
                     ></v-text-field>
                   </template>
 
-                  <v-date-picker v-model="date" no-title scrollable>
+                  <v-date-picker v-model="date" no-title scrollable @change="getGraph">
                     <v-spacer></v-spacer>
 
                     <v-btn text color="primary" @click="menu = false">
                       Cancel
                     </v-btn>
 
-                    <v-btn text color="primary" @click="getGraph"> Ok </v-btn>
                   </v-date-picker>
                 </v-menu>
+              </v-container>
+
+              <v-container>
+                The total earning today is Rs {{eachDayEarn}}
               </v-container>
 
               <!--  -->
@@ -180,7 +186,9 @@ export default {
 
     salesList: [],
 
-    date: "",
+    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .substr(0, 10),
     prodQuantity: [],
     prodName: [],
     prodPrice: [],
@@ -206,7 +214,7 @@ export default {
 
     // filer salesList by date
     getGraph() {
-      this.menu = false;
+      
       let selectDate = this.date.split("-").reverse().join("/");
       db.collection("users")
         .doc(this.user.uid)
@@ -226,6 +234,10 @@ export default {
     },
   },
 
+  mounted() {
+      this.getGraph();
+  },
+
   computed: {
 
       totalEarning() {
@@ -235,6 +247,12 @@ export default {
       }
         return eachProdEarn 
       },
+
+      eachDayEarn() {
+        
+          let dayEarn = (this.totalEarning).reduce(function(a, b) { return a + b; }, 0)
+        return dayEarn
+      }
 
 
 
