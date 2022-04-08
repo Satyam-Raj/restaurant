@@ -122,12 +122,12 @@
                 <h3>Earning per Product</h3>
                 <v-sparkline
                   :fill="false"
-                  :labels="rangeProdName"
+                  :labels="nameOfProductRange"
                   :gradient="['#1feaea', '#ffd200', '#f72047']"
                   :line-width="0.7"
                   :padding="10"
                   :smooth="1"
-                  :value="totalEarningRange"
+                  :value="rangeTotality"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -208,9 +208,9 @@
                     </v-btn>
                   </v-date-picker>
                 </v-menu>
-                <h4>
+                <body>
                   The total earning on date "{{ date }}" is Rs {{ eachDayEarn }}
-                </h4>
+                </body>
               </v-container>
 
               <v-container v-if="radios === 'dateRange'">
@@ -253,7 +253,252 @@
 
                   </v-date-picker>
                 </v-menu>
+                <body>
+                  The total earning on date "{{ totalityDate }}" is Rs {{ eachDayEarnRange }}
+                </body>
               </v-container>
+
+              <v-container v-if="radios === 'perDay'">
+                <v-simple-table fixed-header height="220px" dark>
+                  <template v-slot:default primary>
+                    <h4 class="primary">Quantity sold per Product Data</h4>
+
+                    <v-row class="mr-3 pt-3">
+                      <v-col >
+                        <thead>
+                          <tr>
+                            <th class="text-left black red--text">Product Name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="item in prodName" :key="item.index">
+                            <td>{{ item }}</td>
+                          </tr>
+                        </tbody>
+                    </v-col>
+
+                    <v-col>
+                      <thead>
+                        <tr>
+                          <th class="text-left black red--text">Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in prodQuantity" :key="item.index">
+                          <td>{{ item }}</td>
+                          
+                        </tr>
+                      </tbody>
+                    </v-col>
+
+                    </v-row>
+                    
+                  </template>
+                </v-simple-table>
+              </v-container>
+
+              <v-container v-if="radios === 'perDay'">
+                <v-simple-table fixed-header height="250px" dark>
+                  <template v-slot:default primary>
+                    <h4 class="primary">Earning per Product</h4>
+
+                    <v-row class="mr-3 pt-3">
+                      <v-col >
+                        <thead>
+                          <tr>
+                            <th class="text-left black red--text">Product Name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="item in prodName" :key="item.index">
+                            <td>{{ item }}</td>
+                          </tr>
+                        </tbody>
+                    </v-col>
+
+                    <v-col>
+                      <thead>
+                        <tr>
+                          <th class="text-left black red--text">Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in prodTotal" :key="item.index">
+                          <td>{{ item }}</td>
+                          
+                        </tr>
+                      </tbody>
+                    </v-col>
+
+                    </v-row>
+                    
+                  </template>
+                </v-simple-table>
+              </v-container>
+
+
+<!--  Range Data below -->
+
+              <v-container v-if="radios === 'dateRange'">
+                <v-simple-table fixed-header height="250px" dark>
+                  <template v-slot:default primary>
+                    <h4 class="primary">Earning per day</h4>
+
+                    <v-row class="mr-3 pt-3">
+                      <v-col >
+                        <thead>
+                          <tr>
+                            <th class="text-left black red--text">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="item in totalityDate" :key="item.index">
+                            <td>{{ item }}</td>
+                          </tr>
+                        </tbody>
+                    </v-col>
+
+                    <v-col>
+                      <thead>
+                        <tr>
+                          <th class="text-left black red--text">Earning</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in rangeTotal" :key="item.index">
+                          <td>{{ item }}</td>
+                          
+                        </tr>
+                      </tbody>
+                    </v-col>
+                    
+                    </v-row>
+                    
+                  </template>
+                </v-simple-table>
+              </v-container>
+
+
+              <v-container v-if="radios === 'dateRange'">
+                <v-simple-table fixed-header height="300px" dark>
+                  <template v-slot:default primary>
+                    <h4 class="primary">Quantity sold per Product</h4>
+
+                    <v-row class="mr-3 pt-3">
+                      <v-col >
+                        <thead>
+                          <tr>
+                            <th class="text-left black red--text">Product Name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="item in prodNameRange" :key="item.index">
+                            <td>{{ item }}</td>
+                          </tr>
+                        </tbody>
+                    </v-col>
+
+                    <v-col>
+                      <thead>
+                        <tr>
+                          <th class="text-left black red--text">Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in prodQuantityRange" :key="item.index">
+                          <td>{{ item }}</td>
+                          
+                        </tr>
+                      </tbody>
+                    </v-col>
+
+                    </v-row>
+                    
+                  </template>
+                </v-simple-table>
+              </v-container>
+
+              <v-container v-if="radios === 'dateRange'">
+                <v-simple-table fixed-header height="300px" dark>
+                  <template v-slot:default primary>
+                    <h4 class="primary">Earning per Product</h4>
+
+                    <v-row class="mr-3 pt-3">
+                      <v-col >
+                        <thead>
+                          <tr>
+                            <th class="text-left black red--text">Product Name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="item in nameOfProductRange" :key="item.index">
+                            <td>{{ item }}</td>
+                          </tr>
+                        </tbody>
+                    </v-col>
+
+                    <v-col>
+                      <thead>
+                        <tr>
+                          <th class="text-left black red--text">Earning</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in rangeTotality" :key="item.index">
+                          <td>{{ item }}</td>
+                          
+                        </tr>
+                      </tbody>
+                    </v-col>
+
+                    </v-row>
+                    
+                  </template>
+                </v-simple-table>
+              </v-container>
+
+              <v-container v-if="radios === 'dateRange'">
+                <v-simple-table fixed-header height="283px" dark>
+                  <template v-slot:default primary>
+                    <h4 class="primary">Total items sold on Each day in selected range</h4>
+
+                    <v-row class="mr-3 pt-3 ">
+                      <v-col >
+                        <thead>
+                          <tr>
+                            <th class="text-left black red--text">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="item in newDate" :key="item.index">
+                            <td>{{ item }}</td>
+                          </tr>
+                        </tbody>
+                    </v-col>
+
+                    <v-col>
+                      <thead>
+                        <tr>
+                          <th class="text-left black red--text">No. of item</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in newQuantity" :key="item.index">
+                          <td>{{ item }}</td>
+                          
+                        </tr>
+                      </tbody>
+                    </v-col>
+
+                    </v-row>
+                    
+                  </template>
+                </v-simple-table>
+              </v-container>
+
+
+
+              
 
               <!--  -->
             </v-sheet>
@@ -306,6 +551,8 @@ export default {
     prodPriceRange: [],
     rangeTotal: [],
     totalityDate: [],
+    rangeTotality: [],
+    nameOfProductRange: [],
 
     dates: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -354,6 +601,8 @@ export default {
 
         });
 
+        
+
         // add quantity if same product is repeated
           
         this.prodQuantityRange = [];
@@ -368,6 +617,8 @@ export default {
             this.prodQuantityRange.push(this.rangeProdQuantity[i]);
           }
         }
+
+        
 
         // align price with the index of the product name
         this.prodPriceRange = [];
@@ -433,6 +684,55 @@ export default {
           }
         }
 
+        // add total if same product is repeated
+        
+        let totality2 = [];
+        let nameOfProduct = [];
+        sales.forEach(doc => {
+          totality2.push(parseInt(doc.data().total));
+          nameOfProduct.push(doc.data().name);
+        });
+
+        let rangeTotality1 = [];
+        let nameOfProductRange1 = [];
+        let count4 = 0;
+        for (let i = 0; i < totality2.length; i++) {
+          if (i === 0) {
+            rangeTotality1.push(totality2[i]);
+            nameOfProductRange1.push(nameOfProduct[i]);
+          } else {
+            if (nameOfProduct[i] === nameOfProduct[i - 1]) {
+              rangeTotality1[count4] += totality2[i];
+            } else {
+              count4++;
+              rangeTotality1.push(totality2[i]);
+              nameOfProductRange1.push(nameOfProduct[i]);
+            }
+          }
+        }
+
+
+
+        // add total if same Product is repeated
+
+        this.rangeTotality = [];
+        this.nameOfProductRange = [];
+        for (let i = 0; i < rangeTotality1.length; i++) {
+          if (this.nameOfProductRange.includes(nameOfProductRange1[i])) {
+            let index = this.nameOfProductRange.indexOf(nameOfProductRange1[i]);
+            this.rangeTotality[index] += rangeTotality1[i];
+          } else {
+            this.nameOfProductRange.push(nameOfProductRange1[i]);
+            this.rangeTotality.push(rangeTotality1[i]);
+          }
+        }
+
+    
+
+
+
+
+
 
 
     },
@@ -472,10 +772,7 @@ export default {
           });
         });
 
-        console.log(this.prodQuantity);
-        console.log(this.prodName);
-        console.log(this.prodTotal);
-
+       
         
         
     }
@@ -507,6 +804,13 @@ export default {
 
     eachDayEarn() {
       let dayEarn = this.prodTotal.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+      return dayEarn;
+    },
+
+    eachDayEarnRange() {
+      let dayEarn = this.rangeTotal.reduce(function (a, b) {
         return a + b;
       }, 0);
       return dayEarn;
