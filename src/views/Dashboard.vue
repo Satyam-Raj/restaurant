@@ -64,16 +64,17 @@
         <v-row>
           <v-col cols="12" sm="8">
             <v-sheet min-height="70vh" rounded="lg" :elevation="10" dark>
-              <v-container fluid class="pa-2">
+              <v-container fluid class="pa-2" v-if="radios === 'perDay'">
                 <h3>Quantity sold per Product</h3>
                 <v-sparkline
                   :fill="false"
                   :labels="prodName"
                   :gradient="['#1feaea', '#ffd200', '#f72047']"
-                  :line-width="0.5"
+                  :line-width="0.7"
                   :padding="10"
                   :smooth="1"
                   :value="prodQuantity"
+                  color="deep-purple lighten-3"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -83,13 +84,66 @@
                   :fill="false"
                   :labels="prodName"
                   :gradient="['#1feaea', '#ffd200', '#f72047']"
-                  :line-width="0.5"
+                  :line-width="0.7"
                   :padding="10"
                   :smooth="1"
-                  :value="totalEarning"
+                  :value="prodTotal"
                   auto-draw
-                  :tooltip="totalEarning"
                 ></v-sparkline>
+              </v-container>
+
+              <v-container fluid class="pa-2" v-if="radios === 'dateRange'">
+                <h3>Earning per day</h3>
+                <v-sparkline
+                  :fill="false"
+                  :labels="totalityDate"
+                  :gradient="['#1feaea', '#ffd200', '#f72047']"
+                  :line-width="0.7"
+                  :padding="20"
+                  :smooth="1"
+                  :value="rangeTotal"
+                  auto-draw
+                ></v-sparkline>
+                <v-divider></v-divider>
+
+                <h3>Quantity sold per Product</h3>
+                <v-sparkline
+                  :fill="false"
+                  :labels="prodNameRange"
+                  :gradient="['#1feaea', '#ffd200', '#f72047']"
+                  :line-width="0.7"
+                  :padding="10"
+                  :smooth="1"
+                  :value="prodQuantityRange"
+                  auto-draw
+                ></v-sparkline>
+                <v-divider></v-divider>
+
+                <h3>Earning per Product</h3>
+                <v-sparkline
+                  :fill="false"
+                  :labels="rangeProdName"
+                  :gradient="['#1feaea', '#ffd200', '#f72047']"
+                  :line-width="0.7"
+                  :padding="10"
+                  :smooth="1"
+                  :value="totalEarningRange"
+                  auto-draw
+                ></v-sparkline>
+                <v-divider></v-divider>
+
+                <small>Total items sold on Each day in selected range</small>
+                <v-sparkline
+                  :fill="false"
+                  :labels="newDate"
+                  :gradient="['#1feaea', '#ffd200', '#f72047']"
+                  :line-width="0.7"
+                  :padding="20"
+                  :smooth="1"
+                  :value="newQuantity"
+                  auto-draw
+                ></v-sparkline>
+                
               </v-container>
 
               <!--  -->
@@ -172,7 +226,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="rangeDate"
-                      label="Select Date"
+                      label="Select Date Range"
                       prepend-icon="mdi-calendar"
                       readonly
                       color="blue"
@@ -210,6 +264,8 @@
   </v-app>
 </template>
 
+
+
 <script>
 import firebase from "firebase";
 import "firebase/auth";
@@ -230,9 +286,26 @@ export default {
       .toISOString()
       .substr(0, 10),
     rangeDate: "",
+
     prodQuantity: [],
     prodName: [],
     prodPrice: [],
+    prodTotal: [],
+
+
+    rangeProdQuantity: [],
+    rangeProdName: [],
+    rangeProdPrice: [],
+    storedRangeDate: [],
+
+    newQuantity: [],
+    newDate: [],
+
+    prodQuantityRange: [],
+    prodNameRange: [],
+    prodPriceRange: [],
+    rangeTotal: [],
+    totalityDate: [],
 
     dates: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -265,13 +338,108 @@ export default {
         .where("date", ">=", startDate)
         .where("date", "<=", endDate)
         .get();
+
+
+        this.rangeProdQuantity = [];
+        this.rangeProdName = [];
+        this.rangeProdPrice = [];
+        this.storedRangeDate = [];
+        this.rangeTotal = [];
         sales.forEach(doc => {
-          console.log(doc.data());
+          this.rangeProdQuantity.push(parseInt(doc.data().quantity));
+          this.rangeProdName.push(doc.data().name);
+          this.rangeProdPrice.push(parseInt(doc.data().price));
+          this.rangeTotal.push(parseInt(doc.data().total));
+          this.storedRangeDate.push(doc.data().date);
+
         });
+
+        // add quantity if same product is repeated
+          
+        this.prodQuantityRange = [];
+        this.prodNameRange = [];
+
+        for (let i = 0; i < (this.rangeProdName).length; i++) {
+          if (this.prodNameRange.includes(this.rangeProdName[i])) {
+            let index = this.prodNameRange.indexOf(this.rangeProdName[i]);
+            this.prodQuantityRange[index] += this.rangeProdQuantity[i];
+          } else {
+            this.prodNameRange.push(this.rangeProdName[i]);
+            this.prodQuantityRange.push(this.rangeProdQuantity[i]);
+          }
+        }
+
+        // align price with the index of the product name
+        this.prodPriceRange = [];
+        for (let i = 0; i < this.prodNameRange.length; i++) {
+          for (let j = 0; j < this.rangeProdName.length; j++) {
+            if (this.prodNameRange[i] === this.rangeProdName[j]) {
+              this.prodPriceRange.push(this.rangeProdPrice[j]);
+            }
+          }
+        }
+
+        // add quantity if same date is repeated
+
+        let quantity = [];
+        let date = [];
+        sales.forEach(doc => {
+          quantity.push(parseInt(doc.data().quantity));
+          date.push(doc.data().date);
+        });
+
+        this.newQuantity = [];
+        this.newDate = [];
+        let count = 0;
+        for (let i = 0; i < quantity.length; i++) {
+          if (i === 0) {
+            this.newQuantity.push(quantity[i]);
+            this.newDate.push(date[i]);
+          } else {
+            if (date[i] === date[i - 1]) {
+              this.newQuantity[count] += quantity[i];
+            } else {
+              count++;
+              this.newQuantity.push(quantity[i]);
+              this.newDate.push(date[i]);
+            }
+          }
+        }
+
+        // add total earning if same date is repeated
+        
+        let totality = [];
+        let dDate = [];
+        sales.forEach(doc => {
+          totality.push(parseInt(doc.data().total));
+          dDate.push(doc.data().date);
+        });
+
+        this.rangeTotal = [];
+        this.totalityDate = [];
+        let count3 = 0;
+        for (let i = 0; i < totality.length; i++) {
+          if (i === 0) {
+            this.rangeTotal.push(totality[i]);
+            this.totalityDate.push(dDate[i]);
+          } else {
+            if (dDate[i] === dDate[i - 1]) {
+              this.rangeTotal[count3] += totality[i];
+            } else {
+              count3++;
+              this.rangeTotal.push(totality[i]);
+              this.totalityDate.push(dDate[i]);
+            }
+          }
+        }
 
 
 
     },
+
+
+
+    
 
     getGraph() {
       let selectDate = this.date.split("-").reverse().join("/");
@@ -283,13 +451,38 @@ export default {
           this.prodQuantity = [];
           this.prodName = [];
           this.prodPrice = [];
+          this.prodTotal = [];
           snapshot.forEach((doc) => {
-            this.prodQuantity.push(parseInt(doc.data().quantity));
-            this.prodPrice.push(parseInt(doc.data().price));
-            this.prodName.push(doc.data().name);
+            // add quantity if same product is repeated
+            if (this.prodName.includes(doc.data().name)) {
+              let index = this.prodName.indexOf(doc.data().name);
+              this.prodQuantity[index] += parseInt(doc.data().quantity);
+            } else {
+              this.prodName.push(doc.data().name);
+              this.prodQuantity.push(parseInt(doc.data().quantity));
+            }
+
+            // add total earning if same date is repeated
+            if (this.prodTotal.includes(doc.data().total)) {
+              let index = this.prodTotal.indexOf(doc.data().total);
+              this.prodTotal[index] += parseInt(doc.data().total);
+            } else {
+              this.prodTotal.push(parseInt(doc.data().total));
+            }
           });
         });
-    },
+
+        console.log(this.prodQuantity);
+        console.log(this.prodName);
+        console.log(this.prodTotal);
+
+        
+        
+    }
+
+    
+
+
   },
 
   mounted() {
@@ -298,24 +491,47 @@ export default {
   },
 
   computed: {
-    totalEarning() {
-      let eachProdEarn = [];
-      for (
-        let i = 0;
-        i < Math.min(this.prodQuantity.length, this.prodPrice.length);
-        i++
-      ) {
-        eachProdEarn[i] = this.prodQuantity[i] * this.prodPrice[i];
-      }
-      return eachProdEarn;
-    },
+
+    // for auto map on graph for current date
+    // totalEarning() {
+    //   let eachProdEarn = [];
+    //   for (
+    //     let i = 0;
+    //     i < Math.min(this.prodQuantity.length, this.prodPrice.length);
+    //     i++
+    //   ) {
+    //     eachProdEarn[i] = this.prodQuantity[i] * this.prodPrice[i];
+    //   }
+    //   return eachProdEarn;
+    // },
 
     eachDayEarn() {
-      let dayEarn = this.totalEarning.reduce(function (a, b) {
+      let dayEarn = this.prodTotal.reduce(function (a, b) {
         return a + b;
       }, 0);
       return dayEarn;
     },
+
+
+// for range graph
+    totalEarningRange() {
+      let rangeProdEarn = [];
+      for (
+        let i = 0;
+        i < Math.min(this.prodQuantityRange.length, this.prodPriceRange.length);
+        i++
+      ) {
+        rangeProdEarn[i] = this.prodQuantityRange[i] * this.prodPriceRange[i];
+      }
+      return rangeProdEarn;
+    },
+
+    // eachDayEarnRange() {
+    //   let dayEarnrange = this.totalEarningRange.reduce(function (a, b) {
+    //     return a + b;
+    //   }, 0);
+    //   return dayEarnrange;
+    // },
   },
 
   firestore() {

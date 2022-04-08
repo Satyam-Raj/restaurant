@@ -289,7 +289,7 @@
                       <td>{{ item.name }}</td>
                       <td>{{ item.quantity }}</td>
                       <td>{{ item.price }}</td>
-                      <td>{{ item.quantity * item.price }}</td>
+                      <td>{{ item.total }}</td>
                       <td>{{ item.description }}</td>
                       <td>{{ item.paymentMode }}</td>
                       <td>{{ item.date }}</td>
@@ -459,6 +459,7 @@ export default {
                             price: item.displayprice,
                             description: item.description,
                             paymentMode:item.payMode  ,
+                            total: item.quantity * item.displayprice,
                             date: new Date().toLocaleDateString("fr-FR"),
                         });
                      }
