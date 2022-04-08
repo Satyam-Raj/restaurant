@@ -104,6 +104,7 @@
                   :padding="20"
                   :smooth="1"
                   :value="rangeTotal"
+                  height="80"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -117,6 +118,7 @@
                   :padding="10"
                   :smooth="1"
                   :value="prodQuantityRange"
+                  height="80"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -130,6 +132,7 @@
                   :padding="10"
                   :smooth="1"
                   :value="rangeTotality"
+                  height="80"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -143,6 +146,7 @@
                   :padding="20"
                   :smooth="1"
                   :value="newQuantity"
+                  height="79"
                   auto-draw
                 ></v-sparkline>
                 
