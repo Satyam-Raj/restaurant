@@ -75,6 +75,7 @@
                   :smooth="1"
                   :value="prodQuantity"
                   color="deep-purple lighten-3"
+                  height="95"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -88,6 +89,7 @@
                   :padding="10"
                   :smooth="1"
                   :value="prodTotal"
+                  height="95"
                   auto-draw
                 ></v-sparkline>
               </v-container>
@@ -152,12 +154,32 @@
 
           <v-col cols="12" sm="4">
             <v-sheet rounded="lg" min-height="70vh" :elevation="10" dark>
+
+              
+                <v-container text-center class="pt-7">
+                  <v-row>
+
+                    <v-col>
+                      <v-btn color="orange">Sales</v-btn>
+                    </v-col>
+
+                    <v-col>
+                      <v-btn color="purple">Inventory</v-btn>
+                    </v-col>
+
+                    <v-col>
+                      <v-btn color="pink">Buffer</v-btn>
+                    </v-col>
+
+                  </v-row>
+                </v-container>
+              
               <v-container fluid class="pl-16">
                 <v-radio-group v-model="radios" mandatory>
                   <v-row>
                     <v-col>
                       <v-radio
-                        label="Per Day"
+                        label="Today"
                         color="orange"
                         value="perDay"
                       ></v-radio>
@@ -173,7 +195,7 @@
                 </v-radio-group>
               </v-container>
 
-              <v-container v-if="radios === 'perDay'">
+              <v-container v-if="radios === 'perDay'" class="pb-7">
                 <v-menu
                   ref="menu"
                   v-model="menu"
@@ -208,9 +230,7 @@
                     </v-btn>
                   </v-date-picker>
                 </v-menu>
-                <body>
-                  The total earning on date "{{ date }}" is Rs {{ eachDayEarn }}
-                </body>
+                
               </v-container>
 
               <v-container v-if="radios === 'dateRange'">
@@ -319,7 +339,7 @@
                     <v-col>
                       <thead>
                         <tr>
-                          <th class="text-left black red--text">Quantity</th>
+                          <th class="text-left black red--text">Earning</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -334,6 +354,9 @@
                     
                   </template>
                 </v-simple-table>
+                <body>
+                  Total earning on "{{ date }}"  =  Rs {{ eachDayEarn }}
+                </body>
               </v-container>
 
 
@@ -575,6 +598,7 @@ export default {
 
     // filer salesList by date range
     async rangeDateGraph() {
+      this.menu= false;
       let startDate = (this.rangeDate[0]).split("-").reverse().join("/");
       let endDate = (this.rangeDate[1]).split("-").reverse().join("/");
       
