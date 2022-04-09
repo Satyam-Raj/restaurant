@@ -63,8 +63,8 @@
         <h1 class="pl-3">Dashboard</h1>
         <v-row>
           <v-col cols="12" sm="8">
-            <v-sheet min-height="40vh" rounded="lg" :elevation="10" dark>
-              <v-container fluid class="pa-2" v-if="radios === 'perDay'">
+            <v-sheet min-height="30vh" rounded="lg" :elevation="10" dark>
+              <v-container fluid class="pa-2" v-if="radios === 'perDay' && prodName !=''">
                 <h3>Quantity sold per Product</h3>
                 <v-sparkline
                   :fill="false"
@@ -94,7 +94,7 @@
                 ></v-sparkline>
               </v-container>
 
-              <v-container fluid class="pa-2" v-if="radios === 'dateRange'">
+              <v-container fluid class="pa-2" v-if="radios === 'dateRange' && rangeTotal !=''">
                 <h3>Earning per day</h3>
                 <v-sparkline
                   :fill="false"
@@ -156,7 +156,7 @@
           </v-col>
 
           <v-col cols="12" sm="4">
-            <v-sheet rounded="lg" min-height="70vh" :elevation="10" dark>
+            <v-sheet rounded="lg" min-height="30vh" :elevation="10" dark>
               <v-container text-center class="pt-7">
                 <v-row>
                   <v-col>
@@ -231,7 +231,7 @@
                 </v-menu>
               </v-container>
 
-              <v-container v-if="radios === 'perDay'">
+              <v-container v-if="radios === 'perDay' && prodName !=''">
                 <v-row>
                   <v-col
                     cols="6"
@@ -307,13 +307,16 @@
                     </v-btn>
                   </v-date-picker>
                 </v-menu>
-                <body>
+                <body v-if="rangeTotal !=''">
                   Total earning on "{{ totalityDate }}" = Rs
                   {{ eachDayEarnRange }}
                 </body>
+                <body v-else class="display-1 text-center red--text">
+                  Select a date range
+                </body>
               </v-container>
 
-              <v-container v-if="radios === 'perDay'">
+              <v-container v-if="radios === 'perDay' && prodName !=''">
                 <v-simple-table fixed-header height="220px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Quantity sold per Product Data</h4>
@@ -351,7 +354,7 @@
                 </v-simple-table>
               </v-container>
 
-              <v-container v-if="radios === 'perDay'">
+              <v-container v-if="radios === 'perDay' && prodName !=''">
                 <v-simple-table fixed-header height="250px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Earning per Product</h4>
@@ -387,14 +390,17 @@
                     </v-row>
                   </template>
                 </v-simple-table>
-                <body>
+                <body v-if="prodName !=''">
                   Total earning on "{{ date }}" = Rs {{ eachDayEarn }}
+                </body>
+                <body v-else class="display-1 text-center red--text">
+                  Select a date, or <br> Enter some data 
                 </body>
               </v-container>
 
               <!--  Range Data below -->
 
-              <v-container v-if="radios === 'dateRange'">
+              <v-container v-if="radios === 'dateRange' && rangeTotal !=''">
                 <v-simple-table fixed-header height="250px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Earning per day</h4>
@@ -430,7 +436,7 @@
                 </v-simple-table>
               </v-container>
 
-              <v-container v-if="radios === 'dateRange'">
+              <v-container v-if="radios === 'dateRange' && rangeTotal !=''">
                 <v-simple-table fixed-header height="300px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Quantity sold per Product</h4>
@@ -471,7 +477,7 @@
                 </v-simple-table>
               </v-container>
 
-              <v-container v-if="radios === 'dateRange'">
+              <v-container v-if="radios === 'dateRange' && rangeTotal !=''">
                 <v-simple-table fixed-header height="300px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Earning per Product</h4>
@@ -512,7 +518,7 @@
                 </v-simple-table>
               </v-container>
 
-              <v-container v-if="radios === 'dateRange'">
+              <v-container v-if="radios === 'dateRange' && rangeTotal !=''">
                 <v-simple-table fixed-header height="283px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">
