@@ -291,7 +291,8 @@
                       <td>{{ item.price }}</td>
                       <td>{{ item.total }}</td>
                       <td>{{ item.description }}</td>
-                      <td>{{ item.paymentMode }}</td>
+                      <td v-if="item.paymentMode==='Dues'" class="red--text">{{ item.paymentMode }}</td>
+                      <td v-else>{{ item.paymentMode }}</td>
                       <td>{{ item.date }}</td>
                     </tr>
                   </tbody>
