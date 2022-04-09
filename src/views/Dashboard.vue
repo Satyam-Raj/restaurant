@@ -159,7 +159,7 @@
           <v-col cols="12" sm="4">
             <v-sheet rounded="lg" min-height="70vh" :elevation="10" dark>
 
-              
+            
                 <v-container text-center class="pt-7">
                   <v-row>
 
@@ -235,6 +235,50 @@
                   </v-date-picker>
                 </v-menu>
                 
+              </v-container>
+
+              <v-container>
+
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    class="d-flex align-center justify-center"
+                  >
+                  <v-text class="mr-3">Yesterday -</v-text>
+                      <v-chip
+                        color="orange"
+                        label
+                        outlined
+                      >
+                        {{ sumOfPreviousDate }}
+                      </v-chip>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    class="d-flex align-center justify-center"
+                  >
+                  <v-text class="mr-3">Today -</v-text>
+                      <v-chip
+                        color="orange"
+                        label
+                        outlined
+                      >
+                        {{ eachDayEarn }}
+                      </v-chip>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    class="d-flex align-center justify-center"
+                  >
+                  <v-text class="display-1  ">{{ percentage }}%</v-text>
+                  <v-icon color = "light-green" v-if(eachDayEarn > sumOfPreviousDate)>mdi-arrow-up-thick</v-icon>
+                  <v-icon color = "red">mdi-arrow-down-thick</v-icon>
+                  </v-col>
+                </v-row>
               </v-container>
 
               <v-container v-if="radios === 'dateRange'">
@@ -564,6 +608,9 @@ export default {
     prodPrice: [],
     prodTotal: [],
 
+    previousTotal: [],
+    previousDate: [],
+
 
     rangeProdQuantity: [],
     rangeProdName: [],
@@ -740,7 +787,6 @@ export default {
         }
 
 
-
         // add total if same Product is repeated
 
         this.rangeTotality = [];
@@ -755,14 +801,6 @@ export default {
           }
         }
 
-    
-
-
-
-
-
-
-
     },
 
 
@@ -770,6 +808,9 @@ export default {
     
 
     getGraph() {
+      // get the data from the below method
+      this.previousDateData();
+      
       let selectDate = this.date.split("-").reverse().join("/");
       db.collection("users")
         .doc(this.user.uid)
@@ -799,15 +840,33 @@ export default {
             }
           });
         });
-
-       
         
-        
-    }
+    },
 
-    
+    previousDateData() {
+
+      let todayDate = this.date;
+        // convert date to previous date
+        let  date1 = new Date(todayDate);
+        let  date2 = new Date(date1);
+        date2.setDate(date1.getDate() - 1); 
+        // convert date2 into iso format
+        let date4 = date2.toISOString().split('T')[0];
+        let selectDate2 = date4.split("-").reverse().join("/");
 
 
+        db.collection("users")
+        .doc(this.user.uid)
+        .collection("salesList")
+        .where("date", "==", selectDate2)
+        .onSnapshot((snapshot) => {
+          this.previousTotal= [],
+          this.previousDate = selectDate2,
+          snapshot.forEach((doc) => {
+            this.previousTotal.push(parseInt(doc.data().total));
+          });
+        });
+    },
   },
 
   mounted() {
@@ -816,19 +875,6 @@ export default {
   },
 
   computed: {
-
-    // for auto map on graph for current date
-    // totalEarning() {
-    //   let eachProdEarn = [];
-    //   for (
-    //     let i = 0;
-    //     i < Math.min(this.prodQuantity.length, this.prodPrice.length);
-    //     i++
-    //   ) {
-    //     eachProdEarn[i] = this.prodQuantity[i] * this.prodPrice[i];
-    //   }
-    //   return eachProdEarn;
-    // },
 
     eachDayEarn() {
       let dayEarn = this.prodTotal.reduce(function (a, b) {
@@ -844,19 +890,34 @@ export default {
       return dayEarn;
     },
 
+    sumOfPreviousDate() {
+      let sum = this.previousTotal.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+      return sum;
+    },
+
+    // percentage of gain if eachDayEarn is greater than sumOfPreviousDate
+    percentage() {
+      let percentage = ((this.eachDayEarn - this.sumOfPreviousDate)/this.sumOfPreviousDate) * 100;
+      // get percentage in 2 decimal
+      return percentage.toFixed(2);
+    
+    },
+
 
 // for range graph
-    totalEarningRange() {
-      let rangeProdEarn = [];
-      for (
-        let i = 0;
-        i < Math.min(this.prodQuantityRange.length, this.prodPriceRange.length);
-        i++
-      ) {
-        rangeProdEarn[i] = this.prodQuantityRange[i] * this.prodPriceRange[i];
-      }
-      return rangeProdEarn;
-    },
+    // totalEarningRange() {
+    //   let rangeProdEarn = [];
+    //   for (
+    //     let i = 0;
+    //     i < Math.min(this.prodQuantityRange.length, this.prodPriceRange.length);
+    //     i++
+    //   ) {
+    //     rangeProdEarn[i] = this.prodQuantityRange[i] * this.prodPriceRange[i];
+    //   }
+    //   return rangeProdEarn;
+    // },
 
     // eachDayEarnRange() {
     //   let dayEarnrange = this.totalEarningRange.reduce(function (a, b) {
