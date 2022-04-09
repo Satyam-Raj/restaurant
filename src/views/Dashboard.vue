@@ -65,7 +65,7 @@
           <v-col cols="12" sm="8">
             <v-sheet min-height="30vh" rounded="lg" :elevation="10" dark>
               <v-container fluid class="pa-2" v-if="radios === 'perDay' && prodName !=''">
-                <h3>Quantity sold per Product</h3>
+                <body>Quantity sold per Product</body>
                 <v-sparkline
                   :fill="false"
                   :labels="prodName"
@@ -80,7 +80,7 @@
                 ></v-sparkline>
                 <v-divider></v-divider>
 
-                <h3>Earning per Product</h3>
+                <body>Earning per Product</body>
                 <v-sparkline
                   :fill="false"
                   :labels="prodName1"
@@ -95,7 +95,7 @@
               </v-container>
 
               <v-container fluid class="pa-2" v-if="radios === 'dateRange' && rangeTotal !=''">
-                <h3>Earning per day</h3>
+                <body>Earning per day</body>
                 <v-sparkline
                   :fill="false"
                   :labels="totalityDate"
@@ -109,7 +109,7 @@
                 ></v-sparkline>
                 <v-divider></v-divider>
 
-                <h3>Quantity sold per Product</h3>
+                <body>Quantity sold per Product</body>
                 <v-sparkline
                   :fill="false"
                   :labels="prodNameRange"
@@ -123,7 +123,7 @@
                 ></v-sparkline>
                 <v-divider></v-divider>
 
-                <h3>Earning per Product</h3>
+                <body>Earning per Product</body>
                 <v-sparkline
                   :fill="false"
                   :labels="nameOfProductRange"
@@ -137,7 +137,7 @@
                 ></v-sparkline>
                 <v-divider></v-divider>
 
-                <small>Total items sold on Each day in selected range</small>
+                <body>Total items sold on Each day in selected range</body>
                 <v-sparkline
                   :fill="false"
                   :labels="newDate"
