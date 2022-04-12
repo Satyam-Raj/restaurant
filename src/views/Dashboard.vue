@@ -397,13 +397,13 @@
                     </v-row>
                   </template>
                 </v-simple-table>
-                <body v-if="prodName !=''">
+                <body >
                   Total earning on "{{ date }}" = Rs {{ eachDayEarn }}
                 </body>
-                <body v-else class="display-1 text-center red--text">
-                  Select a date, or <br> Enter some data 
-                </body>
+
+                
               </v-container>
+              
 
               <!--  Range Data below -->
 
