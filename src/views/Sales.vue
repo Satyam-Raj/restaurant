@@ -34,6 +34,13 @@
             <v-list-item-title>Payments</v-list-item-title>
           </v-list-item>
 
+          <v-list-item to="/employee">
+            <v-list-item-icon>
+              <v-icon>mdi-account-multiple</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Employee</v-list-item-title>
+          </v-list-item>
+
           <v-list-item to="/account">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
@@ -103,7 +110,7 @@
                   <v-container>
                     <v-form
                       ref="prodForm"
-                      @submit.prevent="addProduct,submitProduct"
+                      @submit.prevent="addProduct, submitProduct"
                       v-for="(item, index) in addProductList"
                       :key="index"
                     >
@@ -118,7 +125,6 @@
                           ></v-text-field>
                         </v-col>
 
-                       
                         <v-col cols="12" sm="1">
                           <v-btn block @click="deleteProduct(item.id)">
                             <v-icon> mdi-delete </v-icon>
@@ -182,16 +188,10 @@
                   <v-divider></v-divider>
 
                   <v-container
-                  
-                   v-for="(item, index) in addEntryList"
-                      :key="index"
-                      
+                    v-for="(item, index) in addEntryList"
+                    :key="index"
                   >
-                    <v-form
-                      @submit.prevent="submit"
-                      ref="form"
-                      
-                    >
+                    <v-form @submit.prevent="submit" ref="form">
                       <v-row>
                         <v-col class="d-flex" cols="12" sm="2">
                           <v-select
@@ -243,8 +243,6 @@
                             <v-icon> mdi-delete </v-icon>
                           </v-btn>
                         </v-col>
-
-                        
                       </v-row>
                     </v-form>
                   </v-container>
@@ -291,7 +289,9 @@
                       <td>{{ item.price }}</td>
                       <td>{{ item.total }}</td>
                       <td>{{ item.description }}</td>
-                      <td v-if="item.paymentMode==='Dues'" class="red--text">{{ item.paymentMode }}</td>
+                      <td v-if="item.paymentMode === 'Dues'" class="red--text">
+                        {{ item.paymentMode }}
+                      </td>
                       <td v-else>{{ item.paymentMode }}</td>
                       <td>{{ item.date }}</td>
                     </tr>
@@ -356,7 +356,6 @@ export default {
     dialog: false,
     dialogAdd: false,
 
-
     addName: "",
     addProductList: [],
     addEntryList: [],
@@ -368,16 +367,13 @@ export default {
     payMode: "",
 
     payModeDrop: [
-
-       { text: "PayTm", value: "PayTm" },
-       { text: "GPay", value: "GPay" },
-       { text: "UPI", value: "UPI" },
-       { text: "Online", value: "Online" },
-       { text: "Cash", value: "Cash" },
-        { text: "Dues", value: "Dues" },
-        ],
-
-
+      { text: "PayTm", value: "PayTm" },
+      { text: "GPay", value: "GPay" },
+      { text: "UPI", value: "UPI" },
+      { text: "Online", value: "Online" },
+      { text: "Cash", value: "Cash" },
+      { text: "Dues", value: "Dues" },
+    ],
 
     salesList: [],
     user: firebase.auth().currentUser,
@@ -413,89 +409,74 @@ export default {
     ],
   }),
 
-  
-
   methods: {
     // valid submit
-    
-              submit() {
-                
 
-                  this.addEntryList.forEach((item) => {
+    submit() {
+      this.addEntryList.forEach((item) => {
+        // condition for form validation
+        if (
+          item.addProductName == "" ||
+          item.quantity == "" ||
+          item.displayprice == "" ||
+          item.description == "" ||
+          item.paymentMode == ""
+        ) {
+          alert("Please fill all the fields");
+          // how to set nameRules
+        } else if (isNaN(item.quantity)) {
+          alert("Quantity must be a number");
+        } else if (item.quantity.length > 5) {
+          alert("Quantity must be less than 5 digits");
+        } else if (isNaN(item.displayprice)) {
+          alert("Price must be a number");
+        } else if (item.displayprice.length > 7) {
+          alert("Price must be less than 7 digits");
+        } else if (item.description.length > 30) {
+          alert("Description must be less than 30 characters");
+        } else {
+          this.dialog = false;
 
-                    // condition for form validation
-                    if (item.addProductName == "" || item.quantity == "" || item.displayprice == "" || item.description == "" || item.paymentMode == "") {
-                      alert("Please fill all the fields");
-                      // how to set nameRules
+          db.collection("users")
+            .doc(this.user.uid)
+            .collection("salesList")
+            .add({
+              id: Date.now(),
+              name: item.addProductName,
+              quantity: item.quantity,
+              price: item.displayprice,
+              description: item.description,
+              paymentMode: item.payMode,
+              total: item.quantity * item.displayprice,
+              date: new Date().toLocaleDateString("fr-FR"),
+            });
+        }
+      });
 
-                    } 
-                    else if (isNaN(item.quantity)) {
-                        alert("Quantity must be a number");
-                      }
-                    else if((item.quantity).length > 5){
-                      alert("Quantity must be less than 5 digits");
-                    }
-                    else if(isNaN(item.displayprice)){
-                      alert("Price must be a number");
-                    }
-                    else if ((item.displayprice).length > 7){
-                      alert("Price must be less than 7 digits");
-                    }
-                    else if ((item.description).length > 30){
-                      alert("Description must be less than 30 characters");
-                    }
+      // if (this.$refs.form.validate()) {}
 
-                    
-                  
-                     else {
-                          this.dialog = false;
+      // db.collection("users")
+      //   .doc(this.user.uid)
+      //   .collection("salesList")
+      //   .add({
+      //     id: Date.now(),
+      //     name: item.addProductName ,
+      //     quantity: item.quantity,
+      //     price: item.displayprice,
+      //     description: item.description,
+      //     paymentMode:item.payMode  ,
+      //     date: new Date().toLocaleDateString("fr-FR"),
+      //   });
 
-                          db.collection("users")
-                          .doc(this.user.uid)
-                          .collection("salesList")
-                          .add({
-                            id: Date.now(),
-                            name: item.addProductName ,
-                            quantity: item.quantity,
-                            price: item.displayprice,
-                            description: item.description,
-                            paymentMode:item.payMode  ,
-                            total: item.quantity * item.displayprice,
-                            date: new Date().toLocaleDateString("fr-FR"),
-                        });
-                     }
-                  });
+      // send select product to firebase
 
-                // if (this.$refs.form.validate()) {}
-
-                  // db.collection("users")
-                  //   .doc(this.user.uid)                  
-                  //   .collection("salesList")             
-                  //   .add({
-                  //     id: Date.now(),
-                  //     name: item.addProductName ,
-                  //     quantity: item.quantity,
-                  //     price: item.displayprice,
-                  //     description: item.description,
-                  //     paymentMode:item.payMode  ,
-                  //     date: new Date().toLocaleDateString("fr-FR"),
-                  //   });
-
-                    // send select product to firebase
-                    
-
-
-                  // clear input
-                  this.name = "";
-                  this.quantity = "";
-                  this.displayprice = "";
-                  this.description = "";
-                  this.paymentMode = "";
-
-                  
-                
-              },
-
+      // clear input
+      this.name = "";
+      this.quantity = "";
+      this.displayprice = "";
+      this.description = "";
+      this.paymentMode = "";
+    },
 
     clear() {
       this.name = "";
@@ -521,7 +502,7 @@ export default {
         addName: "",
       });
     },
-    
+
     addEntry() {
       this.addEntryList.push({
         id: Date.now(),
@@ -533,37 +514,32 @@ export default {
       });
     },
 
-
     deleteEntry(id) {
-      this.addEntryList= this.addEntryList.filter((item) => item.id !== id);
+      this.addEntryList = this.addEntryList.filter((item) => item.id !== id);
     },
 
     deleteProduct(id) {
-      this.addProductList = this.addProductList.filter((item) => item.id !== id);
+      this.addProductList = this.addProductList.filter(
+        (item) => item.id !== id
+      );
     },
 
     submitProduct() {
-      
-            
-            this.addProductList.forEach((item) => {
-              if (item.addName == "" || (item.addName).length > 30) {
-                alert("Please fill Product Name correctly");
-              } else {
+      this.addProductList.forEach((item) => {
+        if (item.addName == "" || item.addName.length > 30) {
+          alert("Please fill Product Name correctly");
+        } else {
+          this.dialogAdd = false;
 
-                this.dialogAdd = false;
-
-                db.collection("users")
-                .doc(this.user.uid)
-                .collection("addProductList")
-                .add({
-                  id: item.id,
-                  addName: item.addName,
-                });
-                
-              }
-              
+          db.collection("users")
+            .doc(this.user.uid)
+            .collection("addProductList")
+            .add({
+              id: item.id,
+              addName: item.addName,
             });
-
+        }
+      });
     },
 
     closeEntry() {
@@ -573,12 +549,7 @@ export default {
     closeProduct() {
       this.dialogAdd = false;
     },
-
-
   },
-
-  
-
 
   firestore() {
     return {

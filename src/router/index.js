@@ -11,6 +11,7 @@ import Premium from '../views/Premium.vue'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Contact from '../views/Contact.vue'
+import Employee from '../views/Employee.vue'
 
 
 
@@ -79,6 +80,11 @@ const routes = [
     name: 'Premium',
     component: Premium,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/employee',
+    name: 'Employee',
+    component: Employee,
   },
 ]
 

@@ -60,6 +60,13 @@
             <v-list-item-title>Payments</v-list-item-title>
           </v-list-item>
 
+          <v-list-item to="/employee">
+            <v-list-item-icon>
+              <v-icon>mdi-account-multiple</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Employee</v-list-item-title>
+          </v-list-item>
+
           <v-list-item to="/account">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
