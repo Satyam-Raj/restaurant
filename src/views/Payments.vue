@@ -67,11 +67,25 @@
 
     <v-main class="grey lighten-1 pt-0">
       <v-container>
-        <h1 class="pl-3">Payments</h1>
         <v-row>
-          <v-col cols="12" sm="112">
-            <v-sheet min-height="70vh" rounded="lg" :elevation="10">
-              <v-simple-table fixed-header height="879px" dark>
+          <v-col col='6' sm='11' >
+            <h1 class="pl-3">Payments</h1>
+          </v-col>
+          <v-col col='6' sm='1'>
+            <v-select
+              :items="['PayTm', 'GPay', 'UPI', 'PhonePe', 'Online', 'Cash', 'Dues']"
+              label="Filter"
+              class="red--text"
+              multiple
+              dense
+              v-model="filter"
+            ></v-select>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" sm="12">
+            <v-sheet min-height="50vh" rounded="lg" :elevation="10">
+              <v-simple-table fixed-header height="850px" dark>
                 <template v-slot:default primary>
                   <thead>
                     <tr>
@@ -84,26 +98,21 @@
                       <th class="text-left black accent-1">Date</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody v-for="(fill,index) in filter" :key='index'>
                     <tr v-for="item in salesList" :key="item.id">
-                      <td v-if="item.paymentMode === 'Dues'">{{ item.name }}</td>
-                      <td v-if="item.paymentMode === 'Dues'">{{ item.quantity }}</td>
-                      <td v-if="item.paymentMode === 'Dues'">{{ item.price }}</td>
-                      <td v-if="item.paymentMode === 'Dues'">{{ item.total }}</td>
-                      <td v-if="item.paymentMode === 'Dues'">{{ item.description }}</td>
-                      <td v-if="item.paymentMode === 'Dues'" class="red--text">{{ item.paymentMode }}</td>
-                      <td v-if="item.paymentMode === 'Dues'">{{ item.date }}</td>
+                      <td v-if="item.paymentMode === fill">{{ item.name }}</td>
+                      <td v-if="item.paymentMode === fill">{{ item.quantity }}</td>
+                      <td v-if="item.paymentMode === fill">{{ item.price }}</td>
+                      <td v-if="item.paymentMode === fill">{{ item.total }}</td>
+                      <td v-if="item.paymentMode === fill">{{ item.description }}</td>
+                      <td v-if="item.paymentMode === fill" class="orange--text">{{ item.paymentMode }}</td>
+                      <td v-if="item.paymentMode === fill">{{ item.date }}</td>
                     </tr>
                   </tbody>
                 </template>
               </v-simple-table>
-
-              <!--  -->
             </v-sheet>
           </v-col>
-
-          
-
         </v-row>
       </v-container>
     </v-main>
@@ -128,6 +137,7 @@ export default {
     profile: {},
 
     salesList: [],
+    filter: '',
 
     
   }),

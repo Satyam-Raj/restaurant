@@ -370,6 +370,7 @@ export default {
       { text: "PayTm", value: "PayTm" },
       { text: "GPay", value: "GPay" },
       { text: "UPI", value: "UPI" },
+      { text: "PhonePe", value: "PhonePe" },
       { text: "Online", value: "Online" },
       { text: "Cash", value: "Cash" },
       { text: "Dues", value: "Dues" },
