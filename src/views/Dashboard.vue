@@ -81,8 +81,8 @@
                   :padding="10"
                   :smooth="1"
                   :value="prodQuantity"
-                  color="deep-purple lighten-3"
                   height="95"
+                  label-size="3.5"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -98,6 +98,7 @@
                   :value="prodTotal"
                   height="95"
                   auto-draw
+                  label-size="3.5"
                 ></v-sparkline>
               </v-container>
 
@@ -111,7 +112,8 @@
                   :padding="20"
                   :smooth="1"
                   :value="rangeTotal"
-                  height="80"
+                  height="82"
+                  label-size="3.5"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -125,7 +127,8 @@
                   :padding="10"
                   :smooth="1"
                   :value="prodQuantityRange"
-                  height="80"
+                  height="82"
+                  label-size="3.5"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -139,7 +142,8 @@
                   :padding="10"
                   :smooth="1"
                   :value="rangeTotality"
-                  height="80"
+                  height="82"
+                  label-size="3.5"
                   auto-draw
                 ></v-sparkline>
                 <v-divider></v-divider>
@@ -153,7 +157,8 @@
                   :padding="20"
                   :smooth="1"
                   :value="newQuantity"
-                  height="79"
+                  height="82"
+                  label-size="3.5"
                   auto-draw
                 ></v-sparkline>
               </v-container>
@@ -164,22 +169,6 @@
 
           <v-col cols="12" sm="4">
             <v-sheet rounded="lg" min-height="30vh" :elevation="10" dark>
-              <v-container text-center class="pt-7">
-                <v-row>
-                  <v-col>
-                    <v-btn color="orange">Sales</v-btn>
-                  </v-col>
-
-                  <v-col>
-                    <v-btn color="purple">Inventory</v-btn>
-                  </v-col>
-
-                  <v-col>
-                    <v-btn color="pink">Buffer</v-btn>
-                  </v-col>
-                </v-row>
-              </v-container>
-
               <v-container fluid class="pl-16">
                 <v-radio-group v-model="radios" mandatory>
                   <v-row>
@@ -279,6 +268,55 @@
                   </v-col>
                 </v-row>
               </v-container>
+              <v-divider></v-divider>
+              <v-container v-if="radios === 'perDay' && prodName !=''">
+                <v-row>
+                  <v-col cols="6"
+                    sm="3"
+                    class="d-flex align-center justify-center">
+                    <span class="mr-0">This Month -></span>
+                  </v-col>
+                  <v-col
+                    cols="6"
+                    sm="3"
+                    class="d-flex align-center justify-center"
+                  >
+                    <span class="ml-3"> Inventory </span>
+                    <v-chip color="orange" label outlined>
+                      {{ currentInventoryTotal }}
+                    </v-chip>
+                  </v-col>
+                  <v-col
+                    cols="6"
+                    sm="3"
+                    class="d-flex align-center justify-center"
+                  >
+                    <span class="mr-3">Sales</span>
+                    <v-chip color="orange" label outlined>
+                      {{ currentSalesTotal }}
+                    </v-chip>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="3"
+                    class="d-flex align-center justify-center"
+                  >
+                    <span>{{ percentProfit }}%</span>
+                    <v-icon
+                      v-if="currentSalesTotal > currentInventoryTotal"
+                      color="light-green"
+                      class="display-1"
+                      >mdi-arrow-up-thick</v-icon
+                    >
+                    <v-icon color="red" v-else class="display-1"
+                      >mdi-arrow-down-thick</v-icon
+                    >
+                  </v-col>
+                </v-row>
+              </v-container>
+
+              
 
               <v-container v-if="radios === 'dateRange'">
                 <v-menu
@@ -319,12 +357,14 @@
                   {{ eachDayEarnRange }}
                 </body>
                 <body v-else class="display-1 text-center red--text">
-                  Select a date range
+                  Select date  in ascending order
                 </body>
               </v-container>
 
+              
+
               <v-container v-if="radios === 'perDay' && prodName !=''">
-                <v-simple-table fixed-header height="220px" dark>
+                <v-simple-table fixed-header height="230px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Quantity sold per Product Data</h4>
 
@@ -362,7 +402,7 @@
               </v-container>
 
               <v-container v-if="radios === 'perDay' && prodName !=''">
-                <v-simple-table fixed-header height="250px" dark>
+                <v-simple-table fixed-header height="258px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Earning per Product</h4>
 
@@ -622,6 +662,9 @@ export default {
     rangeTotality: [],
     nameOfProductRange: [],
 
+    currentMonthSalesTotal: [],
+    currentMonthTotal: [],
+
     dates: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
@@ -643,10 +686,11 @@ export default {
 
     // filer salesList by date range
     async rangeDateGraph() {
+      this.currentMonthSales();
+      this.currentMonthRange();
       this.menu = false;
       let startDate = this.rangeDate[0].split("-").reverse().join("/");
       let endDate = this.rangeDate[1].split("-").reverse().join("/");
-
       let sales = await db
         .collection("users")
         .doc(this.user.uid)
@@ -789,11 +833,216 @@ export default {
       }
     },
 
+// filtering last month inventory
+    // previousMonthRange(){
+    //   let currentDate = this.rangeDate[0]
+    //   let date = new Date(currentDate);
+    //   date.setMonth(date.getMonth() - 1);
+    //   let dd = date.getDate();
+    //   let mm = date.getMonth() + 1;
+    //   let yyyy = date.getFullYear();
+
+    //   if (dd < 10) {
+    //     dd = "0" + dd;
+    //   }
+
+    //   if (mm < 10) {
+    //     mm = "0" + mm;
+    //   }
+    //   let lastMonth = yyyy + "-" + mm + "-" + dd;
+
+
+    //   // get last month start date
+    //   let lastMonthStart = new Date(lastMonth);
+    //   lastMonthStart.setDate(1);
+    //   let dd3 = lastMonthStart.getDate();
+    //   let mm3 = lastMonthStart.getMonth() + 1;
+    //   let yyyy3 = lastMonthStart.getFullYear();
+
+    //   if (dd3 < 10) {
+    //     dd3 = "0" + dd3;
+    //   }
+    //   if (mm3 < 10) {
+    //     mm3 = "0" + mm3;
+    //   }
+    //   let lastMonthStart1 = yyyy3 + "-" + mm3 + "-" + dd3;
+
+    //   // get last date of last month
+    //   let lastMonthEnd = new Date(lastMonth);
+    //   lastMonthEnd.setMonth(lastMonthEnd.getMonth() + 1);
+    //   lastMonthEnd.setDate(0);
+    //   let dd4 = lastMonthEnd.getDate();
+    //   let mm4 = lastMonthEnd.getMonth() + 1;
+    //   let yyyy4 = lastMonthEnd.getFullYear();
+
+    //   if (dd4 < 10) {
+    //     dd4 = "0" + dd4;
+    //   }
+    //   if (mm4 < 10) {
+    //     mm4 = "0" + mm4;
+    //   }
+    //   let lastMonthEnd1 = yyyy4 + "-" + mm4 + "-" + dd4;
+
+    //   // converting date format
+    //   let laststartDate = lastMonthStart1.split("-").reverse().join("/");
+    //   let lastendDate = lastMonthEnd1.split("-").reverse().join("/");
+
+    //   // getting database data of last month
+
+    //   db.collection("users")
+    //     .doc(this.user.uid)
+    //     .collection("inventoryList")
+    //     .where("date", ">=", laststartDate)
+    //     .where("date", "<=", lastendDate)
+    //     .onSnapshot((snapshot) => {
+    //       (this.previousMonthTotal = []),
+    //         snapshot.forEach((doc) => {
+    //           this.previousMonthTotal.push(parseInt(doc.data().total));
+    //         });
+    //     });
+
+    // },
+
+
+
+
+
+    // filtering current month inventory data below
+    currentMonthRange(){
+
+       let currentDate = this.rangeDate[0]
+      
+
+
+
+      // get last month start date
+      let lastMonthStart = new Date(currentDate);
+      lastMonthStart.setDate(1);
+      let dd3 = lastMonthStart.getDate();
+      let mm3 = lastMonthStart.getMonth() + 1;
+      let yyyy3 = lastMonthStart.getFullYear();
+
+      if (dd3 < 10) {
+        dd3 = "0" + dd3;
+      }
+      if (mm3 < 10) {
+        mm3 = "0" + mm3;
+      }
+      let lastMonthStart2 = yyyy3 + "-" + mm3 + "-" + dd3;
+
+
+
+
+
+      // get last date of last month
+      let lastMonthEnd = new Date(currentDate);
+      lastMonthEnd.setMonth(lastMonthEnd.getMonth() + 1);
+      lastMonthEnd.setDate(0);
+      let dd4 = lastMonthEnd.getDate();
+      let mm4 = lastMonthEnd.getMonth() + 1;
+      let yyyy4 = lastMonthEnd.getFullYear();
+
+      if (dd4 < 10) {
+        dd4 = "0" + dd4;
+      }
+      if (mm4 < 10) {
+        mm4 = "0" + mm4;
+      }
+      let lastMonthEnd2 = yyyy4 + "-" + mm4 + "-" + dd4;
+
+      // converting date format
+      let currentstartDate = lastMonthStart2.split("-").reverse().join("/");
+      let currentendDate = lastMonthEnd2.split("-").reverse().join("/");
+
+      db.collection("users")
+        .doc(this.user.uid)
+        .collection("inventoryList")
+        .where("date", ">=", currentstartDate)
+        .where("date", "<=", currentendDate)
+        .onSnapshot((snapshot) => {
+          (this.currentMonthTotal = []),
+            snapshot.forEach((doc) => {
+              this.currentMonthTotal.push(parseInt(doc.data().total));
+            });
+        });
+
+
+    },
+
+    currentMonthSales(){
+
+       let currentDate = this.rangeDate[0]
+      
+
+
+
+      // get last month start date
+      let lastMonthStart = new Date(currentDate);
+      lastMonthStart.setDate(1);
+      let dd3 = lastMonthStart.getDate();
+      let mm3 = lastMonthStart.getMonth() + 1;
+      let yyyy3 = lastMonthStart.getFullYear();
+
+      if (dd3 < 10) {
+        dd3 = "0" + dd3;
+      }
+      if (mm3 < 10) {
+        mm3 = "0" + mm3;
+      }
+      let lastMonthStart2 = yyyy3 + "-" + mm3 + "-" + dd3;
+
+
+
+
+
+      // get last date of last month
+      let lastMonthEnd = new Date(currentDate);
+      lastMonthEnd.setMonth(lastMonthEnd.getMonth() + 1);
+      lastMonthEnd.setDate(0);
+      let dd4 = lastMonthEnd.getDate();
+      let mm4 = lastMonthEnd.getMonth() + 1;
+      let yyyy4 = lastMonthEnd.getFullYear();
+
+      if (dd4 < 10) {
+        dd4 = "0" + dd4;
+      }
+      if (mm4 < 10) {
+        mm4 = "0" + mm4;
+      }
+      let lastMonthEnd2 = yyyy4 + "-" + mm4 + "-" + dd4;
+
+      // converting date format
+      let currentstartDate = lastMonthStart2.split("-").reverse().join("/");
+      let currentendDate = lastMonthEnd2.split("-").reverse().join("/");
+
+      db.collection("users")
+        .doc(this.user.uid)
+        .collection("salesList")
+        .where("date", ">=", currentstartDate)
+        .where("date", "<=", currentendDate)
+        .onSnapshot((snapshot) => {
+          (this.currentMonthSalesTotal = []),
+            snapshot.forEach((doc) => {
+              this.currentMonthSalesTotal.push(parseInt(doc.data().total));
+            });
+        });
+
+
+    },
+
+    
+
     getGraph() {
       // get the data from the below method
       this.previousDateData();
 
       let selectDate = this.date.split("-").reverse().join("/");
+      // console.log(selectDate);
+      // remove last 5 characters from the date
+      // let date = selectDate.slice(0, -5);
+      // console.log(date);
+
+
       db.collection("users")
         .doc(this.user.uid)
         .collection("salesList")
@@ -855,6 +1104,10 @@ export default {
     this.getGraph();
   },
 
+
+
+  // computed data below
+
   computed: {
     eachDayEarn() {
       let dayEarn = this.prodTotal.reduce(function (a, b) {
@@ -885,6 +1138,33 @@ export default {
       // get percentage in 2 decimal
       return percentage.toFixed(2);
     },
+
+    currentSalesTotal() {
+      let sum = this.currentMonthSalesTotal.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+      return sum;
+    },
+
+    currentInventoryTotal() {
+      let sum = this.currentMonthTotal.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+      return sum;
+    },
+
+    percentProfit() {
+      let percent =
+        ((this.currentSalesTotal - this.currentInventoryTotal) /
+          this.currentInventoryTotal) *
+        100;
+      // get percentage in 2 decimal
+      return percent.toFixed(2);
+    },
+
+    
+    
+
 
     // for range graph
     // totalEarningRange() {

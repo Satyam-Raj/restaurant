@@ -126,7 +126,7 @@
                         </v-col>
 
                         <v-col cols="12" sm="1">
-                          <v-btn block @click="deleteProduct(item.id)">
+                          <v-btn large block @click="deleteProduct(item.id)">
                             <v-icon> mdi-delete </v-icon>
                           </v-btn>
                         </v-col>
@@ -239,7 +239,7 @@
                         </v-col>
 
                         <v-col cols="12" sm="1">
-                          <v-btn block @click="deleteEntry(item.id)">
+                          <v-btn large block @click="deleteEntry(item.id)">
                             <v-icon> mdi-delete </v-icon>
                           </v-btn>
                         </v-col>
@@ -303,40 +303,7 @@
             </v-sheet>
           </v-col>
 
-          <!-- calender below -->
-          <!--             
-                <v-container class="pt-14">            
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-menu
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      transition="scale-transition"
-                      offset-y
-                      min-width="auto"
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                          v-model="date"
-                          label="Choose Date"
-                          prepend-icon="mdi-calendar"
-                          readonly
-                          v-bind="attrs"
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker
-                        v-model="date"
-                        @input="menu2 = false"
-                      ></v-date-picker>
-                    </v-menu>
-                    </v-col>
-                  </v-container> -->
-          <!-- calender above -->
+    
         </v-row>
       </v-container>
     </v-main>
@@ -453,24 +420,7 @@ export default {
             });
         }
       });
-
-      // if (this.$refs.form.validate()) {}
-
-      // db.collection("users")
-      //   .doc(this.user.uid)
-      //   .collection("salesList")
-      //   .add({
-      //     id: Date.now(),
-      //     name: item.addProductName ,
-      //     quantity: item.quantity,
-      //     price: item.displayprice,
-      //     description: item.description,
-      //     paymentMode:item.payMode  ,
-      //     date: new Date().toLocaleDateString("fr-FR"),
-      //   });
-
-      // send select product to firebase
-
+     
       // clear input
       this.name = "";
       this.quantity = "";
