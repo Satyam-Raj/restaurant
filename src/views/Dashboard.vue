@@ -81,7 +81,7 @@
                   :padding="10"
                   :smooth="1"
                   :value="prodQuantity"
-                  height="95"
+                  height="102"
                   label-size="3.5"
                   auto-draw
                 ></v-sparkline>
@@ -96,7 +96,7 @@
                   :padding="10"
                   :smooth="1"
                   :value="prodTotal"
-                  height="95"
+                  height="102"
                   auto-draw
                   label-size="3.5"
                 ></v-sparkline>
@@ -281,7 +281,7 @@
                     sm="3"
                     class="d-flex align-center justify-center"
                   >
-                    <span class="ml-3"> Inventory </span>
+                    <span class="mr-3"> Inventory </span>
                     <v-chip color="orange" label outlined>
                       {{ currentInventoryTotal }}
                     </v-chip>
