@@ -495,10 +495,12 @@ export default {
 
     closeEntry() {
       this.dialog = false;
+      this.addEntryList = [];
     },
 
     closeProduct() {
       this.dialogAdd = false;
+      this.addProductList = [];
     },
   },
 

@@ -235,7 +235,7 @@
                     class="d-flex align-center justify-center"
                   >
                     <span class="mr-3">Day Before -</span>
-                    <v-chip color="orange" label outlined>
+                    <v-chip color="blue" label outlined>
                       {{ sumOfPreviousDate }}
                     </v-chip>
                   </v-col>
@@ -245,7 +245,7 @@
                     class="d-flex align-center justify-center"
                   >
                     <span class="mr-3">Select Day -</span>
-                    <v-chip color="orange" label outlined>
+                    <v-chip color="blue" label outlined>
                       {{ eachDayEarn }}
                     </v-chip>
                   </v-col>
@@ -271,14 +271,14 @@
               <v-divider></v-divider>
               <v-container v-if="radios === 'perDay' && prodName !=''">
                 <v-row>
-                  <v-col cols="6"
-                    sm="3"
+                  <v-col cols="12"
+                    sm="12"
                     class="d-flex align-center justify-center">
-                    <span class="mr-0">This Month -></span>
+                    <span class="mr-0 yellow--text">This Month</span>
                   </v-col>
                   <v-col
                     cols="6"
-                    sm="3"
+                    sm="4"
                     class="d-flex align-center justify-center"
                   >
                     <span class="mr-3"> Inventory </span>
@@ -288,7 +288,7 @@
                   </v-col>
                   <v-col
                     cols="6"
-                    sm="3"
+                    sm="4"
                     class="d-flex align-center justify-center"
                   >
                     <span class="mr-3">Sales</span>
@@ -299,7 +299,7 @@
 
                   <v-col
                     cols="12"
-                    sm="3"
+                    sm="4"
                     class="d-flex align-center justify-center"
                   >
                     <span>{{ percentProfit }}%</span>
@@ -686,8 +686,6 @@ export default {
 
     // filer salesList by date range
     async rangeDateGraph() {
-      this.currentMonthSales();
-      this.currentMonthRange();
       this.menu = false;
       let startDate = this.rangeDate[0].split("-").reverse().join("/");
       let endDate = this.rangeDate[1].split("-").reverse().join("/");
@@ -910,7 +908,7 @@ export default {
     // filtering current month inventory data below
     currentMonthRange(){
 
-       let currentDate = this.rangeDate[0]
+       let currentDate = this.date
       
 
 
@@ -971,7 +969,7 @@ export default {
 
     currentMonthSales(){
 
-       let currentDate = this.rangeDate[0]
+       let currentDate = this.date
       
 
 
@@ -1035,6 +1033,9 @@ export default {
     getGraph() {
       // get the data from the below method
       this.previousDateData();
+      this.currentMonthSales();
+      this.currentMonthRange();
+
 
       let selectDate = this.date.split("-").reverse().join("/");
       // console.log(selectDate);

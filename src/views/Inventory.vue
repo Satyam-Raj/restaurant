@@ -334,8 +334,16 @@ export default {
   methods: {
     // valid submit
     submit() {
-    
-        this.addEntryList.forEach((item) => {
+
+       this.addEntryList.forEach((item) => {
+         if (item.name == "" || item.quantity == "" || item.price == "") {
+            alert("Please fill all the fields");
+         }else if (isNaN(item.quantity) || isNaN(item.price)) {
+            alert("Please enter valid number");
+         }
+         else{
+          this.dialog = false;
+          this.addEntryList = [];
           db.collection("users")
             .doc(this.user.uid)
             .collection("inventoryList")
@@ -347,6 +355,7 @@ export default {
               total: item.quantity * item.price,
               date: new Date().toLocaleDateString("fr-FR"),
             });
+            }
         });
     },
 
@@ -364,10 +373,12 @@ export default {
 
     closeEntry() {
       this.dialog = false;
+      this.addEntryList = [];
     },
 
     closeProduct() {
       this.dialogAdd = false;
+      this.addProductList = [];
     },
 
     submitProduct() {
@@ -376,6 +387,7 @@ export default {
           alert("Please fill Product Name correctly");
         } else {
           this.dialogAdd = false;
+          this.addProductList = [];
 
           db.collection("users")
             .doc(this.user.uid)
