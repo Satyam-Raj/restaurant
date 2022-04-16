@@ -81,7 +81,7 @@
                   :padding="10"
                   :smooth="1"
                   :value="prodQuantity"
-                  height="102"
+                  height="105"
                   label-size="3.5"
                   auto-draw
                 ></v-sparkline>
@@ -96,7 +96,7 @@
                   :padding="10"
                   :smooth="1"
                   :value="prodTotal"
-                  height="102"
+                  height="105"
                   auto-draw
                   label-size="3.5"
                 ></v-sparkline>
@@ -402,7 +402,7 @@
               </v-container>
 
               <v-container v-if="radios === 'perDay' && prodName !=''">
-                <v-simple-table fixed-header height="258px" dark>
+                <v-simple-table fixed-header height="238px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Earning per Product</h4>
 

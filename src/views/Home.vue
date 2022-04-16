@@ -439,6 +439,7 @@
               });
 
               user.user.sendEmailVerification();
+              alert("Please verify your email address")
 
 
 

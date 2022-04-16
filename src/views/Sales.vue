@@ -392,18 +392,17 @@ export default {
         ) {
           alert("Please fill all the fields");
           // how to set nameRules
-        } else if (isNaN(item.quantity)) {
+        } else if (isNaN(item.quantity) || isNaN(item.displayprice)) {
           alert("Quantity must be a number");
         } else if (item.quantity.length > 5) {
           alert("Quantity must be less than 5 digits");
-        } else if (isNaN(item.displayprice)) {
-          alert("Price must be a number");
         } else if (item.displayprice.length > 7) {
           alert("Price must be less than 7 digits");
         } else if (item.description.length > 30) {
           alert("Description must be less than 30 characters");
         } else {
           this.dialog = false;
+          this.addEntryList = [];
 
           db.collection("users")
             .doc(this.user.uid)
@@ -481,6 +480,7 @@ export default {
           alert("Please fill Product Name correctly");
         } else {
           this.dialogAdd = false;
+          this.addProductList = [];
 
           db.collection("users")
             .doc(this.user.uid)
