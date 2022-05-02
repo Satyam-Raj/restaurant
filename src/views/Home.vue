@@ -283,7 +283,7 @@
                 <v-col>
                   <span>
                     <h1>Hello !! 😀</h1>
-                    <h2>Welcome to Crispy.</h2>
+                    <h2>Welcome to Crispicy.</h2>
                     <body>
                       Are you a restaurant owner? Or, a merchant, tired of
                       documenting your records of sales, inventory, etc. on
@@ -291,7 +291,7 @@
                       provide every service you need to get your business online
                       at very less price. And many exciting features to help you
                       grow your business. Access your business record anywhere,
-                      anytime and from any device with Crispy.
+                      anytime and from any device with <strong>Crispicy</strong>.
                     </body>
                   </span>
                 </v-col>

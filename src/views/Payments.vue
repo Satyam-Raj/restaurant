@@ -3,7 +3,7 @@
     <v-app-bar app color="grey darken-4" flat :elevation="2">
       <v-app-bar-nav-icon @click="drawer = true" dark></v-app-bar-nav-icon>
       <v-toolbar-title class="white--text">
-        <pre>Inventory </pre>
+        <pre>Crispicy</pre>
       </v-toolbar-title>
 
       <v-tabs centered class="ml-n9" color="white" dark>
