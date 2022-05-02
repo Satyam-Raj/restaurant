@@ -48,13 +48,6 @@
             <v-list-item-title>Account</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/premium">
-            <v-list-item-icon>
-              <v-icon>mdi-bullhorn</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Premium</v-list-item-title>
-          </v-list-item>
-
           <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-logout</v-icon>
@@ -277,9 +270,10 @@
                       <th class="text-left black">Quantity</th>
                       <th class="text-left black accent-1">Price (Rs)</th>
                       <th class="text-left black accent-1">Total (Rs)</th>
-                      <th class="text-left black accent-1">Description</th>
-                      <th class="text-left black accent-1">Payment</th>
-                      <th class="text-left black accent-1">Date</th>
+                      <th class="text-center black accent-1">Description</th>
+                      <th class="text-center black accent-1">Payment</th>
+                      <th class="text-center black accent-1">Date</th>
+                      <th class="text-center black accent-1">Modify</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -288,12 +282,118 @@
                       <td>{{ item.quantity }}</td>
                       <td>{{ item.price }}</td>
                       <td>{{ item.total }}</td>
-                      <td>{{ item.description }}</td>
-                      <td v-if="item.paymentMode === 'Dues'" class="red--text">
+                      <td class="text-center accent-1">
+                        {{ item.description }}
+                      </td>
+                      <td
+                        v-if="item.paymentMode === 'Dues'"
+                        class="text-center red--text"
+                      >
                         {{ item.paymentMode }}
                       </td>
-                      <td v-else>{{ item.paymentMode }}</td>
-                      <td>{{ item.date }}</td>
+                      <td v-else class="text-center accent-1">
+                        {{ item.paymentMode }}
+                      </td>
+                      <td class="text-center accent-1">{{ item.date }}</td>
+                      <td class="text-center accent-1">
+                        <v-dialog
+                          v-model="dialog2"
+                          persistent
+                          max-width="790"
+                          :retain-focus="false"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              color="orange"
+                              dark
+                              v-bind="attrs"
+                              v-on="on"
+                              outlined
+                              @click="editSales(item.id)"
+                            >
+                              <v-icon>mdi-pencil</v-icon>
+                            </v-btn>
+                          </template>
+                          <v-card>
+                            <v-container
+                              class="text-center primary white--text"
+                            >
+                              <h2>Edit Product details</h2>
+                            </v-container>
+                            <v-container>
+                              <v-row>
+                                <v-col class="d-flex" cols="12" sm="3">
+                                  <v-select
+                                    :items="
+                                      ProductList.map((item) => item.addName)
+                                    "
+                                    v-model="edit.addProductName"
+                                    label="Select Product"
+                                  ></v-select>
+                                </v-col>
+
+                                <v-col cols="12" md="2">
+                                  <v-text-field
+                                    v-model="edit.quantity"
+                                    :rules="quantityRules"
+                                    :counter="5"
+                                    label="Quantity"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="2">
+                                  <v-text-field
+                                    v-model="edit.displayprice"
+                                    :rules="displaypriceRules"
+                                    :counter="5"
+                                    label="Price"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="3">
+                                  <v-text-field
+                                    v-model="edit.description"
+                                    :rules="descriptionRules"
+                                    :counter="30"
+                                    label="Description"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" md="2">
+                                  <v-select
+                                    :items="
+                                      payModeDrop.map((item) => item.text)
+                                    "
+                                    v-model="edit.payMode"
+                                    label="Payment Mode"
+                                  ></v-select>
+                                </v-col>
+                              </v-row>
+                            </v-container>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                color="red darken-1"
+                                text
+                                outlined
+                                @click="updateSales"
+                              >
+                                Yes
+                              </v-btn>
+                              <v-btn
+                                color="primary"
+                                text
+                                outlined
+                                @click="dialog2 = false"
+                              >
+                                Cancel
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
+                      </td>
                     </tr>
                   </tbody>
                 </template>
@@ -302,8 +402,6 @@
               <!--  -->
             </v-sheet>
           </v-col>
-
-    
         </v-row>
       </v-container>
     </v-main>
@@ -321,6 +419,7 @@ export default {
     drawer: false,
     group: null,
     dialog: false,
+    dialog2: false,
     dialogAdd: false,
 
     addName: "",
@@ -332,6 +431,16 @@ export default {
     displayprice: "",
     description: "",
     payMode: "",
+
+    edit: {
+      addProductName: "",
+      quantity: "",
+      displayprice: "",
+      description: "",
+      payMode: "",
+    },
+
+    key: "",
 
     payModeDrop: [
       { text: "PayTm", value: "PayTm" },
@@ -419,7 +528,7 @@ export default {
             });
         }
       });
-     
+
       // clear input
       this.name = "";
       this.quantity = "";
@@ -462,6 +571,41 @@ export default {
         description: "",
         payMode: "",
       });
+    },
+    editSales(id) {
+      db.collection("users")
+        .doc(this.user.uid)
+        .collection("salesList")
+        .doc(id)
+        .get()
+        .then((doc) => {
+          this.edit.addProductName = doc.data().name;
+          this.edit.quantity = doc.data().quantity;
+          this.edit.displayprice = doc.data().price;
+          this.edit.description = doc.data().description;
+          this.edit.payMode = doc.data().paymentMode;
+
+          this.key = doc.id;
+        });
+    },
+    deleteSales(id) {
+      console.log(id);
+    },
+    updateSales() {
+      this.dialog2 = false;
+
+      db.collection("users")
+        .doc(this.user.uid)
+        .collection("salesList")
+        .doc(this.key)
+        .update({
+          name: this.edit.addProductName,
+          quantity: this.edit.quantity,
+          price: this.edit.displayprice,
+          description: this.edit.description,
+          paymentMode: this.edit.payMode,
+          total: this.edit.quantity * this.edit.displayprice,
+        });
     },
 
     deleteEntry(id) {

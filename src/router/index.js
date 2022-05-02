@@ -7,7 +7,6 @@ import Sales from '../views/Sales.vue'
 import Buffer from '../views/Buffer.vue'
 import Payments from '../views/Payments.vue'
 import Account from '../views/Account.vue'
-import Premium from '../views/Premium.vue'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Contact from '../views/Contact.vue'
@@ -75,16 +74,12 @@ const routes = [
     component: Account,
     meta: { requiresAuth: true }
   },
-  {
-    path: '/premium',
-    name: 'Premium',
-    component: Premium,
-    meta: { requiresAuth: true }
-  },
+
   {
     path: '/employee',
     name: 'Employee',
     component: Employee,
+    meta: { requiresAuth: true }
   },
 ]
 

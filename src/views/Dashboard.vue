@@ -48,12 +48,6 @@
             <v-list-item-title>Account</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/premium">
-            <v-list-item-icon>
-              <v-icon>mdi-bullhorn</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Premium</v-list-item-title>
-          </v-list-item>
 
           <v-list-item>
             <v-list-item-icon>
@@ -71,8 +65,14 @@
         <v-row>
           <v-col cols="12" sm="8">
             <v-sheet min-height="30vh" rounded="lg" :elevation="10" dark>
-              <v-container fluid class="pa-2" v-if="radios === 'perDay' && prodName !=''">
-                <body>Quantity sold per Product</body>
+              <v-container
+                fluid
+                class="pa-2"
+                v-if="radios === 'perDay' && prodName != ''"
+              >
+                <body>
+                  Quantity sold per Product
+                </body>
                 <v-sparkline
                   :fill="false"
                   :labels="prodName"
@@ -87,7 +87,9 @@
                 ></v-sparkline>
                 <v-divider></v-divider>
 
-                <body>Earning per Product</body>
+                <body>
+                  Earning per Product
+                </body>
                 <v-sparkline
                   :fill="false"
                   :labels="prodName1"
@@ -102,8 +104,14 @@
                 ></v-sparkline>
               </v-container>
 
-              <v-container fluid class="pa-2" v-if="radios === 'dateRange' && rangeTotal !=''">
-                <body>Earning per day</body>
+              <v-container
+                fluid
+                class="pa-2"
+                v-if="radios === 'dateRange' && rangeTotal != ''"
+              >
+                <body>
+                  Earning per day
+                </body>
                 <v-sparkline
                   :fill="false"
                   :labels="totalityDate"
@@ -118,7 +126,9 @@
                 ></v-sparkline>
                 <v-divider></v-divider>
 
-                <body>Quantity sold per Product</body>
+                <body>
+                  Quantity sold per Product
+                </body>
                 <v-sparkline
                   :fill="false"
                   :labels="prodNameRange"
@@ -133,7 +143,9 @@
                 ></v-sparkline>
                 <v-divider></v-divider>
 
-                <body>Earning per Product</body>
+                <body>
+                  Earning per Product
+                </body>
                 <v-sparkline
                   :fill="false"
                   :labels="nameOfProductRange"
@@ -148,7 +160,9 @@
                 ></v-sparkline>
                 <v-divider></v-divider>
 
-                <body>Total items sold on Each day in selected range</body>
+                <body>
+                  Total items sold on Each day in selected range
+                </body>
                 <v-sparkline
                   :fill="false"
                   :labels="newDate"
@@ -227,7 +241,7 @@
                 </v-menu>
               </v-container>
 
-              <v-container v-if="radios === 'perDay' && prodName !=''">
+              <v-container v-if="radios === 'perDay' && prodName != ''">
                 <v-row>
                   <v-col
                     cols="6"
@@ -269,11 +283,13 @@
                 </v-row>
               </v-container>
               <v-divider></v-divider>
-              <v-container v-if="radios === 'perDay' && prodName !=''">
+              <v-container v-if="radios === 'perDay' && prodName != ''">
                 <v-row>
-                  <v-col cols="12"
+                  <v-col
+                    cols="12"
                     sm="12"
-                    class="d-flex align-center justify-center">
+                    class="d-flex align-center justify-center"
+                  >
                     <span class="mr-0 yellow--text">This Month</span>
                   </v-col>
                   <v-col
@@ -316,8 +332,6 @@
                 </v-row>
               </v-container>
 
-              
-
               <v-container v-if="radios === 'dateRange'">
                 <v-menu
                   ref="menu"
@@ -352,18 +366,16 @@
                     </v-btn>
                   </v-date-picker>
                 </v-menu>
-                <body v-if="rangeTotal !=''">
+                <body v-if="rangeTotal != ''">
                   Total earning on "{{ totalityDate }}" = Rs
                   {{ eachDayEarnRange }}
                 </body>
                 <body v-else class="display-1 text-center red--text">
-                  Select date  in ascending order
+                  Select date in ascending order
                 </body>
               </v-container>
 
-              
-
-              <v-container v-if="radios === 'perDay' && prodName !=''">
+              <v-container v-if="radios === 'perDay' && prodName != ''">
                 <v-simple-table fixed-header height="230px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Quantity sold per Product Data</h4>
@@ -401,7 +413,7 @@
                 </v-simple-table>
               </v-container>
 
-              <v-container v-if="radios === 'perDay' && prodName !=''">
+              <v-container v-if="radios === 'perDay' && prodName != ''">
                 <v-simple-table fixed-header height="238px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Earning per Product</h4>
@@ -437,17 +449,14 @@
                     </v-row>
                   </template>
                 </v-simple-table>
-                <body >
+                <body>
                   Total earning on "{{ date }}" = Rs {{ eachDayEarn }}
                 </body>
-
-                
               </v-container>
-              
 
               <!--  Range Data below -->
 
-              <v-container v-if="radios === 'dateRange' && rangeTotal !=''">
+              <v-container v-if="radios === 'dateRange' && rangeTotal != ''">
                 <v-simple-table fixed-header height="250px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Earning per day</h4>
@@ -483,7 +492,7 @@
                 </v-simple-table>
               </v-container>
 
-              <v-container v-if="radios === 'dateRange' && rangeTotal !=''">
+              <v-container v-if="radios === 'dateRange' && rangeTotal != ''">
                 <v-simple-table fixed-header height="300px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Quantity sold per Product</h4>
@@ -524,7 +533,7 @@
                 </v-simple-table>
               </v-container>
 
-              <v-container v-if="radios === 'dateRange' && rangeTotal !=''">
+              <v-container v-if="radios === 'dateRange' && rangeTotal != ''">
                 <v-simple-table fixed-header height="300px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">Earning per Product</h4>
@@ -565,7 +574,7 @@
                 </v-simple-table>
               </v-container>
 
-              <v-container v-if="radios === 'dateRange' && rangeTotal !=''">
+              <v-container v-if="radios === 'dateRange' && rangeTotal != ''">
                 <v-simple-table fixed-header height="283px" dark>
                   <template v-slot:default primary>
                     <h4 class="primary">
@@ -831,7 +840,7 @@ export default {
       }
     },
 
-// filtering last month inventory
+    // filtering last month inventory
     // previousMonthRange(){
     //   let currentDate = this.rangeDate[0]
     //   let date = new Date(currentDate);
@@ -848,7 +857,6 @@ export default {
     //     mm = "0" + mm;
     //   }
     //   let lastMonth = yyyy + "-" + mm + "-" + dd;
-
 
     //   // get last month start date
     //   let lastMonthStart = new Date(lastMonth);
@@ -901,17 +909,9 @@ export default {
 
     // },
 
-
-
-
-
     // filtering current month inventory data below
-    currentMonthRange(){
-
-       let currentDate = this.date
-      
-
-
+    currentMonthRange() {
+      let currentDate = this.date;
 
       // get last month start date
       let lastMonthStart = new Date(currentDate);
@@ -927,10 +927,6 @@ export default {
         mm3 = "0" + mm3;
       }
       let lastMonthStart2 = yyyy3 + "-" + mm3 + "-" + dd3;
-
-
-
-
 
       // get last date of last month
       let lastMonthEnd = new Date(currentDate);
@@ -963,16 +959,10 @@ export default {
               this.currentMonthTotal.push(parseInt(doc.data().total));
             });
         });
-
-
     },
 
-    currentMonthSales(){
-
-       let currentDate = this.date
-      
-
-
+    currentMonthSales() {
+      let currentDate = this.date;
 
       // get last month start date
       let lastMonthStart = new Date(currentDate);
@@ -988,10 +978,6 @@ export default {
         mm3 = "0" + mm3;
       }
       let lastMonthStart2 = yyyy3 + "-" + mm3 + "-" + dd3;
-
-
-
-
 
       // get last date of last month
       let lastMonthEnd = new Date(currentDate);
@@ -1024,11 +1010,7 @@ export default {
               this.currentMonthSalesTotal.push(parseInt(doc.data().total));
             });
         });
-
-
     },
-
-    
 
     getGraph() {
       // get the data from the below method
@@ -1036,13 +1018,11 @@ export default {
       this.currentMonthSales();
       this.currentMonthRange();
 
-
       let selectDate = this.date.split("-").reverse().join("/");
       // console.log(selectDate);
       // remove last 5 characters from the date
       // let date = selectDate.slice(0, -5);
       // console.log(date);
-
 
       db.collection("users")
         .doc(this.user.uid)
@@ -1105,8 +1085,6 @@ export default {
     this.getGraph();
   },
 
-
-
   // computed data below
 
   computed: {
@@ -1162,10 +1140,6 @@ export default {
       // get percentage in 2 decimal
       return percent.toFixed(2);
     },
-
-    
-    
-
 
     // for range graph
     // totalEarningRange() {

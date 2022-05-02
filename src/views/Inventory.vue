@@ -48,12 +48,6 @@
             <v-list-item-title>Account</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/premium">
-            <v-list-item-icon>
-              <v-icon>mdi-bullhorn</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Premium</v-list-item-title>
-          </v-list-item>
 
           <v-list-item>
             <v-list-item-icon>
@@ -206,10 +200,7 @@
                           <v-text-field
                             v-model="item.quantity"
                             :counter="5"
-                            :rules="[
-                              v => !!v || 'Quantity is required'
-                            ]"
-                            
+                            :rules="[(v) => !!v || 'Quantity is required']"
                             label="Quantity"
                             required
                           ></v-text-field>
@@ -264,6 +255,7 @@
                       <th class="text-left black">Price (Rs)</th>
                       <th class="text-left black">Total (Rs)</th>
                       <th class="text-left black">Date</th>
+                      <th class="text-left black">Modify</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -273,6 +265,89 @@
                       <td>{{ item.price }}</td>
                       <td>{{ item.total }}</td>
                       <td>{{ item.date }}</td>
+                      <td>
+                        <v-dialog
+                          v-model="dialog2"
+                          persistent
+                          max-width="790"
+                          :retain-focus="false"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              color="pink"
+                              dark
+                              v-bind="attrs"
+                              v-on="on"
+                              outlined
+                              @click="editInventory(item.id)"
+                            >
+                              <v-icon>mdi-pencil</v-icon>
+                            </v-btn>
+                          </template>
+                          <v-card>
+                            <v-container
+                              class="text-center primary white--text"
+                            >
+                              <h2>Edit Inventory details</h2>
+                            </v-container>
+                            <v-container>
+                              <v-row>
+                                <v-col class="d-flex" cols="12" sm="5">
+                                  <v-select
+                                    :items="
+                                      inventoryProduct.map(
+                                        (item) => item.addName
+                                      )
+                                    "
+                                    v-model="edit.name"
+                                    label="Select Product"
+                                  ></v-select>
+                                </v-col>
+
+                                <v-col cols="12" md="4">
+                                  <v-text-field
+                                    v-model="edit.quantity"
+                                    :counter="5"
+                                    :rules="[
+                                      (v) => !!v || 'Quantity is required',
+                                    ]"
+                                    label="Quantity"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="3">
+                                  <v-text-field
+                                    v-model="edit.price"
+                                    :counter="5"
+                                    label="Price"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                              </v-row>
+                            </v-container>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                color="red darken-1"
+                                text
+                                outlined
+                                @click="updateInventory"
+                              >
+                                Yes
+                              </v-btn>
+                              <v-btn
+                                color="primary"
+                                text
+                                outlined
+                                @click="dialog2 = false"
+                              >
+                                Cancel
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
+                      </td>
                     </tr>
                   </tbody>
                 </template>
@@ -298,6 +373,7 @@ export default {
     drawer: false,
     group: null,
     dialog: false,
+    dialog2: false,
     dialogAdd: false,
 
     name: "",
@@ -307,6 +383,14 @@ export default {
     addProductList: [],
     addEntryList: [],
     addName: "",
+
+    edit: {
+      name: "",
+      quantity: "",
+      price: "",
+    },
+
+    key: "",
 
     inventoryList: [],
     user: firebase.auth().currentUser,
@@ -334,14 +418,12 @@ export default {
   methods: {
     // valid submit
     submit() {
-
-       this.addEntryList.forEach((item) => {
-         if (item.name == "" || item.quantity == "" || item.price == "") {
-            alert("Please fill all the fields");
-         }else if (isNaN(item.quantity) || isNaN(item.price)) {
-            alert("Please enter valid number");
-         }
-         else{
+      this.addEntryList.forEach((item) => {
+        if (item.name == "" || item.quantity == "" || item.price == "") {
+          alert("Please fill all the fields");
+        } else if (isNaN(item.quantity) || isNaN(item.price)) {
+          alert("Please enter valid number");
+        } else {
           this.dialog = false;
           this.addEntryList = [];
           db.collection("users")
@@ -355,8 +437,8 @@ export default {
               total: item.quantity * item.price,
               date: new Date().toLocaleDateString("fr-FR"),
             });
-            }
-        });
+        }
+      });
     },
 
     addProduct() {
@@ -398,6 +480,36 @@ export default {
             });
         }
       });
+    },
+
+    editInventory(id) {
+      db.collection("users")
+        .doc(this.user.uid)
+        .collection("inventoryList")
+        .doc(id)
+        .get()
+        .then((doc) => {
+          this.edit.name = doc.data().name;
+          this.edit.quantity = doc.data().quantity;
+          this.edit.price = doc.data().price;
+
+          this.key = doc.id;
+        });
+    },
+
+    updateInventory() {
+      db.collection("users")
+        .doc(this.user.uid)
+        .collection("inventoryList")
+        .doc(this.key)
+        .update({
+          name: this.edit.name,
+          quantity: this.edit.quantity,
+          price: this.edit.price,
+          total: this.edit.quantity * this.edit.price,
+        });
+
+      this.dialog2 = false;
     },
 
     addEntry() {

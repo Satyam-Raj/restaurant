@@ -432,27 +432,26 @@ export default {
 
     // register function
     async register() {
+      if (this.$refs.registerForm.validate()) {
+        this.dialog_register = false;
 
-    if (this.$refs.registerForm.validate()) {
-      this.dialog_register = false;
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(
+            (user) => {
+              db.collection("profile").doc(user.user.uid).set({
+                businessName: this.businessName,
+              });
 
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(
-          (user) => {
-            db.collection("profile").doc(user.user.uid).set({
-              businessName: this.businessName,
-            });
-
-            user.user.sendEmailVerification();
-            alert("Please verify your email address");
-          },
-          (error) => {
-            alert(error.message);
-          }
-        );
-    }
+              user.user.sendEmailVerification();
+              alert("Please verify your email address");
+            },
+            (error) => {
+              alert(error.message);
+            }
+          );
+      }
     },
 
     async forgot_password() {
