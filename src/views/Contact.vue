@@ -6,6 +6,10 @@
       color="grey darken-4"
       flat
     >
+
+    <v-toolbar-title class="white--text">
+        <span class="headline"> <pre>Crispicy </pre></span>
+      </v-toolbar-title>
    
 
       <v-tabs
@@ -17,8 +21,8 @@
           Home
         </v-tab>
 
-        <v-tab router to="/about" >
-            About
+        <v-tab router to="/services" >
+            Services
         </v-tab>
 
         <v-tab router to="/contact" >
@@ -35,29 +39,27 @@
     </v-app-bar>
 
 
-    <v-main class="pt-5 grey lighten-1">
-        
+    <v-main class="pa-15 ">
 
-        <!--  -->
-        
-        <h1>Contact</h1>
-       
+      <v-sheet
+            
+            class="mx-auto pa-5"
+            height="auto"
+            width="auto"
+            elevation="10"
+            dark
+            align="center"
+          >
+            <h1 class="orange--text">Contact Us</h1>
+            <body class="pa-10 blue--text">
+              We would love to hear your feedback, suggestions, or questions. Contact us at below email address.
+            </body>
+            <h3>crispicy@crispicy.com</h3>
+          </v-sheet>
 
     </v-main>
 
   </v-app>
 </template>
 
-<script>
 
-    
-
-  export default {
-    name: 'Contact',
-    data: () => ({
-
-      
-    }),
-
-  }
-</script>
