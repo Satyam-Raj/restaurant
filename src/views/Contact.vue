@@ -7,9 +7,7 @@
       flat
     >
 
-    <v-toolbar-title class="white--text">
-        <span class="headline"> <pre>Crispicy </pre></span>
-      </v-toolbar-title>
+    
    
 
       <v-tabs
@@ -55,11 +53,16 @@
               We would love to hear your feedback, suggestions, or questions. Contact us at below email address.
             </body>
             <h3>crispicy@crispicy.com</h3>
+
+            
+
+            
+
+            
           </v-sheet>
 
     </v-main>
 
   </v-app>
 </template>
-
 

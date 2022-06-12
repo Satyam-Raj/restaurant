@@ -7,9 +7,7 @@
       flat
     >
 
-    <v-toolbar-title class="white--text">
-        <span class="headline"> <pre>Crispicy </pre></span>
-    </v-toolbar-title>
+    
    
 
       <v-tabs

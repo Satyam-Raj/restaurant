@@ -2,9 +2,7 @@
   <v-app id="home">
     <v-app-bar app color="grey darken-4" flat>
       <!-- Company name on top left -->
-      <v-toolbar-title class="white--text">
-        <span class="headline"> <pre>Crispicy </pre></span>
-      </v-toolbar-title>
+      
       <v-tabs centered color="white" dark>
         
         <v-tab router to="/"> Home </v-tab>
