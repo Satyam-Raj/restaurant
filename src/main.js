@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueMeta from 'vue-meta'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -10,6 +11,9 @@ import { firestorePlugin } from 'vuefire'
 
 Vue.use(firestorePlugin);
 Vue.config.productionTip = false;
+Vue.use(VueMeta, {
+  keyName: 'head'
+})
 
 const firebaseConfig = {
   apiKey: "AIzaSyALgjOUTpUbl-CegOPOUyUMu4fzUpRpCJ0",
