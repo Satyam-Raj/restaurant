@@ -1,4 +1,5 @@
-# restaurant-app
+# crispicy.com
+## restaurant management-app 
 
 ## Project setup
 ```
